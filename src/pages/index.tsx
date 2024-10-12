@@ -120,13 +120,13 @@ export default function LandingPage() {
               placeholder="Enter your email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="px-4 py-3 w-64 rounded-l-lg border-2 border-blue-800 text-black focus:outline-none focus:ring-2 focus:ring-blue-300"
+              className="px-4 py-3 w-64 md:rounded-l-lg md:rounded-none rounded-lg mr-1 md:mr-0 border-2 border-blue-800 text-black focus:outline-none focus:ring-2 focus:ring-blue-300"
               required
             />
             <button
               type="submit"
               disabled={firestoreRequestLoading}
-              className={`relative bg-blue-800 text-white px-6 py-3 rounded-r-lg hover:bg-blue-900 transition-colors text-lg font-semibold ${firestoreRequestLoading ? 'text-transparent' : ''}`}
+              className={`relative bg-blue-800 text-white px-6 py-3 md:rounded-r-lg md:rounded-none rounded-lg hover:bg-blue-900 transition-colors text-lg font-semibold ${firestoreRequestLoading ? 'text-transparent' : ''}`}
             >
               {firestoreRequestLoading && (
                 <div className="absolute inset-0 flex items-center justify-center">
