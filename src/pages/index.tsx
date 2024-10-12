@@ -2,8 +2,8 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowRight, Globe, Home, Users, Shield, Star, X, CheckCircle } from 'lucide-react'
 
-import db from '../pages/utils/firestore';
-import { getDocs, addDoc, collection } from "firebase/firestore";
+import db from '../utils/firestore';
+import { addDoc, collection } from "firebase/firestore";
 
 export default function LandingPage() {
   const [email, setEmail] = useState('');
@@ -87,7 +87,7 @@ export default function LandingPage() {
             <Star className="w-5 h-5 text-blue-800" />
             <span>4.8/5 Student Rating</span>
             <Users className="w-5 h-5 text-blue-800" />
-            <span>10,000+ Happy Users</span>
+            <span>100+ Happy Users</span>
           </div>
         </section>
 
@@ -241,7 +241,7 @@ export default function LandingPage() {
               <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
               <h2 className="text-2xl font-bold text-blue-800 mb-2">Thank You for Joining!</h2>
               <p className="text-gray-600 mb-4">
-                You've been successfully added to our database. We'll be in touch shortly with exciting opportunities for your study abroad housing.
+                You&apos;ve been successfully added to our database. We&apos;ll be in touch shortly with exciting opportunities for your study abroad housing.
               </p>
               <button
                 onClick={() => setShowPopup(false)}
