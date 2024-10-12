@@ -1,13 +1,25 @@
 import { useState } from 'react'
-import { motion } from 'framer-motion'
-import { ArrowRight, Globe, Home, Users, Shield, Star } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { ArrowRight, Globe, Home, Users, Shield, Star, X, CheckCircle } from 'lucide-react'
+
+import db from '../pages/utils/firestore';
+import { getDocs, addDoc, collection } from "firebase/firestore";
 
 export default function LandingPage() {
-  const [email, setEmail] = useState('')
+  const [email, setEmail] = useState('');
+  const [showPopup, setShowPopup] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Handle form submission here
+    try {
+      const docRef = await addDoc(collection(db, "emails"), {
+        email: email
+      })
+      console.log('Document written with ID: ', docRef.id);
+      setShowPopup(true);
+    } catch (error) {
+      console.error('Error adding document: ', error);
+    }
     console.log('Submitted email:', email)
     setEmail('')
   }
@@ -59,7 +71,7 @@ export default function LandingPage() {
               placeholder="Enter your email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="px-4 py-3 w-64 rounded-l-lg border-2 border-blue-800 focus:outline-none focus:ring-2 focus:ring-orange-500"
+              className="px-4 py-3 w-64 rounded-l-lg border-2 border-blue-800 text-black focus:outline-none focus:ring-2 focus:ring-blue-300"
               required
             />
             <button
@@ -198,11 +210,50 @@ export default function LandingPage() {
             </div>
           </div>
           <div className="mt-8 text-center text-sm">
-            <p>&copy; 2023 StudyStay. All rights reserved.</p>
+            <p>&copy; 2024 StudyStay. All rights reserved.</p>
             <p className="mt-2">Trusted by universities worldwide. Licensed and insured.</p>
           </div>
         </div>
       </footer>
+
+      <AnimatePresence>
+        {showPopup && (
+          <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50"
+        >
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.9, opacity: 0 }}
+            className="bg-white rounded-lg p-8 max-w-md w-full relative"
+          >
+            <button
+              onClick={() => setShowPopup(false)}
+              className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
+              aria-label="Close popup"
+            >
+              <X className="w-6 h-6" />
+            </button>
+            <div className="text-center">
+              <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
+              <h2 className="text-2xl font-bold text-blue-800 mb-2">Thank You for Joining!</h2>
+              <p className="text-gray-600 mb-4">
+                You've been successfully added to our database. We'll be in touch shortly with exciting opportunities for your study abroad housing.
+              </p>
+              <button
+                onClick={() => setShowPopup(false)}
+                className="bg-blue-800 text-white px-6 py-2 rounded-lg hover:bg-blue-900 transition-colors"
+              >
+                Got it!
+              </button>
+            </div>
+          </motion.div>
+        </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   )
 }
