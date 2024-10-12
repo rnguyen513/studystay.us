@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { ArrowRight, Globe, Home, Users, CheckCircle } from 'lucide-react'
+import { ArrowRight, Globe, Home, Users } from 'lucide-react'
 
 export default function LandingPage() {
   const [email, setEmail] = useState('')
@@ -103,7 +103,7 @@ export default function LandingPage() {
                 transition={{ duration: 0.8, delay: 0.2 * index }}
                 whileHover={{ scale: 1.05 }}
               >
-                <p className="text-blue-800 mb-4 text-lg">"{testimonial.quote}"</p>
+                <p className="text-blue-800 mb-4 text-lg">&quot;{testimonial.quote}&quot;</p>
                 <p className="font-semibold text-orange-700">{testimonial.name}</p>
               </motion.div>
             ))}
