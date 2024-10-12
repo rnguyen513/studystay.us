@@ -95,7 +95,7 @@ export default function LandingPage() {
             <button
               type="submit"
               disabled={firestoreRequestLoading}
-              className="bg-blue-800 text-white px-6 py-3 rounded-r-lg hover:bg-blue-900 transition-colors text-lg font-semibold"
+              className={`relative bg-blue-800 text-white px-6 py-3 rounded-r-lg hover:bg-blue-900 transition-colors text-lg font-semibold ${firestoreRequestLoading ? 'text-transparent' : ''}`}
             >
               {firestoreRequestLoading && (
                 <div className="absolute inset-0 flex items-center justify-center">
