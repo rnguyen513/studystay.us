@@ -1,11 +1,12 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ArrowRight, Globe, Home, Users, Shield, Star, X, CheckCircle, CircleX } from 'lucide-react'
+import { ArrowRight, Globe, Home, Users, Shield, Star, X, CheckCircle, CircleX, Menu } from 'lucide-react'
 
 export default function LandingPage() {
   const [email, setEmail] = useState('');
   const [showPopup, setShowPopup] = useState(false);
-  const [popupMessage, setPopupMessage] = useState("You've been successfully added to our database. We'll be in touch shortly with exciting opportunities for your study abroad housing.");
+  const [popupMessage, setPopupMessage] = useState("You've been added to our database. We'll be in touch shortly with exciting opportunities for your study abroad housing.");
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [firestoreRequestLoading, setFirestoreRequestLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -49,7 +50,7 @@ export default function LandingPage() {
           <Shield className="w-8 h-8 text-blue-800 mr-2" />
           <div className="text-2xl font-bold text-blue-800">StudyStay</div>
         </div>
-        <nav>
+        <nav className="hidden md:block">
           <ul className="flex space-x-6">
             <li><a href="#" className="text-blue-800 hover:text-orange-500 transition-colors">How it works</a></li>
             <li><a href="#" className="text-blue-800 hover:text-orange-500 transition-colors">Listings</a></li>
@@ -57,9 +58,39 @@ export default function LandingPage() {
             <li><a href="#" className="text-blue-800 hover:text-orange-500 transition-colors">Safety</a></li>
           </ul>
         </nav>
+        <motion.button 
+          className="md:hidden text-blue-800"
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          aria-label="Toggle menu"
+          animate={{ rotate: isMenuOpen ? 180 : 0 }}
+          transition={{ duration: 0.3 }}
+        >
+          <Menu className="w-6 h-6" />
+        </motion.button>
       </header>
 
-      <main className="container mx-auto px-4 py-16">
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3 }}
+            className="md:hidden bg-white shadow-md overflow-hidden"
+          >
+            <nav className="container mx-auto px-4 py-2">
+              <ul className="space-y-2">
+                <li><a href="#" className="block py-2 text-blue-800 hover:text-orange-500 transition-colors">How it works</a></li>
+                <li><a href="#" className="block py-2 text-blue-800 hover:text-orange-500 transition-colors">Listings</a></li>
+                <li><a href="#" className="block py-2 text-blue-800 hover:text-orange-500 transition-colors">About us</a></li>
+                <li><a href="#" className="block py-2 text-blue-800 hover:text-orange-500 transition-colors">Safety</a></li>
+              </ul>
+            </nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <main className="container mx-auto px-4 py-16 md:py-16">
         <section className="text-center mb-16">
           <motion.h1 
             className="text-5xl font-bold mb-6 text-blue-800"
@@ -105,13 +136,19 @@ export default function LandingPage() {
               <span className={firestoreRequestLoading ? "invisible" : ""}>Get Started</span>
             </button>
           </motion.form>
-          <div className="flex justify-center items-center space-x-4 text-sm text-gray-600">
-            <Shield className="w-5 h-5 text-blue-800" />
-            <span>Verified Listings</span>
-            <Star className="w-5 h-5 text-blue-800" />
-            <span>4.8/5 Student Rating</span>
-            <Users className="w-5 h-5 text-blue-800" />
-            <span>100+ Happy Users</span>
+          <div className="flex flex-col md:flex-row justify-center items-center space-y-2 md:space-y-0 md:space-x-4 text-sm text-gray-600">
+            <div className="flex items-center">
+              <Shield className="w-5 h-5 text-blue-800 mr-1" />
+              <span>Verified Listings</span>
+            </div>
+            <div className="flex items-center">
+              <Star className="w-5 h-5 text-blue-800 mr-1" />
+              <span>4.8/5 Student Rating</span>
+            </div>
+            <div className="flex items-center">
+              <Users className="w-5 h-5 text-blue-800 mr-1" />
+              <span>100+ Happy Users</span>
+            </div>
           </div>
         </section>
 
@@ -272,7 +309,7 @@ export default function LandingPage() {
                 {popupMessage}
               </p>
               <button
-                onClick={() => {setShowPopup(false); setPopupMessage("You've been successfully added to our database. We'll be in touch shortly with exciting opportunities for your study abroad housing.")}}
+                onClick={() => {setShowPopup(false); setPopupMessage("You've been added to our database. We'll be in touch shortly with exciting opportunities for your study abroad housing.")}}
                 className="bg-blue-800 text-white px-6 py-2 rounded-lg hover:bg-blue-900 transition-colors"
               >
                 Got it!

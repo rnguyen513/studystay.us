@@ -17,7 +17,8 @@ export default async function handler(
     if (req.body.collection != null) {
         if (req.body.email != null) {
             const docRef = addDoc(collection(db, req.body.collection), {
-                email: req.body.email
+                email: req.body.email,
+                timestamp: new Date()
             });
             console.log('Document written with ID: ', "" + (await docRef).id);
             return res.status(200).json({ documentId: "" + (await docRef).id })
