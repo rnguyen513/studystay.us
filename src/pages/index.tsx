@@ -1,26 +1,44 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ArrowRight, Globe, Home, Users, Shield, Star, X, CheckCircle } from 'lucide-react'
-
-import db from '../utils/firestore';
-import { addDoc, collection } from "firebase/firestore";
+import { ArrowRight, Globe, Home, Users, Shield, Star, X, CheckCircle, CircleX } from 'lucide-react'
 
 export default function LandingPage() {
   const [email, setEmail] = useState('');
   const [showPopup, setShowPopup] = useState(false);
+  const [popupMessage, setPopupMessage] = useState("You've been successfully added to our database. We'll be in touch shortly with exciting opportunities for your study abroad housing.");
+  const [firestoreRequestLoading, setFirestoreRequestLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    setFirestoreRequestLoading(true);
+
     try {
-      const docRef = await addDoc(collection(db, "emails"), {
-        email: email
+      await fetch("/api/firestoreRequest", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          collection: "emails",
+          email: email
+        }),
+        signal: AbortSignal.timeout(5000)
+      }).then(res => {
+        console.log("res:", res);
+        if (res.status != 200) {
+          setPopupMessage("Something went wrong. Please try again later or contact Ryan at amk3ef@virginia.edu. ERROR_DATABASE_DOWN")
+        }
+        res.json();
+      }).then(data => {
+        console.log("data:", data)
       })
-      console.log('Document written with ID: ', docRef.id);
-      setShowPopup(true);
     } catch (error) {
-      console.error('Error adding document: ', error);
+      console.error('Error with request: ', error);
+      setPopupMessage("Something went wrong. Please try again later or contact Ryan at amk3ef@virginia.edu. ERROR_FETCH_TIMEOUT_5000")
     }
-    console.log('Submitted email:', email)
+
+    setFirestoreRequestLoading(false);
+    setShowPopup(true);
     setEmail('')
   }
 
@@ -76,9 +94,15 @@ export default function LandingPage() {
             />
             <button
               type="submit"
+              disabled={firestoreRequestLoading}
               className="bg-blue-800 text-white px-6 py-3 rounded-r-lg hover:bg-blue-900 transition-colors text-lg font-semibold"
             >
-              Get Started
+              {firestoreRequestLoading && (
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="w-6 h-6 border-t-2 border-b-2 border-white rounded-full animate-spin"></div>
+                </div>
+              )}
+              <span className={firestoreRequestLoading ? "invisible" : ""}>Get Started</span>
             </button>
           </motion.form>
           <div className="flex justify-center items-center space-x-4 text-sm text-gray-600">
@@ -238,13 +262,17 @@ export default function LandingPage() {
               <X className="w-6 h-6" />
             </button>
             <div className="text-center">
-              <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
-              <h2 className="text-2xl font-bold text-blue-800 mb-2">Thank You for Joining!</h2>
+              { popupMessage[0] == "S" ? (
+                <CircleX className="w-16 h-16 text-red-500 mx-auto mb-4"/>
+              ) : (
+                <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4"/>
+              )}
+              <h2 className="text-2xl font-bold text-blue-800 mb-2">{popupMessage[0] == "S" ? "Uh oh..." : "Thank You for Joining!"}</h2>
               <p className="text-gray-600 mb-4">
-                You&apos;ve been successfully added to our database. We&apos;ll be in touch shortly with exciting opportunities for your study abroad housing.
+                {popupMessage}
               </p>
               <button
-                onClick={() => setShowPopup(false)}
+                onClick={() => {setShowPopup(false); setPopupMessage("You've been successfully added to our database. We'll be in touch shortly with exciting opportunities for your study abroad housing.")}}
                 className="bg-blue-800 text-white px-6 py-2 rounded-lg hover:bg-blue-900 transition-colors"
               >
                 Got it!
