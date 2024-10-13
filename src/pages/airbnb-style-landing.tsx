@@ -14,6 +14,7 @@ const center = {
   lng: -79.3262,
 }
 
+
 const ImageCarousel = ({ images }:any) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
@@ -220,9 +221,9 @@ export default function LandingPage() {
         </div>
       </header>
 
-      <main className="container mx-auto px-4 py-8">
+      <main className="container mx-auto px-4 py-8 ">
         <div className="flex items-center justify-center mb-8">
-          <div className="flex items-center shadow-md rounded-full border max-w-5xl w-full">
+          <div className="hidden md:flex items-center shadow-md rounded-full border max-w-5xl w-full">
             <div className="px-6 py-2 border-r flex-1">
               <div className="text-xs font-bold">Where</div>
               <input type="text" placeholder="Search destinations" className="w-full outline-none text-sm" />
@@ -243,9 +244,23 @@ export default function LandingPage() {
               <Search className="w-5 h-5" />
             </button>
           </div>
+
+          <div className="flex md:hidden items-center shadow-md rounded-full border max-w-5xl w-full">
+            <div className="px-6 py-2 border-r flex-1">
+              <div className="text-xs font-bold">Where</div>
+              <input type="text" placeholder="Search destinations" className="w-full outline-none text-sm" />
+            </div>
+            <div className="px-6 py-2 flex-1">
+              <div className="text-xs font-bold">Who</div>
+              <input type="text" placeholder="Add guests" className="w-full outline-none text-sm" />
+            </div>
+            <button className="bg-blue-600 text-white p-4 rounded-full hover:bg-blue-700 m-2">
+              <Search className="w-5 h-5" />
+            </button>
+          </div>
         </div>
 
-        <hr className="mb-8"/>
+        <hr className="hidden md:flex mb-8"/>
 
         <div className="flex items-start justify-between content-center mb-8">
           <div className="relative flex-grow overflow-hidden mr-4">
@@ -270,7 +285,7 @@ export default function LandingPage() {
             <div className="absolute top-0 left-0 h-full w-16 bg-gradient-to-r from-white to-transparent"></div>
             <div className="absolute top-0 right-0 h-full w-16 bg-gradient-to-l from-white to-transparent"></div>
           </div>
-          <div className="flex space-x-4">
+          <div className="space-x-4 hidden md:flex">
             <button className="flex items-center space-x-2 border rounded-lg px-4 py-2 whitespace-nowrap">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-4 h-4">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
