@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowRight, Globe, Home, Users, Shield, Star, X, CheckCircle, CircleX, Menu } from 'lucide-react'
+import afacad from '../utils/fonts'
 
 export default function LandingPage() {
   const [email, setEmail] = useState('');
@@ -44,7 +45,7 @@ export default function LandingPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
+    <div className={`min-h-screen bg-gradient-to-b from-blue-50 to-white ${afacad.className}`}>
       <header className="container mx-auto px-4 py-6 flex justify-between items-center">
         <div className="flex items-center">
           <Shield className="w-8 h-8 text-blue-800 mr-2" />
