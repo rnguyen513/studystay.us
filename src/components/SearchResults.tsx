@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { ListingData } from '@/utils/tempData';
 import ListingsArray from '@/components/ListingsArray';
+import LoadingSkeleton from '@/components/ListingsArrayLoadingSkeleton';
 
 type SearchResultsProps = {
     searchQuery: string,
@@ -24,7 +25,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({ searchQuery, date}) => {
     return (
         <>
             {loading ? (
-                <div className="font-bold text-2xl">Loading...</div>
+                <LoadingSkeleton/>
             ) : listings.length > 0 ? (
                 <ListingsArray listings={listings} />
             ) : (
