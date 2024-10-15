@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowRight, Globe, Home, Users, Shield, Star, X, CheckCircle, CircleX, Menu } from 'lucide-react'
-import afacad from '../utils/fonts'
+import { afacad } from '@/utils/fonts'
 
 export default function LandingPage() {
   const [email, setEmail] = useState('');
@@ -309,12 +309,14 @@ export default function LandingPage() {
               <p className="text-gray-600 mb-4">
                 {popupMessage}
               </p>
-              <button
-                onClick={() => {setShowPopup(false); setPopupMessage("You've been added to our database. We'll be in touch shortly with exciting opportunities for your study abroad housing.")}}
-                className="bg-blue-800 text-white px-6 py-2 rounded-lg hover:bg-blue-900 transition-colors"
-              >
-                Got it!
-              </button>
+              <a href="airbnb-style-landing">
+                <button
+                  onClick={() => {setShowPopup(false); setPopupMessage("You've been added to our database. We'll be in touch shortly with exciting opportunities for your study abroad housing.")}}
+                  className="bg-blue-800 text-white px-6 py-2 rounded-lg hover:bg-blue-900 transition-colors"
+                >
+                  Got it!
+                </button>
+              </a>
             </div>
           </motion.div>
         </motion.div>
