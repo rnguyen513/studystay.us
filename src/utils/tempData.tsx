@@ -1,11 +1,11 @@
 export type ListingData = {
     location: string,
-    views: string,
+    views?: string,
     dates: string,
     price: number,
-    rating: number,
-    lat: number,
-    lng: number,
+    rating?: number,
+    lat?: number,
+    lng?: number,
     images: string[]
 }
 

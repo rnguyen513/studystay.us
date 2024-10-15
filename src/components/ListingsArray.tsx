@@ -30,7 +30,7 @@ const ListingsArray: React.FC<ListingsArrayProps> = ({ listings}) => {
                         </div>
                         <p className="text-gray-500 text-sm">{listing.views}</p>
                         <p className="text-gray-500 text-sm">{listing.dates}</p>
-                        <p className="font-semibold">${listing.price} <span className="font-normal">night</span></p>
+                        <p className="font-semibold">${listing.price} <span className="font-normal">month</span></p>
                     </div>
                 </div>
             ))}

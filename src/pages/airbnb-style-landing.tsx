@@ -16,7 +16,7 @@ const mapContainerStyle = {
 
 const center = {
   lat: 37.7749, // Centered on Virginia, USA
-  lng: -79.3262,
+  lng: -79.3262
 }
 
 export default function LandingPage() {
