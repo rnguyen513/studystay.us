@@ -6,7 +6,7 @@ type ListingsArrayProps = {
     listings: ListingData[];
 };
 
-const ListingsArray: React.FC<ListingsArrayProps> = ({ listings}) => {
+const ListingsArray: React.FC<ListingsArrayProps> = ({ listings }) => {
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {listings.map((listing, index) => (
