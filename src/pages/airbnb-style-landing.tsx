@@ -8,6 +8,7 @@ import Header from '@/components/header'
 import SearchBar from '@/components/SearchBar'
 import ListingsArray from '@/components/ListingsArray'
 import { tempListings, categoryIcons } from '@/utils/tempData'
+import AuthPopup from '@/components/AuthPopup'
 
 const mapContainerStyle = {
   width: '100%',
