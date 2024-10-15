@@ -26,11 +26,7 @@ export default function Page() {
                 <div className="font-bold text-2xl mb-4">Results for: {searchQuery}</div>
 
                 <Suspense fallback={<LoadingSkeleton/>}>
-                {searchQuery ? (
                     <SearchResults searchQuery={searchQuery as string} date={date ? date : undefined}/>
-                ) : (
-                    <div>We didn&apos;t find anything for that...</div>
-                )}
                 </Suspense>
             </main>
         </div>
