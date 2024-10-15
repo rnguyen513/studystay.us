@@ -29,7 +29,7 @@ export default function Page() {
                 {searchQuery ? (
                     <SearchResults searchQuery={searchQuery as string} date={date ? date : undefined}/>
                 ) : (
-                    <div>We didn't find anything for that...</div>
+                    <div>We didn&apos;t find anything for that...</div>
                 )}
                 </Suspense>
             </main>
