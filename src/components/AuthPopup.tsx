@@ -35,7 +35,7 @@ export default function AuthPopup({ onClose }: { onClose: () => void }) {
           </div>
           
           <p className="text-xs text-gray-500 mt-2 mb-4">
-            We'll email you to confirm your address. Your email is used to log in to your account.
+            We&apos;ll email you to confirm your address. Your email is used to log in to your account.
           </p>
           
           <Button className="w-full bg-primary text-white">Continue</Button>
