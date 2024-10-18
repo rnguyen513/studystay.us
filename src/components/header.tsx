@@ -4,7 +4,7 @@ import AuthPopup from "@/components/AuthPopup";
 import { leagueSpartan } from "@/utils/fonts";
 import { useSession, signOut, signIn } from "next-auth/react";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 import {
@@ -21,6 +21,26 @@ const Header = () => {
 
   const { data, status } = useSession();
   const router = useRouter();
+
+  useEffect(() => {
+    if (status != "authenticated") return;
+
+    try {
+      fetch("/api/firebaselink/confirmuser", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          email: data?.user?.email
+        })
+      }).then(res => res.json()).then(data => {
+        console.log("data returned from /api/firebaselink/confirmuser:", data);
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }, [status]);
 
     return (
       <>
