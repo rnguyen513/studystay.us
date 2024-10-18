@@ -63,7 +63,7 @@ export default function LandingPage() {
             <li><a href="#" className="text-blue-800 hover:text-orange-500 transition-colors">Safety</a></li> */}
           </ul>
         </nav>
-        <motion.button 
+        {/* <motion.button 
           className="md:hidden text-blue-800"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           aria-label="Toggle menu"
@@ -71,10 +71,10 @@ export default function LandingPage() {
           transition={{ duration: 0.3 }}
         >
           <Menu className="w-6 h-6" />
-        </motion.button>
+        </motion.button> */}
       </header>
 
-      <AnimatePresence>
+      {/* <AnimatePresence>
         {isMenuOpen && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
@@ -93,7 +93,7 @@ export default function LandingPage() {
             </nav>
           </motion.div>
         )}
-      </AnimatePresence>
+      </AnimatePresence> */}
 
       <main className="container mx-auto px-4 py-16 md:py-16">
         <section className="text-center mb-16">
