@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { useSearchParams } from "next/navigation";
 
-import { afacad } from "@/utils/fonts";
+import { leagueSpartan } from "@/utils/fonts";
 import Header from "@/components/header";
 import SearchBar from "@/components/SearchBar";
 import LoadingSkeleton from "@/components/ListingsArrayLoadingSkeleton";
@@ -16,12 +16,12 @@ export default function Page() {
     const date = searchParams.get("date");
 
     return (
-        <div className={`min-h-screen bg-white text-black ${afacad.className} text-xl`}>
+        <div className={`min-h-screen bg-white text-black ${leagueSpartan.className} text-xl`}>
             <Header/>
 
             <main className="container mx-auto px-4 py-8 ">
                 <SearchBar/>
-                <hr className="hidden md:flex mb-4"/>
+                {/* <hr className="hidden md:flex mb-4"/> */}
 
                 <div className="font-bold text-2xl mb-4">Results for: {searchQuery}</div>
 

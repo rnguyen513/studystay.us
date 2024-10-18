@@ -32,7 +32,7 @@ export default function AuthPopup({ onClose }: { onClose: () => void }) {
 
   const handleSignUp = () => {
     try {
-      fetch('/api/auth/signup', {
+      fetch('/api/auth2/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -73,7 +73,7 @@ export default function AuthPopup({ onClose }: { onClose: () => void }) {
         setLoading(false);
       }
       onClose()
-      
+
     }
   }
 
