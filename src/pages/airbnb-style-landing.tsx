@@ -1,14 +1,12 @@
-import { useState, useEffect, FormEventHandler } from 'react'
-import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 import { X } from 'lucide-react'
 //import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api'
 
-import { afacad, leagueSpartan } from '@/utils/fonts'
+import { leagueSpartan } from '@/utils/fonts'
 import Header from '@/components/header'
 import SearchBar from '@/components/SearchBar'
 import ListingsArray from '@/components/ListingsArray'
-import { tempListings, categoryIcons } from '@/utils/tempData'
-import AuthPopup from '@/components/AuthPopup'
+import { tempListings } from '@/utils/tempData'
 
 const mapContainerStyle = {
   width: '100%',
