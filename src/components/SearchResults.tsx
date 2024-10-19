@@ -12,9 +12,9 @@ type SearchResultsProps = {
 const SearchResults: React.FC<SearchResultsProps> = ({ searchQuery, date}) => {
     const [listings, setListings] = useState<ListingData[]>([]);
     const [loading, setLoading] = useState(true);
-    var searchParams = useSearchParams();
+    let searchParams = useSearchParams();
 
-    var typeOfProperty = searchParams.get("typeofproperty") ?? "";
+    let typeOfProperty = searchParams.get("typeofproperty") ?? "";
 
     useEffect(() => {
         console.log("type of property sent to server: " + typeOfProperty);
