@@ -1,19 +1,27 @@
 export type ListingData = {
-    id: string,
+    listingId: string,
     location: string,
+    description?: string,
+    title: string,
+    typeOfProperty?: string,
+    bedrooms: number,
+    baths: number,
+    guests?: string,
     views?: string,
     dates: string,
     price: number,
     rating?: number,
     lat?: number,
     lng?: number,
+    address: string,
     extraCosts?: string[],
+    otherRoommates?: string[],
     images: string[]
 }
 
 export const tempListings: ListingData[] = [
     {
-        id: "1",
+        listingId: "1",
         location: 'Penhook, Virginia',
         views: 'Mountain and lake views',
         dates: 'Oct 20 - 25',
@@ -32,7 +40,7 @@ export const tempListings: ListingData[] = [
         ]
     } as ListingData,
     {
-        "id": "2",
+        listingId: "2",
         location: 'Broadway, Virginia', 
         views: 'Mountain and valley views', 
         dates: 'Nov 18 - 23', 
@@ -47,10 +55,15 @@ export const tempListings: ListingData[] = [
         ]
     } as ListingData,
     {
-        "id": "3",
+        listingId: "3",
         location: 'Luray, Virginia', 
         views: 'Mountain and park views', 
-        dates: 'Nov 17 - 22', 
+        dates: 'Nov 17 - 22',
+        address: "123 Fake Street",
+        bedrooms: 2,
+        baths: 1,
+        description: "The Luxury Lake House is located near some of the area's finest restaurants, wineries, breweries, and golf courses. Bring your golf clubs and fishing poles along, as our property features an expansive lake front with excellent catch and release, providing a serene and picturesque setting to appreciate the beauty of the area and an unmatched view of Robert Trent Jones Golf course. The Lake House is a wildlife habitat and it is not uncommon to see wild animals and farm animals on the property.",
+        guests: "3-6",
         price: 256, 
         rating: 18, 
         lat: 38.6651, 
@@ -62,7 +75,7 @@ export const tempListings: ListingData[] = [
         ]
     } as ListingData,
     {
-        "id": "4",
+        listingId: "4",
         location: 'Dunmore, West Virginia', 
         views: 'Mountain and lake views', 
         dates: 'Oct 13 - 18', 
@@ -77,7 +90,7 @@ export const tempListings: ListingData[] = [
         ]
     } as ListingData,
     {
-        "id": "5",
+        listingId: "5",
         location: 'Dunmore, West Virginia', 
         views: 'Mountain and lake views', 
         dates: 'Oct 13 - 18', 
@@ -92,7 +105,7 @@ export const tempListings: ListingData[] = [
         ]
     } as ListingData,
     {
-        "id": "6",
+        listingId: "6",
         location: 'Luray, Virginia', 
         views: 'Mountain and park views', 
         dates: 'Nov 17 - 22', 
@@ -107,7 +120,7 @@ export const tempListings: ListingData[] = [
         ]
     } as ListingData,
     {
-        "id": "7",
+        listingId: "7",
         location: 'Penhook, Virginia', 
         views: 'Mountain and lake views', 
         dates: 'Oct 20 - 25', 
@@ -122,7 +135,22 @@ export const tempListings: ListingData[] = [
         ]
     } as ListingData,
     {
-        "id": "8",
+        listingId: "8",
+        location: 'Broadway, Virginia', 
+        views: 'Mountain and valley views', 
+        dates: 'Nov 18 - 23', 
+        price: 225, 
+        rating: 25, 
+        lat: 38.6126, 
+        lng: -78.7992,
+        images: [
+        'https://a0.muscache.com/im/pictures/miso/Hosting-625495310891506269/original/a701c888-2d26-4bcd-bfd7-7e5ad9a5ad4d.jpeg?im_w=720',
+        'https://a0.muscache.com/im/pictures/miso/Hosting-625495310891506269/original/7fb13042-18f0-4eb5-8361-dd15296d40c1.jpeg?im_w=720',
+        'https://a0.muscache.com/im/pictures/miso/Hosting-625495310891506269/original/63a41d17-b31e-4ff7-afdb-58627cd22267.jpeg?im_w=720',
+        ]
+    } as ListingData,
+    {
+        listingId: "9",
         location: 'Broadway, Virginia', 
         views: 'Mountain and valley views', 
         dates: 'Nov 18 - 23', 

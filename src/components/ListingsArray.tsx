@@ -15,7 +15,7 @@ const Listing = ({ listing }: { listing: ListingData }) => {
     const router = useRouter();
 
     const goToExpandedPage = () => {
-        router.push(`/listing/${listing.id}`);
+        router.push(`/listing/${listing.listingId}`);
     }
 
     return (

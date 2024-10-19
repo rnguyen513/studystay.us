@@ -16,6 +16,7 @@ export default async function handler(
             if (!querySnapshot.docs.map(doc => doc.data().email).includes(req.body.email)) {
                 const newEmailRef = addDoc(collection(db, "emails"), {
                     email: req.body.email,
+                    thumbnail: req.body.picture,
                     timestamp: new Date()
                 })
                 return res.status(200).send({ "documentId": " " + (await newEmailRef).id })

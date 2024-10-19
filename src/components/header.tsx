@@ -32,7 +32,8 @@ const Header = () => {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          email: data?.user?.email
+          email: data?.user?.email,
+          picture: data?.user?.image
         })
       }).then(res => res.json()).then(data => {
         console.log("data returned from /api/firebaselink/confirmuser:", data);
@@ -53,8 +54,8 @@ const Header = () => {
             <a href="#" className="">Leasing</a>
           </div>
           <div className="flex items-center space-x-4">
-            <a href="#" className="hidden md:block text-sm font-semibold hover:bg-gray-100 px-4 py-2 rounded-full transition-colors duration-200">StudyStay your place</a>
-            <button className="p-2 rounded-full hover:bg-gray-100">
+            <a href="#" className="hidden md:block text-sm font-semibold hover:bg-gray-100 px-4 py-2 rounded-full transition-colors duration-200 blur-sm">StudyStay your place</a>
+            <button className="p-2 rounded-full hover:bg-gray-100 blur-sm">
               <House className="w-5 h-5" />
             </button>
             {status == "unauthenticated" || status == "loading" ? (
@@ -73,7 +74,7 @@ const Header = () => {
                   <DropdownMenuContent className="font-semibold w-56 p-2">
                     {/* <DropdownMenuLabel>Menu label</DropdownMenuLabel>
                     <DropdownMenuSeparator></DropdownMenuSeparator> */}
-                    <DropdownMenuItem onClick={() => router.push("/profile")} className="py-2 hover:cursor-pointer">My profile</DropdownMenuItem>
+                    {/* <DropdownMenuItem onClick={() => router.push("/profile")} className="py-2 text-gray-500">My profile</DropdownMenuItem> */}
                     <DropdownMenuItem onClick={() => signOut()} className="py-2 hover:cursor-pointer">Sign out</DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>

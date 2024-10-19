@@ -37,12 +37,12 @@ export default function LandingPage() {
         <ListingsArray listings={tempListings}/>
       </main>
 
-      <button
+      {/* <button
         className="fixed bottom-20 left-1/2 transform -translate-x-1/2 bg-black text-white px-6 py-3 rounded-full font-semibold shadow-lg z-10"
         onClick={() => setShowMap(!showMap)}
       >
         {showMap ? 'Show list' : 'Show map'}
-      </button>
+      </button> */}
 
 
       {/* map */}
