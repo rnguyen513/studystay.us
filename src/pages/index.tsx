@@ -187,7 +187,7 @@ export default function LandingPage() {
               <p className="text-gray-600">{feature.description}</p>
             </motion.div>
           ))} */}
-          <motion.div
+          {/* <motion.div
             className="bg-white p-6 rounded-lg shadow-md border border-gray-200"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -195,7 +195,51 @@ export default function LandingPage() {
           >
             <CircleHelp className="w-12 h-12 mx-auto mb-4 text-blue-800" />
             <h2 className="text-xl font-semibold mb-2 text-blue-800">Why use StudyStay?</h2>
-            <p className="text-gray-600">Subleasing your space/finding a sublease to take over is notoriously difficult in the college space…Facebook chats are rampant with scams…listing information is limited or incomplete…theres no way to accurately filter out needs for housing… StudyStay provides a platform for both the seller and buyer to connect on a student-ID authenticated platform, where you can easily find housing that suits you, and as a seller, find buyers more efficiently by listing your space with our intuitive UI.</p>
+            <p className="text-gray-600">
+              Subleasing your space/finding a sublease to take over is notoriously difficult in the college space
+
+              Facebook chats are rampant with scams…listing information is limited or incomplete…theres no way to 
+              accurately filter out needs for housing… StudyStay provides a platform for both the seller and buyer 
+              to connect on a student-ID authenticated platform, where you can easily find housing that suits you, 
+              and as a seller, find buyers more efficiently by listing your space with our intuitive UI.
+            </p>
+            <ul>
+              <li>Facebook chats are rampant with scams</li>
+              <li>Listed information is limited or incomplete</li>
+              <li>There's no way to filter housing</li>
+            </ul>
+            <p>
+              StudyStay provides a platform for both the seller and buyer 
+              to connect on a student-ID authenticated platform, where you can find housing that suits you.
+              Ass a seller, find buyers more efficiently by listing your space on our platform.
+            </p>
+          </motion.div> */}
+          <motion.div
+            className="bg-background p-6 rounded-lg shadow-md border border-border"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            <div className="flex flex-col items-center justify-center mb-4">
+              <CircleHelp className="mr-2 h-12 w-12 text-blue-800 mb-4"/>
+              <h2 className="text-4xl font-semibold text-blue-800">Why use StudyStay?</h2>
+            </div>
+            <div className="text-xl space-y-4">
+              <p className="">
+                Subleasing your space or finding a sublease to take over is <b>notoriously</b> difficult in the college space.
+                StudyStay addresses these common challenges:
+              </p>
+              <ul className="ml-6 list-disc space-y-2">
+                <li>Facebook chats are rampant with scams</li>
+                <li>Listed information is limited or incomplete</li>
+                <li>There&apos;s no way to accurately filter housing needs</li>
+              </ul>
+              <p className="">
+                StudyStay provides a platform for both sellers and buyers to connect on a student-ID authenticated
+                 platform. <a className="underline">Here, you can easily find housing that suits your needs</a>, and as a seller, you can find buyers more
+                efficiently by listing your space with our intuitive UI.
+              </p>
+            </div>
           </motion.div>
         </section>
 
