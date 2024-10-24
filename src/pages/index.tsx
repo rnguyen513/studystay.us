@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowRight, Globe, Home, Users, Shield, Star, X, CheckCircle, CircleX, Menu, CircleHelp } from 'lucide-react'
 import { leagueSpartan } from '@/utils/fonts'
+import PropertyCarousel from '@/components/PropertyCarousel'
 
 import { useRouter } from 'next/navigation'
 
@@ -96,7 +97,7 @@ export default function LandingPage() {
       </AnimatePresence> */}
 
       <main className="container mx-auto px-4 py-16 md:py-16">
-        <section className="text-center mb-16">
+        <section className="text-center">
           <motion.h1 
             className="text-5xl font-bold mb-6 text-blue-800"
             initial={{ opacity: 0, y: 20 }}
@@ -169,7 +170,9 @@ export default function LandingPage() {
           </div>
         </section>
 
-        <section className="flex flex-col items-center w-1/2 mx-auto mb-16">
+        <PropertyCarousel/>
+
+        <section className="flex flex-col items-center w-1/2 mx-auto mb-16 mt-10">
           {/* {[
             { icon: Globe, title: "Global Network", description: "Access to verified listings from universities worldwide" },
             { icon: Shield, title: "Safety First", description: "All listings and users are thoroughly vetted for your security" },
