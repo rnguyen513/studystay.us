@@ -75,6 +75,7 @@ const Header = () => {
                     {/* <DropdownMenuLabel>Menu label</DropdownMenuLabel>
                     <DropdownMenuSeparator></DropdownMenuSeparator> */}
                     {/* <DropdownMenuItem onClick={() => router.push("/profile")} className="py-2 text-gray-500">My profile</DropdownMenuItem> */}
+                    <DropdownMenuItem className="py-2 hover:cursor-pointer">Saved stays</DropdownMenuItem>
                     <DropdownMenuItem onClick={() => signOut()} className="py-2 hover:cursor-pointer">Sign out</DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>

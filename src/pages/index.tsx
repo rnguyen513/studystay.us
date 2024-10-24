@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ArrowRight, Globe, Home, Users, Shield, Star, X, CheckCircle, CircleX, Menu } from 'lucide-react'
+import { ArrowRight, Globe, Home, Users, Shield, Star, X, CheckCircle, CircleX, Menu, CircleHelp } from 'lucide-react'
 import { leagueSpartan } from '@/utils/fonts'
 
 import { useRouter } from 'next/navigation'
@@ -103,15 +103,23 @@ export default function LandingPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            Safe and Reliable Housing for Students Abroad
+            Subleasing for students made easy
           </motion.h1>
-          <motion.p 
+          {/* <motion.p 
             className="text-xl text-gray-700 mb-8 max-w-2xl mx-auto"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
             StudyStay connects you with verified subleases from fellow students, ensuring a secure and comfortable stay during your study abroad experience. <a href="https://www.instagram.com/studystay.us" target="_blank" className="text-blue-800 underline">Follow us on Instagram!</a>
+          </motion.p> */}
+          <motion.p 
+            className="text-xl text-gray-700 mb-8 max-w-2xl mx-auto"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            StudySpace facilitates the process of sub-leasing on college campuses by connecting authenticated student leasers with fellow students. <a href="https://www.instagram.com/studystay.us" target="_blank" className="text-blue-800 underline">Follow us on Instagram!</a>
           </motion.p>
           <motion.form 
             onSubmit={handleSubmit}
@@ -142,10 +150,10 @@ export default function LandingPage() {
             </button>
           </motion.form>
           <div className="flex flex-col md:flex-row justify-center items-center space-y-2 md:space-y-0 md:space-x-4 text-sm text-gray-600">
-            <div className="flex items-center">
+            {/* <div className="flex items-center">
               <Shield className="w-5 h-5 text-blue-800 mr-1" />
               <span>Verified Listings</span>
-            </div>
+            </div> */}
             {/* <div className="flex items-center">
               <Star className="w-5 h-5 text-blue-800 mr-1" />
               <span>4.8/5 Student Rating</span>
@@ -156,13 +164,13 @@ export default function LandingPage() {
             </div> */}
             <div className="flex items-center">
               <Star className="w-5 h-5 text-blue-800 mr-1"/>
-              <span>Large network of students like you</span>
+              <span>For UVA students, by UVA students</span>
             </div>
           </div>
         </section>
 
-        <section className="grid md:grid-cols-3 gap-8 mb-16">
-          {[
+        <section className="flex flex-col items-center w-1/2 mx-auto mb-16">
+          {/* {[
             { icon: Globe, title: "Global Network", description: "Access to verified listings from universities worldwide" },
             { icon: Shield, title: "Safety First", description: "All listings and users are thoroughly vetted for your security" },
             { icon: Home, title: "Comfortable Stays", description: "Find homes that meet our comfort and quality standards" },
@@ -178,7 +186,17 @@ export default function LandingPage() {
               <h2 className="text-xl font-semibold mb-2 text-blue-800">{feature.title}</h2>
               <p className="text-gray-600">{feature.description}</p>
             </motion.div>
-          ))}
+          ))} */}
+          <motion.div
+            className="bg-white p-6 rounded-lg shadow-md border border-gray-200"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            <CircleHelp className="w-12 h-12 mx-auto mb-4 text-blue-800" />
+            <h2 className="text-xl font-semibold mb-2 text-blue-800">Why use StudyStay?</h2>
+            <p className="text-gray-600">Subleasing your space/finding a sublease to take over is notoriously difficult in the college space…Facebook chats are rampant with scams…listing information is limited or incomplete…theres no way to accurately filter out needs for housing… StudyStay provides a platform for both the seller and buyer to connect on a student-ID authenticated platform, where you can easily find housing that suits you, and as a seller, find buyers more efficiently by listing your space with our intuitive UI.</p>
+          </motion.div>
         </section>
 
         {/* Testimonials */}
@@ -211,8 +229,8 @@ export default function LandingPage() {
           </div>
         </section> */}
 
-        <section className="text-center mb-16">
-          <h2 className="text-3xl font-bold mb-6 text-blue-800">How StudyStay Works</h2>
+        <section className="text-center">
+          <h2 className="text-3xl font-bold mb-10 text-blue-800">How StudyStay Works</h2>
           <div className="grid md:grid-cols-3 gap-8">
             {[
               { step: 1, title: "Create an Account", description: "Sign up and verify your student status" },
@@ -230,8 +248,8 @@ export default function LandingPage() {
           </div>
         </section>
 
-        <section className="text-center bg-orange-100 p-8 rounded-lg">
-          <h2 className="text-3xl font-bold mb-6 text-blue-800">Ready for a Safe and Comfortable Stay?</h2>
+        {/* <section className="text-center bg-orange-100 p-8 rounded-lg">
+          <h2 className="text-3xl font-bold mb-6 text-blue-800">Ready to sublease?</h2>
           <motion.div
             className="inline-flex items-center bg-blue-800 text-white px-8 py-4 rounded-lg hover:bg-blue-900 hover:cursor-pointer transition-colors"
             whileHover={{ scale: 1.05 }}
@@ -239,40 +257,40 @@ export default function LandingPage() {
             // onClick={() => router.push("/airbnb-style-landing")}
             onClick={() => {setPopupMessage("Coming Soon!"); setShowPopup(true);}}
           >
-            <a className="text-xl font-semibold">Find Your Perfect Stay</a>
+            <a className="text-xl font-semibold">Find the Perfect Place</a>
             <ArrowRight className="ml-2 w-6 h-6" />
           </motion.div>
           <p className="mt-4 text-sm text-gray-600">No commitment required. Browse our verified listings today.</p>
-        </section>
+        </section> */}
       </main>
 
       <footer className="bg-blue-800 py-8 mt-16 text-white">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-4 gap-8">
-            <div>
+            {/* <div>
               <h3 className="font-semibold mb-4">About StudyStay</h3>
               <ul className="space-y-2">
                 <li><a href="#" className="hover:text-orange-300">Our Story</a></li>
                 <li><a href="#" className="hover:text-orange-300">How It Works</a></li>
                 <li><a href="#" className="hover:text-orange-300">Safety Measures</a></li>
               </ul>
-            </div>
-            <div>
+            </div> */}
+            {/* <div>
               <h3 className="font-semibold mb-4">For Students</h3>
               <ul className="space-y-2">
-                {/* <li><a href="/airbnb-style-landing" className="hover:text-orange-300">Find a Sublease</a></li> */}
+                <li><a href="/airbnb-style-landing" className="hover:text-orange-300">Find a Sublease</a></li>
                 <li><a href="#" className="hover:text-orange-300">List Your Space</a></li>
                 <li><a href="#" className="hover:text-orange-300">Resources</a></li>
               </ul>
-            </div>
-            <div>
+            </div> */}
+            {/* <div>
               <h3 className="font-semibold mb-4">Support</h3>
               <ul className="space-y-2">
                 <li><a href="#" className="hover:text-orange-300">FAQs</a></li>
                 <li><a href="mailto:amk3ef@virginia.edu" className="hover:text-orange-300">Contact Us</a></li>
                 <li><a href="#" className="hover:text-orange-300">Terms of Service</a></li>
               </ul>
-            </div>
+            </div> */}
             <div>
               <h3 className="font-semibold mb-4">Connect With Us</h3>
               <div className="flex space-x-4">
@@ -285,7 +303,7 @@ export default function LandingPage() {
           <div className="mt-8 text-center text-sm">
             <p>&copy; 2024 StudyStay. All rights reserved.</p>
             {/* <p className="mt-2">Trusted by universities worldwide. Licensed and insured.</p> */}
-            <p className="mt-2">Trusted by universities worldwide.</p>
+            {/* <p className="mt-2">Trusted by UVA students</p> */}
           </div>
         </div>
       </footer>
