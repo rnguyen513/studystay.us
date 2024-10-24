@@ -172,7 +172,7 @@ export default function LandingPage() {
 
         <PropertyCarousel/>
 
-        <section className="flex flex-col items-center w-1/2 mx-auto mb-16 mt-10">
+        <section className="flex flex-col items-center md:w-3/4 w-full mx-auto mb-16 mt-10">
           {/* {[
             { icon: Globe, title: "Global Network", description: "Access to verified listings from universities worldwide" },
             { icon: Shield, title: "Safety First", description: "All listings and users are thoroughly vetted for your security" },
