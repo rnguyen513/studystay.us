@@ -96,7 +96,7 @@ export default function LandingPage() {
         )}
       </AnimatePresence> */}
 
-      <main className="container mx-auto px-4 py-16 md:py-16">
+      <main className="container mx-auto px-4 py-16 md:py-16 max-w-full overflow-x-hidden">
         <section className="text-center">
           <motion.h1 
             className="text-5xl font-bold mb-6 text-blue-800"
@@ -218,7 +218,7 @@ export default function LandingPage() {
             </p>
           </motion.div> */}
           <motion.div
-            className="bg-background p-6 rounded-lg shadow-md border border-border"
+            className="bg-white p-6 rounded-lg shadow-md border border-border"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
