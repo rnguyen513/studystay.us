@@ -7,13 +7,13 @@ import { Bookmark, ThumbsUp } from "lucide-react"
 import { tempListings } from "@/utils/tempData"
 
 export default function Component() {
-  const [offset, setOffset] = useState(0)
+  const [offset, setOffset] = useState(-15)
 
   useEffect(() => {
     const interval = setInterval(() => {
       setOffset((currentOffset) => {
         const newOffset = currentOffset - 0.5
-        return newOffset <= -100 ? 0 : newOffset
+        return newOffset <= -100 ? -15 : newOffset
       })
     }, 150)
 
