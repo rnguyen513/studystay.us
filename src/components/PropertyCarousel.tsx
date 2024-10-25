@@ -21,7 +21,7 @@ export default function Component() {
   }, [])
 
   return (
-    <div className="container px-4 py-8 relative min-h-[400px] overflow-hidden">
+    <div className="container px-4 py-8 relative min-h-[400px]">
       <div className="absolute inset-0 flex items-center justify-center z-50">
         <div className="bg-primary opacity-75 text-primary-foreground px-6 py-3 rounded-full text-2xl font-bold shadow-lg">
           Coming Soon
