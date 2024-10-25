@@ -96,7 +96,7 @@ export default function LandingPage() {
         )}
       </AnimatePresence> */}
 
-      <main className="container mx-auto px-4 py-16 md:py-16 max-w-full overflow-x-hidden">
+      <main className="container mx-auto px-4 py-16 md:py-16 overflow-x-hidden">
         <section className="text-center">
           <motion.h1 
             className="text-5xl font-bold mb-6 text-blue-800"
@@ -120,7 +120,8 @@ export default function LandingPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            StudySpace facilitates the process of sub-leasing on college campuses by connecting authenticated student leasers with fellow students. <a href="https://www.instagram.com/studystay.us" target="_blank" className="text-blue-800 underline">Follow us on Instagram!</a>
+            <a>StudyStay facilitates the process of sub-leasing on college campuses by connecting authenticated student leasers with fellow students.</a><br/>
+            <a href="https://www.instagram.com/studystay.us" target="_blank" className="text-blue-800 underline">Follow us on Instagram!</a>
           </motion.p>
           <motion.form 
             onSubmit={handleSubmit}
@@ -147,7 +148,7 @@ export default function LandingPage() {
                   <div className="w-6 h-6 border-t-2 border-b-2 border-white rounded-full animate-spin"></div>
                 </div>
               )}
-              <span className={firestoreRequestLoading ? "invisible" : ""}>Join the list</span>
+              <span className={firestoreRequestLoading ? "invisible" : ""}>Subscribe for updates &rarr;</span>
             </button>
           </motion.form>
           <div className="flex flex-col md:flex-row justify-center items-center space-y-2 md:space-y-0 md:space-x-4 text-sm text-gray-600">
@@ -234,12 +235,12 @@ export default function LandingPage() {
               </p>
               <ul className="ml-6 list-disc space-y-2">
                 <li>Facebook chats are rampant with scams</li>
-                <li>Listed information is limited or incomplete</li>
-                <li>There&apos;s no way to accurately filter housing needs</li>
+                <li>Information is limited/incomplete on other platforms</li>
+                <li>There&apos;s no way to accurately filter student housing needs</li>
               </ul>
               <p className="">
                 StudyStay provides a platform for both sellers and buyers to connect on a student-ID authenticated
-                 platform. <a className="underline">Here, you can easily find housing that suits your needs</a>, and as a seller, you can find buyers more
+                 platform. <a className="font-bold">As a buyer, you can easily find housing that suits your needs</a>, and as a seller, you can find buyers more
                 efficiently by listing your space with our intuitive UI.
               </p>
             </div>
