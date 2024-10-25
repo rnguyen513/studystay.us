@@ -9,3 +9,11 @@
 // }
 
 // export default SupabaseTest;
+
+export default function SupabaseTest() {
+    return (
+        <div>
+            <h1>Supabase Test</h1>
+        </div>
+    )
+}
