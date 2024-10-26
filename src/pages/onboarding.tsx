@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -45,24 +45,25 @@ const ImagePreview = ({ images }: { images: File[] }) => (
 
 export default function OnboardingForm() {
   const [step, setStep] = useState(0)
-  const [propertyType, setPropertyType] = useState('')
+  const [typeOfProperty, settypeOfProperty] = useState('')
   const [address, setAddress] = useState('')
   const [guests, setGuests] = useState(1)
   const [bedrooms, setBedrooms] = useState(1)
   const [beds, setBeds] = useState(1)
-  const [bathrooms, setBathrooms] = useState(1)
+  const [baths, setbaths] = useState(1)
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const [images, setImages] = useState<File[]>([])
-  const [price, setPrice] = useState('')
-  const [extraCosts, setExtraCosts] = useState('')
-  const [otherRoommates, setOtherRoommates] = useState('')
+  const [price, setPrice] = useState(-1)
+  const [extraCosts, setExtraCosts] = useState<String[]>([])
+  const [otherRoommates, setOtherRoommates] = useState<String[]>([])
   const [dates, setDates] = useState<DateRange | undefined>()
-  const [views, setViews] = useState('')
+  const [views, setViews] = useState(0)
   const [error, setError] = useState<string | null>(null);
 
   const [showAuth, setShowAuth] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [pendingSubmit, setPendingSubmit] = useState(false);
   const [userData, setUserData] = useState<{user: SupabaseUser | null} | null>(null);
   const supabase = createClient();
 
@@ -97,7 +98,7 @@ export default function OnboardingForm() {
     }
   ]
 
-  const propertyTypes = [
+  const typeOfPropertys = [
     { name: "House", icon: Home },
     { name: "Apartment", icon: Building },
     { name: "Townhouse", icon: Townhouse },
@@ -111,14 +112,13 @@ export default function OnboardingForm() {
     setter(prev => Math.max(1, prev - 1))
   }
 
-  const handleFinish = () => {
-    console.log('Listing submitted:', {
-      propertyType,
+  const handleFinish = async () => {
+    console.log('submitting listing:', {
+      typeOfProperty,
       address,
       guests,
       bedrooms,
-      beds,
-      bathrooms,
+      baths,
       title,
       description,
       images,
@@ -128,7 +128,60 @@ export default function OnboardingForm() {
       dates,
       views,
     })
-    alert('Your listing has been submitted successfully!')
+
+    setPendingSubmit(true);
+
+    try {
+      let uploadedImages = [];
+      
+      for (const image of images) {
+        try {
+          const { data, error } = await supabase.storage.from('uploadedimages').upload(image.name, image, {
+            cacheControl: '3600',
+            upsert: true
+          });
+
+          if (error) {
+            console.error('Error uploading image:', error);
+          } else {
+            uploadedImages.push("https://zinuafgdmiwpkvlixboz.supabase.co/storage/v1/object/" + data.fullPath);
+            console.log("https://zinuafgdmiwpkvlixboz.supabase.co/storage/v1/object/" + data.fullPath);
+          }
+        } catch (error) {
+          console.error('Unexpected error uploading image:', error);
+        }
+      }
+
+      console.log('Uploaded images: ' + "{" + uploadedImages.join(",") + "}");
+      console.log("uploaded images stringify: " + JSON.stringify(uploadedImages).replace("[","{").replace("]", "}"));
+
+      const { error } = await supabase.from('listings').insert([{
+        typeOfProperty: typeOfProperty,
+        address: address,
+        guests: guests,
+        bedrooms: bedrooms,
+        baths: baths,
+        title: title,
+        description: description,
+        images: uploadedImages,
+        price: price,
+        extraCosts: extraCosts,
+        otherRoommates: otherRoommates,
+        dates: dates,
+        views: views,
+        postedby: userData?.user?.id
+      }]);
+
+      if (error) {
+        console.error('Error submitting listing:', error);
+      } else {
+        console.log('Listing submitted successfully!');
+      }
+    } catch (error) {
+      console.error('Error submitting listing:', error);
+    }
+
+    setPendingSubmit(false);
   }
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -137,57 +190,33 @@ export default function OnboardingForm() {
     }
   }
 
-  const isStepValid = () => {
-    setError(null);
+  const isStepValid = useCallback(() => {
     switch(step) {
       case 1:
-        if (propertyType === '') {
-          setError("Please select a property type.");
-          return false;
-        }
-        return true;
+        return typeOfProperty !== ''
       case 2:
-        if (address.trim() === '') {
-          setError("Please enter an address.");
-          return false;
-        }
-        return true;
+        return address.trim() !== ''
       case 3:
-        if (guests <= 0 || bedrooms <= 0 || beds <= 0 || bathrooms <= 0) {
-          setError("All fields must be greater than 0.");
-          return false;
-        }
-        return true;
+        return guests > 0 && bedrooms > 0 && beds > 0 && baths > 0
       case 4:
-        if (title.trim() === '') {
-          setError("Please enter a title.");
-          return false;
-        }
-        if (description.trim() === '') {
-          setError("Please enter a description.");
-          return false;
-        }
-        if (images.length === 0) {
-          setError("Please upload at least one image.");
-          return false;
-        }
-        return true;
+        return title.trim() !== '' && description.trim() !== '' && images.length > 0
       case 5:
-        if (price === '') {
-          setError("Please enter a price.");
-          return false;
-        }
-        if (dates === undefined) {
-          setError("Please select available dates.");
-          return false;
-        }
-        return true;
+        return price !== -1 && dates !== undefined
       case 6:
-        return true; // All fields in this step are optional
+        return true // All fields in this step are optional
       default:
-        return true;
+        return true
     }
-  };
+  }, [step, typeOfProperty, address, guests, bedrooms, beds, baths, title, description, images, price, dates])
+
+  const handleNextStep = useCallback(() => {
+    if (isStepValid()) {
+      setStep(prev => prev + 1)
+      setError(null)
+    } else {
+      setError("Please fill in all required fields before proceeding.")
+    }
+  }, [isStepValid])
 
   const renderStep = () => {
     switch(step) {
@@ -226,12 +255,12 @@ export default function OnboardingForm() {
           >
             <h2 className="text-3xl font-semibold text-center">Which of these best describes your place?</h2>
             <div className="grid grid-cols-3 gap-6">
-              {propertyTypes.map((type, index) => (
+              {typeOfPropertys.map((type, index) => (
                 <Button
                   key={index}
-                  variant={propertyType === type.name ? "default" : "outline"}
+                  variant={typeOfProperty === type.name ? "default" : "outline"}
                   className="h-auto py-6 flex flex-col items-center gap-4"
-                  onClick={() => setPropertyType(type.name)}
+                  onClick={() => settypeOfProperty(type.name)}
                 >
                   <type.icon className="w-8 h-8"/>
                   <span className="text-lg">{type.name}</span>
@@ -280,7 +309,7 @@ export default function OnboardingForm() {
               { label: "Guests", value: guests, setter: setGuests },
               { label: "Bedrooms", value: bedrooms, setter: setBedrooms },
               { label: "Beds", value: beds, setter: setBeds },
-              { label: "Bathrooms", value: bathrooms, setter: setBathrooms },
+              { label: "baths", value: baths, setter: setbaths },
             ].map((item, index) => (
               <div key={index} className="flex items-center justify-between">
                 <Label htmlFor={item.label} className="text-lg">{item.label}</Label>
@@ -373,18 +402,18 @@ export default function OnboardingForm() {
                     type="number"
                     placeholder="0"
                     value={price}
-                    onChange={(e) => setPrice(e.target.value)}
+                    onChange={(e) => setPrice(parseInt(e.target.value))}
                     className="pl-10"
                   />
                 </div>
               </div>
               <div>
-                <Label htmlFor="extraCosts" className="text-lg">Extra costs (optional)</Label>
+                <Label htmlFor="extraCosts" className="text-lg">Extra costs  (optional)</Label>
                 <Input
                   id="extraCosts"
                   placeholder="e.g., Cleaning fee, Security deposit"
-                  value={extraCosts}
-                  onChange={(e) => setExtraCosts(e.target.value)}
+                  value={"something"}
+                  onChange={(e) => setExtraCosts([e.target.value])}
                 />
               </div>
               <div className="flex flex-col items-center">
@@ -418,8 +447,8 @@ export default function OnboardingForm() {
                 <Input
                   id="otherRoommates"
                   placeholder="Describe other roommates, if any"
-                  value={otherRoommates}
-                  onChange={(e) => setOtherRoommates(e.target.value)}
+                  value={"something"}
+                  onChange={(e) => setOtherRoommates([e.target.value])}
                 />
               </div>
               <div>
@@ -428,22 +457,9 @@ export default function OnboardingForm() {
                   id="views"
                   placeholder="Describe the views from your place"
                   value={views}
-                  onChange={(e) => setViews(e.target.value)}
+                  onChange={(e) => setViews(parseInt(e.target.value))}
                 />
               </div>
-              {/* <div>
-                <Label htmlFor="rating" className="text-lg">Initial Rating (1-5)</Label>
-                <div className="flex items-center mt-2">
-                  {[1, 2, 3, 4, 5].map((star) => (
-                    <Star
-                      key={star}
-                      className={`w-8 h-8 cursor-pointer ${star <= rating ? 'text-yellow-400 fill-current' : 'text-gray-300'}`}
-                      onClick={() => setRating(star)}
-                    />
-                  ))}
-                </div>
-              </div> */}
-            
             </div>
           </motion.div>
         )
@@ -462,6 +478,10 @@ export default function OnboardingForm() {
       </div>}
       </>
     );
+  }
+
+  if (pendingSubmit) {
+    return <div className="z-50">Submitting your listing, please wait...</div>
   }
 
   return (
@@ -499,9 +519,9 @@ export default function OnboardingForm() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
             <Button variant="ghost" onClick={() => setStep(prev => prev - 1)}>Back</Button>
             {step === totalSteps - 1 ? (
-              <Button onClick={handleFinish} disabled={!isStepValid()}>Finish</Button>
+              <Button onClick={handleFinish}>Finish</Button>
             ) : (
-              <Button onClick={() => setStep(prev => prev + 1)} disabled={!isStepValid()}>Next</Button>
+              <Button onClick={handleNextStep}>Next</Button>
             )}
           </div>
         </footer>

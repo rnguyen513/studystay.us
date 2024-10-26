@@ -53,9 +53,13 @@ const Listing = ({ listing }: { listing: ListingData }) => {
 const ListingsArray: React.FC<ListingsArrayProps> = ({ listings }) => {
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {listings.map((listing, index) => (
-                <Listing listing={listing} key={index}/>
-            ))}
+            {listings.length > 0 ? (
+                listings.map((listing, index) => (
+                    <Listing listing={listing} key={index}/>
+                ))
+            ) : (
+                <div>Nothing found...</div>
+            )}
         </div>
     )
 }

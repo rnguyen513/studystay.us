@@ -1,12 +1,11 @@
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import Head from "next/head";
-import { SessionProvider } from "next-auth/react";
 import { Analytics } from "@vercel/analytics/react";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <SessionProvider session={pageProps.session}>
+    <>
       <Head>
         <title>StudyStay</title>
         <link rel="icon" href="/favicon.ico"/>
@@ -14,6 +13,6 @@ export default function App({ Component, pageProps }: AppProps) {
       </Head>
       <Component {...pageProps}/>
       <Analytics/>
-    </SessionProvider>
+    </>
   )
 }

@@ -2,7 +2,6 @@ import { Menu, User, House } from "lucide-react"
 import Link from "next/link";
 import AuthPopup from "@/components/AuthPopup";
 import { leagueSpartan } from "@/utils/fonts";
-import { useSession, signOut, signIn } from "next-auth/react";
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
@@ -13,9 +12,8 @@ import type { User as SupabaseUser } from "@supabase/supabase-js";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
+  DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
@@ -121,6 +119,8 @@ const Header = () => {
                     {/* <DropdownMenuLabel>Menu label</DropdownMenuLabel>
                     <DropdownMenuSeparator></DropdownMenuSeparator> */}
                     {/* <DropdownMenuItem onClick={() => router.push("/profile")} className="py-2 text-gray-500">My profile</DropdownMenuItem> */}
+                    <DropdownMenuItem onClick={() => router.push("/mylistings")} className="py-2 hover:cursor-pointer">My listings</DropdownMenuItem>
+                    <DropdownMenuSeparator/>
                     <DropdownMenuItem className="py-2 hover:cursor-pointer">Saved stays</DropdownMenuItem>
                     <DropdownMenuItem onClick={handleSignOut} className="py-2 hover:cursor-pointer">Sign out</DropdownMenuItem>
                   </DropdownMenuContent>

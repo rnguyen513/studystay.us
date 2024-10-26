@@ -59,7 +59,6 @@ const SearchResults: React.FC<SearchResultsProps> = ({ searchQuery, date, home})
 
             setListings(data);
             setLoading(false);
-            console.log("LISTINGS: " + listings);
         }
         fetchListings();
     }, [searchQuery, date, searchParams]);
