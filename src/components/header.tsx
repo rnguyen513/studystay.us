@@ -69,9 +69,9 @@ const Header = () => {
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <div className="text-[#004aad] text-2xl font-extrabold"><Link href="/in">studystay</Link></div>
           <div className="hidden md:flex space-x-4 absolute left-1/2 transform -translate-x-1/2 text-[#004aad]">
-            <a href="#" className="font-bold">Looking</a>
+            <a href="#" className="font-bold">Find a sublease</a>
             <a>|</a>
-            <a href="#" className="">Leasing</a>
+            <Link href="/onboarding">List a lease</Link>
           </div>
           <div className="flex items-center space-x-4">
             <a href="#" className="hidden md:block text-sm font-semibold hover:bg-gray-100 px-4 py-2 rounded-full transition-colors duration-200 blur-sm pointer-events-none">StudyStay your place</a>

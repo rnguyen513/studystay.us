@@ -1,6 +1,6 @@
 import ImageCarousel from './ImageCarousel'
 import { Bookmark, ThumbsUp } from 'lucide-react'
-import { ListingData } from '@/utils/tempData'
+import type { ListingData } from '@/utils/tempData'
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -15,7 +15,7 @@ const Listing = ({ listing }: { listing: ListingData }) => {
     const router = useRouter();
 
     const goToExpandedPage = () => {
-        router.push(`/listing/${listing.listingId}`);
+        router.push(`/listing/${listing.id}`);
     }
 
     return (

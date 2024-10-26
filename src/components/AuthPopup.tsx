@@ -59,7 +59,7 @@ export default function AuthPopup({ onClose }: { onClose: () => void }) {
       if (error) {
         console.error(error)
       }
-      router.push('/')
+      router.refresh();
     } catch (error) {
       console.error('Error creating user:', error);
     }

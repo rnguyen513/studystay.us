@@ -50,7 +50,7 @@ export default function LandingPage() {
   }
 
   return (
-    <div className={`min-h-screen bg-gradient-to-b from-blue-50 to-white ${leagueSpartan.className}`}>
+    <div className={`min-h-screen bg-gradient-to-b from-blue-50 to-white ${leagueSpartan.className} overflow-x-hidden`}>
       <header className="container mx-auto px-4 py-6 flex justify-between items-center">
         <div className="flex items-center">
           {/* <Shield className="w-8 h-8 text-blue-800 mr-2" /> */}
@@ -96,7 +96,7 @@ export default function LandingPage() {
         )}
       </AnimatePresence> */}
 
-      <main className="container mx-auto px-4 py-16 md:py-16 overflow-x-hidden">
+      <main className="container mx-auto px-4 py-16 md:py-16">
         <section className="text-center">
           <motion.h1 
             className="text-5xl font-bold mb-6 text-blue-800"
