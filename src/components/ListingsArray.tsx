@@ -1,6 +1,6 @@
 import ImageCarousel from './ImageCarousel'
 import { Bookmark, ThumbsUp } from 'lucide-react'
-import { ListingData } from '@/utils/tempData'
+import type { ListingData } from '@/utils/tempData'
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -15,7 +15,7 @@ const Listing = ({ listing }: { listing: ListingData }) => {
     const router = useRouter();
 
     const goToExpandedPage = () => {
-        router.push(`/listing/${listing.listingId}`);
+        router.push(`/listing/${listing.id}`);
     }
 
     return (
@@ -53,9 +53,13 @@ const Listing = ({ listing }: { listing: ListingData }) => {
 const ListingsArray: React.FC<ListingsArrayProps> = ({ listings }) => {
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {listings.map((listing, index) => (
-                <Listing listing={listing} key={index}/>
-            ))}
+            {listings.length > 0 ? (
+                listings.map((listing, index) => (
+                    <Listing listing={listing} key={index}/>
+                ))
+            ) : (
+                <div>Nothing found...</div>
+            )}
         </div>
     )
 }

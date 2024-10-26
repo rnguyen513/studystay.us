@@ -12,6 +12,8 @@ import DynamicPropertyGallery from "@/components/DynamicPropertyGallery";
 import { useState, useEffect } from "react";
 import { ListingData } from "@/utils/tempData";
 
+import { createClient } from "@/utils/supabase/component";
+
 export default function Page() {
     const router = useRouter();
     const { listingId } = router.query;
@@ -20,25 +22,44 @@ export default function Page() {
     const [loading, setLoading] = useState(true);
     const [listing, setListing] = useState({} as ListingData);
 
+    // useEffect(() => {
+    //     try {
+    //         fetch("/api/misc/getListingById", {
+    //             method: "POST",
+    //             headers: {
+    //                 "Content-Type": "application/json"
+    //             },
+    //             body: JSON.stringify({
+    //                 listingId: listingId
+    //             })
+    //         }).then(res => res.json()).then(data => {
+    //             if (data.listing == null) return;
+    //             console.log(data.listing[0]);
+    //             setListing(data.listing[0] ?? {} as ListingData);
+    //         })
+    //     } catch (error) {
+    //         console.log("something went wrong: " + error);
+    //     }
+    //     setLoading(false);
+    // }, [listingId]);
+
+    const supabase = createClient();
     useEffect(() => {
         try {
-            fetch("/api/misc/getListingById", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    listingId: listingId
-                })
-            }).then(res => res.json()).then(data => {
-                if (data.listing == null) return;
-                console.log(data.listing[0]);
-                setListing(data.listing[0] ?? {} as ListingData);
-            })
+            const fetchListing = async () => {
+                const { data, error } = await supabase.from("listings").select().eq("id", listingId);
+
+                if (error || !data) {
+                    return console.log("Error fetching listings or no listings returned: ", error);
+                }
+
+                setListing(data[0] ?? {} as ListingData);
+                setLoading(false);
+            }
+            fetchListing();
         } catch (error) {
             console.log("something went wrong: " + error);
         }
-        setLoading(false);
     }, [listingId]);
 
     return (

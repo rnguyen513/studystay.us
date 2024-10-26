@@ -34,7 +34,7 @@ export default function Component() {
             style={{ transform: `translateX(${offset}%)` }}
           >
             {[...tempListings, ...tempListings, ...tempListings].map((property, index) => (
-              <div key={`${property.listingId}-${index}`} className="w-full md:w-1/2 lg:w-1/3 flex-shrink-0 px-2">
+              <div key={`${property.id}-${index}`} className="w-full md:w-1/2 lg:w-1/3 flex-shrink-0 px-2">
                 <Card className="overflow-hidden">
                   <div className="relative">
                     <Image

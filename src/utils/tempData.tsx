@@ -1,5 +1,5 @@
 export type ListingData = {
-    listingId: string,
+    id: string,
     location: string,
     description?: string,
     title: string,
@@ -21,7 +21,7 @@ export type ListingData = {
 
 export const tempListings: ListingData[] = [
     {
-        listingId: "1",
+        id: "1",
         location: 'Penhook, Virginia',
         views: 'Mountain and lake views',
         dates: 'Oct 20 - 25',
@@ -40,7 +40,7 @@ export const tempListings: ListingData[] = [
         ]
     } as ListingData,
     {
-        listingId: "2",
+        id: "2",
         location: 'Broadway, Virginia', 
         views: 'Mountain and valley views', 
         dates: 'Nov 18 - 23', 
@@ -55,7 +55,7 @@ export const tempListings: ListingData[] = [
         ]
     } as ListingData,
     {
-        listingId: "3",
+        id: "3",
         location: 'Luray, Virginia', 
         views: 'Mountain and park views', 
         dates: 'Nov 17 - 22',
@@ -75,7 +75,7 @@ export const tempListings: ListingData[] = [
         ]
     } as ListingData,
     {
-        listingId: "4",
+        id: "4",
         location: 'Dunmore, West Virginia', 
         views: 'Mountain and lake views', 
         dates: 'Oct 13 - 18', 
@@ -90,7 +90,7 @@ export const tempListings: ListingData[] = [
         ]
     } as ListingData,
     {
-        listingId: "5",
+        id: "5",
         location: 'Dunmore, West Virginia', 
         views: 'Mountain and lake views', 
         dates: 'Oct 13 - 18', 
@@ -105,7 +105,7 @@ export const tempListings: ListingData[] = [
         ]
     } as ListingData,
     {
-        listingId: "6",
+        id: "6",
         location: 'Luray, Virginia', 
         views: 'Mountain and park views', 
         dates: 'Nov 17 - 22', 
@@ -120,7 +120,7 @@ export const tempListings: ListingData[] = [
         ]
     } as ListingData,
     {
-        listingId: "7",
+        id: "7",
         location: 'Penhook, Virginia', 
         views: 'Mountain and lake views', 
         dates: 'Oct 20 - 25', 
@@ -135,7 +135,7 @@ export const tempListings: ListingData[] = [
         ]
     } as ListingData,
     {
-        listingId: "8",
+        id: "8",
         location: 'Broadway, Virginia', 
         views: 'Mountain and valley views', 
         dates: 'Nov 18 - 23', 
@@ -150,7 +150,7 @@ export const tempListings: ListingData[] = [
         ]
     } as ListingData,
     {
-        listingId: "9",
+        id: "9",
         location: 'Broadway, Virginia', 
         views: 'Mountain and valley views', 
         dates: 'Nov 18 - 23', 

@@ -23,10 +23,8 @@ export default function Page() {
                 <SearchBar/>
                 {/* <hr className="hidden md:flex mb-4"/> */}
 
-                <div className="font-bold text-2xl mb-4">Results for: {searchQuery}</div>
-
                 <Suspense fallback={<LoadingSkeleton/>}>
-                    <SearchResults searchQuery={searchQuery as string} date={date ? date : undefined}/>
+                    <SearchResults searchQuery={searchQuery as string} date={date ? date : undefined} home={false}/>
                 </Suspense>
             </main>
         </div>
