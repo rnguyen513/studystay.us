@@ -25,12 +25,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       type: type as EmailOtpType,
       token_hash,
     })
-    if (error) {
-      console.error(error)
-    } else {
-      // next = stringOrFirstString(queryParams.next) || '/in'
-      next = "/in"
-    }
+
+    // if (error) {
+    //   console.error(error)
+    // } else {
+    //   // next = stringOrFirstString(queryParams.next) || '/in'
+    //   next = "/in"
+    // }
+
+    next = "/in"
   }
 
   res.redirect(next)
