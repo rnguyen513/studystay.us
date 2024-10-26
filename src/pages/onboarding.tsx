@@ -10,6 +10,7 @@ import { useRouter } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { DateRange } from 'react-day-picker'
 import AuthPopup from '@/components/AuthPopup'
+import Link from 'next/link'
 
 import { createClient } from '@/utils/supabase/component'
 import type { User as SupabaseUser } from '@supabase/supabase-js'
@@ -55,8 +56,8 @@ export default function OnboardingForm() {
   const [description, setDescription] = useState('')
   const [images, setImages] = useState<File[]>([])
   const [price, setPrice] = useState(-1)
-  const [extraCosts, setExtraCosts] = useState<String[]>([])
-  const [otherRoommates, setOtherRoommates] = useState<String[]>([])
+  const [extraCosts, setExtraCosts] = useState<string[]>([])
+  const [otherRoommates, setOtherRoommates] = useState<string[]>([])
   const [dates, setDates] = useState<DateRange | undefined>()
   const [views, setViews] = useState(0)
   const [error, setError] = useState<string | null>(null);
@@ -471,7 +472,7 @@ export default function OnboardingForm() {
   if ((!userData?.user || !userData.user.email_confirmed_at) && !loading) {
     return (
       <>
-      <div>You need to be signed in and confirmed to create a listing. Let's get started.</div>
+      <div>You need to be signed in and confirmed to create a listing. Let&apos;s get started.</div>
       <Button onClick={() => setShowAuth(true)}>Sign In</Button>
       {showAuth && <div className="z-50">
         <AuthPopup onClose={() => setShowAuth(false)}/>
@@ -489,7 +490,7 @@ export default function OnboardingForm() {
       <header className="bg-white shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <div className="flex items-center">
-            <a href="/in" className="text-[#004aad] text-2xl font-extrabold pointer-cursor" onClick={() => router.push("/in")}>StudyStay</a>
+            <Link href="/in" className="text-[#004aad] text-2xl font-extrabold pointer-cursor">StudyStay</Link>
           </div>
           <div className="flex items-center space-x-4">
             <Button variant="ghost" size="sm" onClick={() => router.push("/help")}>
