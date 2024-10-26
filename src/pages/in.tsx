@@ -7,6 +7,8 @@ import Header from '@/components/header'
 import SearchBar from '@/components/SearchBar'
 import ListingsArray from '@/components/ListingsArray'
 import { tempListings } from '@/utils/tempData'
+import SearchResults from '@/components/SearchResults'
+import { useRouter } from 'next/navigation'
 
 const mapContainerStyle = {
   width: '100%',
@@ -22,19 +24,22 @@ export default function LandingPage() {
   const [showTotalBeforeTaxes, setShowTotalBeforeTaxes] = useState(false);
   const [showMap, setShowMap] = useState(false);
 
+  const router = useRouter();
+
   // const { isLoaded } = useJsApiLoader({
   //   id: 'google-map-script',
   //   googleMapsApiKey: "YOUR_GOOGLE_MAPS_API_KEY", // Replace with your actual API key
   // })
 
   return (
-    <div className={`min-h-screen bg-white text-black ${leagueSpartan.className} text-xl`}>
+    <div className={`min-h-screen bg-white text-black ${leagueSpartan.className} text-xl overflow-hidden`}>
 
       <Header/>
 
       <main className="container mx-auto px-4 py-8">
         <SearchBar/>
-        <ListingsArray listings={tempListings}/>
+        {/* <ListingsArray listings={tempListings}/> */}
+        <SearchResults searchQuery={""} date={""} home={true}/>
       </main>
 
       {/* <button

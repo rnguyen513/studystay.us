@@ -21,7 +21,12 @@ const SearchBar = () => {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         const searchQuery = encodeURIComponent(destination)
-        router.push(`/s/${searchQuery}?date=${date}`)
+        
+        if (typeOfProperty != "" && typeOfProperty != undefined && typeOfProperty != null) {
+            router.push(`/s/${searchQuery}?date=${date}&typeofproperty=${typeOfProperty}`);
+        } else {
+            router.push(`/s/${searchQuery}?date=${date}`);
+        }
     }
 
     return (

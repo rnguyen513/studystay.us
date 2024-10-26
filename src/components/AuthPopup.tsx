@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useRef, useEffect, FormEvent } from 'react'
+import { useRouter } from 'next/navigation'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -10,103 +11,128 @@ import { leagueSpartan } from '@/utils/fonts'
 
 import { useSession, signIn, signOut } from "next-auth/react";
 
+import { createClient } from '@/utils/supabase/component'
+import type { AuthApiError } from '@supabase/supabase-js'
+
 export default function AuthPopup({ onClose }: { onClose: () => void }) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [agreedToTerms, setAgreedToTerms] = useState(false)
+  const [errorMessage, setErrorMessage] = useState("")
   const [step, setStep] = useState(1)
   const contentRef = useRef<HTMLDivElement>(null)
-  // const [contentHeight, setContentHeight] = useState(0)
+  const [contentHeight, setContentHeight] = useState(0)
   const [loading, setLoading] = useState(false);
 
   const { data, status } = useSession();
 
-  // useEffect(() => {
-  //   const updateHeight = () => {
-  //     if (contentRef.current) {
-  //       setContentHeight(contentRef.current.scrollHeight)
-  //     }
-  //   }
+  const supabase = createClient();
+  const router = useRouter();
 
-  //   updateHeight()
-  //   window.addEventListener('resize', updateHeight)
+  useEffect(() => {
+    const updateHeight = () => {
+      if (contentRef.current) {
+        setContentHeight(contentRef.current.scrollHeight)
+      }
+    }
 
-  //   return () => window.removeEventListener('resize', updateHeight)
-  // }, [step, email, password, confirmPassword, agreedToTerms])
+    updateHeight()
+    window.addEventListener('resize', updateHeight)
 
-  // const handleSignUp = () => {
-  //   try {
-  //     fetch('/api/auth2/signup', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify({ email, password }),
-  //     }).then(res => res.json()).then(data => {
-  //       console.log("data:", data);
-  //     })
-  //   } catch (error) {
-  //     console.error('Error creating user:', error);
-  //   }
-  // }
-  // const handleSignIn = async () => {
+    return () => window.removeEventListener('resize', updateHeight)
+  }, [step, email, password, confirmPassword, agreedToTerms])
 
-  // }
+  const handleSignUp = async () => {
+    try {
+      // fetch('/api/auth2/signup', {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //   },
+      //   body: JSON.stringify({ email, password }),
+      // }).then(res => res.json()).then(data => {
+      //   console.log("data:", data);
+      // })
+      const { error } = await supabase.auth.signUp({ email, password });
+      console.log("Created user with: ", { email, password });
+      if (error) {
+        console.error(error)
+      }
+      router.push('/')
+    } catch (error) {
+      console.error('Error creating user:', error);
+    }
+  }
+  const handleSignIn = async () => {
+    try {
+      const { error } = await supabase.auth.signInWithPassword({
+        email,
+        password
+      })
 
-  // const handleContinue = async () => {
-  //   if (step === 1 && email) {
-  //     setStep(2)
-  //   } else if (step === 2 && password && confirmPassword && password === confirmPassword && agreedToTerms) {
-  //     console.log('Signing up with:', { email, password })
+      if (error) {
+        console.log("error signing in: " + (error as AuthApiError).message);
+      } else {
+        router.refresh();
+      }
+    } catch (error) {
+      console.log("error signing in: " + error);
+    }
+  }
 
-  //     setLoading(true);
-  //     try {
-  //       await handleSignUp();
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //     onClose()
+  const handleContinue = async () => {
+    if (step === 1 && email) {
+      setStep(2)
+    } else if (step === 2 && password && confirmPassword && password === confirmPassword && agreedToTerms) {
+      console.log('Signing up with:', { email, password })
 
-  //   } else if (step === 3 && email && password) {
-  //     console.log('Logging in with:', { email, password })
+      setLoading(true);
+      try {
+        await handleSignUp();
+      } finally {
+        setLoading(false);
+      }
+      onClose()
 
-  //     setLoading(true);
-  //     try {
-  //       await handleSignIn()
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //     onClose()
+    } else if (step === 3 && email && password) {
+      console.log('Logging in with:', { email, password })
 
-  //   }
-  // }
+      setLoading(true);
+      try {
+        await handleSignIn()
+      } finally {
+        setLoading(false);
+      }
+      onClose()
+    }
+  }
 
-  // const handleBack = () => {
-  //   if (step > 1) {
-  //     setStep(1)
-  //   }
-  // }
+  const handleBack = () => {
+    if (step > 1) {
+      setStep(1)
+    }
+  }
 
-  // const handleSubmit = (e: FormEvent) => {
-  //   e.preventDefault()
-  //   handleContinue()
-  // }
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault()
+    handleContinue()
+  }
 
-  // const slideVariants = {
-  //   enter: (direction: number) => ({
-  //     x: direction > 0 ? 300 : -300,
-  //     opacity: 0
-  //   }),
-  //   center: {
-  //     x: 0,
-  //     opacity: 1
-  //   },
-  //   exit: (direction: number) => ({
-  //     x: direction < 0 ? 300 : -300,
-  //     opacity: 0
-  //   })
-  // }
+  const slideVariants = {
+    enter: (direction: number) => ({
+      x: direction > 0 ? 300 : -300,
+      opacity: 0
+    }),
+    center: {
+      x: 0,
+      opacity: 1
+    },
+    exit: (direction: number) => ({
+      x: direction < 0 ? 300 : -300,
+      opacity: 0
+    })
+  }
 
   const renderSocialButtons = () => (
     <>
@@ -142,7 +168,7 @@ export default function AuthPopup({ onClose }: { onClose: () => void }) {
   )
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 text-lg">
+    <div className={`fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 text-lg ${leagueSpartan.className}`}>
       <motion.div 
         className="bg-white rounded-lg w-full max-w-md overflow-hidden flex flex-col"
         initial={{ opacity: 0, scale: 0.9 }}
@@ -156,10 +182,7 @@ export default function AuthPopup({ onClose }: { onClose: () => void }) {
         <div className="flex justify-between items-center mb-6">
           <div className="flex items-center">
             {step > 1 && (
-              // <Button variant="ghost" size="icon" className="mr-2" onClick={handleBack}>
-              //   <ArrowLeft className="h-6 w-6" />
-              // </Button>
-              <Button variant="ghost" size="icon" className="mr-2">
+              <Button variant="ghost" size="icon" className="mr-2" onClick={handleBack}>
                 <ArrowLeft className="h-6 w-6" />
               </Button>
             )}
@@ -176,7 +199,7 @@ export default function AuthPopup({ onClose }: { onClose: () => void }) {
                   <motion.div
                     key={step}
                     custom={step}
-                    // variants={slideVariants}
+                    variants={slideVariants}
                     initial="enter"
                     animate="center"
                     exit="exit"
@@ -186,8 +209,7 @@ export default function AuthPopup({ onClose }: { onClose: () => void }) {
                     }}
                   >
                     <div className="relative">
-                      {/* <form onSubmit={handleSubmit} className="opacity-50 blur-sm pointer-events-none"> */}
-                      <form className="opacity-50 blur-sm pointer-events-none">
+                      <form onSubmit={handleSubmit} className="">
                         {step === 1 ? (
                           <div className="space-y-4">
                             <h1 className="text-2xl font-bold">Welcome</h1>
@@ -302,11 +324,6 @@ export default function AuthPopup({ onClose }: { onClose: () => void }) {
                           {loading ? "loading..." : (step === 1 ? 'Continue' : step === 2 ? 'Sign Up' : 'Log In')}
                         </Button>
                       </form>
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="bg-black bg-opacity-25 text-white font-bold py-2 px-4 rounded-lg">
-                          Coming Soon
-                        </div>
-                      </div>
                     </div>
                   </motion.div>
                 </AnimatePresence>
@@ -315,7 +332,7 @@ export default function AuthPopup({ onClose }: { onClose: () => void }) {
               {step === 1 && (
                 <div className="relative mt-2">
                   <Button
-                    className="w-full opacity-50 blur-sm pointer-events-none"
+                    className="w-full"
                     variant="outline"
                     onClick={() => setStep(3)}
                   >
