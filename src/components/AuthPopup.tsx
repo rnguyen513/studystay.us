@@ -9,7 +9,7 @@ import { X, ArrowLeft } from 'lucide-react'
 import { motion, AnimatePresence } from "framer-motion"
 import { leagueSpartan } from '@/utils/fonts'
 
-import { useSession, signIn, signOut } from "next-auth/react";
+// import { useSession, signIn, signOut } from "next-auth/react";
 
 import { createClient } from '@/utils/supabase/component'
 import type { AuthApiError } from '@supabase/supabase-js'
@@ -25,7 +25,7 @@ export default function AuthPopup({ onClose }: { onClose: () => void }) {
   const [contentHeight, setContentHeight] = useState(0)
   const [loading, setLoading] = useState(false);
 
-  const { data, status } = useSession();
+  // const { data, status } = useSession();
 
   const supabase = createClient();
   const router = useRouter();
@@ -138,7 +138,7 @@ export default function AuthPopup({ onClose }: { onClose: () => void }) {
     <>
       <div className="mt-4 text-center text-sm text-gray-500">or</div>
       <div className="mt-4 space-y-3">
-        <Button onClick={() => signIn("google")} variant="outline" className="w-full justify-start">
+        <Button variant="outline" className="w-full justify-start disabled blur-sm">
           <svg className="mr-2" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M3.064 7.51A9.996 9.996 0 0 1 12 2c2.695 0 4.959.99 6.69 2.605l-2.867 2.868C14.786 6.482 13.468 5.977 12 5.977c-2.605 0-4.81 1.76-5.595 4.123c-.2.6-.314 1.24-.314 1.9s.114 1.3.314 1.9c.786 2.364 2.99 4.123 5.595 4.123c1.345 0 2.49-.355 3.386-.955a4.6 4.6 0 0 0 1.996-3.018H12v-3.868h9.418c.118.654.182 1.336.182 2.045c0 3.046-1.09 5.61-2.982 7.35C16.964 21.105 14.7 22 12 22A9.996 9.996 0 0 1 2 12c0-1.614.386-3.14 1.064-4.49Z"/></svg>
           Continue with Google
         </Button>
@@ -192,7 +192,7 @@ export default function AuthPopup({ onClose }: { onClose: () => void }) {
             <X className="h-6 w-6" />
           </Button>
         </div>
-          {status == "unauthenticated" || status == "loading" ? (
+          {true ? (
             <div>
               <div ref={contentRef}>
                 <AnimatePresence initial={false} custom={step}>
@@ -345,7 +345,7 @@ export default function AuthPopup({ onClose }: { onClose: () => void }) {
             </div>
           ) : (
             <div className="flex flex-col items-center">
-              <p>Hello {data?.user?.name}, how&apos;d you get here?</p>
+              <p>Hello, how&apos;d you get here?</p>
             </div>
           )}
         </div>

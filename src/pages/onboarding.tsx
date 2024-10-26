@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Calendar } from "@/components/ui/calendar"
-import { Home, Building, Home as Townhouse, HelpCircle, Upload, DollarSign, Star, Users } from 'lucide-react'
+import { Home, Building, Home as Townhouse, HelpCircle, Upload, DollarSign, LoaderCircle } from 'lucide-react'
 import { leagueSpartan } from '@/utils/fonts'
 import { useRouter } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -55,6 +55,8 @@ export default function OnboardingForm() {
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const [images, setImages] = useState<File[]>([])
+  const [uploadedImages, setUploadedImages] = useState<string[]>([])
+  const [submitMessage, setSubmitMessage] = useState<{message: string, status: "pending" | "success" | "error"}>({message: "", status: "pending"})
   const [price, setPrice] = useState(-1)
   const [extraCosts, setExtraCosts] = useState<string[]>([])
   const [otherRoommates, setOtherRoommates] = useState<string[]>([])
@@ -136,6 +138,7 @@ export default function OnboardingForm() {
       let uploadedImages = [];
       
       for (const image of images) {
+        setSubmitMessage({message: `Uploading image ${images.indexOf(image) + 1} of ${images.length}...`, status: "pending"});
         try {
           const { data, error } = await supabase.storage.from('uploadedimages').upload(image.name, image, {
             cacheControl: '3600',
@@ -143,15 +146,19 @@ export default function OnboardingForm() {
           });
 
           if (error) {
-            console.error('Error uploading image:', error);
+            setSubmitMessage({message: "Something went wrong with image upload. Please try again later or contact Ryan at amk3ef@virginia.edu. " + error, status: "error"});
+            return console.error('Error uploading image:', error);
           } else {
             uploadedImages.push("https://zinuafgdmiwpkvlixboz.supabase.co/storage/v1/object/" + data.fullPath);
             console.log("https://zinuafgdmiwpkvlixboz.supabase.co/storage/v1/object/" + data.fullPath);
           }
         } catch (error) {
-          console.error('Unexpected error uploading image:', error);
+          setSubmitMessage({message: "Something went wrong with image upload. Please try again later or contact Ryan at amk3ef@virginia.edu. " + error, status: "error"});
+          return console.error('Unexpected error uploading image:', error);
         }
       }
+
+      setSubmitMessage({message:"Uploading your listing...hang tight...", status: "pending"});
 
       console.log('Uploaded images: ' + "{" + uploadedImages.join(",") + "}");
       console.log("uploaded images stringify: " + JSON.stringify(uploadedImages).replace("[","{").replace("]", "}"));
@@ -177,12 +184,14 @@ export default function OnboardingForm() {
         console.error('Error submitting listing:', error);
       } else {
         console.log('Listing submitted successfully!');
+        setSubmitMessage({message: "Done!", status: "success"});
+        setPendingSubmit(false);
+        router.push("/mylistings");
       }
     } catch (error) {
       console.error('Error submitting listing:', error);
+      setSubmitMessage({message: "Something went wrong. Please try again later or contact Ryan at amk3ef@virginia.edu. ERROR_DATABASE_DOWN", status: "error"});
     }
-
-    setPendingSubmit(false);
   }
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -481,9 +490,9 @@ export default function OnboardingForm() {
     );
   }
 
-  if (pendingSubmit) {
-    return <div className="z-50">Submitting your listing, please wait...</div>
-  }
+  // if (pendingSubmit) {
+  //   return <div className="z-50">Submitting your listing, please wait...</div>
+  // }
 
   return (
     <div className={`min-h-screen bg-gray-50 flex flex-col ${leagueSpartan.className}`}>
@@ -527,6 +536,40 @@ export default function OnboardingForm() {
           </div>
         </footer>
       )}
+
+      <AnimatePresence>
+        {pendingSubmit && (
+          <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50"
+        >
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.9, opacity: 0 }}
+            className="bg-white rounded-lg p-8 max-w-md w-full relative"
+          >
+            <div className="text-center">
+              <div className="flex items-center justify-center mb-5">
+                  <div className="rounded-full animate-spin">
+                    <LoaderCircle className="w-16 h-16"/>
+                  </div>
+              </div>
+              {/* <h2 className="text-2xl font-bold text-blue-800 mb-2">{popupMessage[0] == "S" ? "Uh oh..." : "Thank You for Joining!"}</h2> */}
+              <p className="text-gray-600 mb-4">
+                {submitMessage.message}
+              </p>
+              {submitMessage.status == "error" && (
+                <p className="text-red-600 mb-4">
+                  <Button onClick={() => setPendingSubmit(false)}>Please contact Ryan at <a href="mailto:amk3ef@virginia.edu" className="bold">amk3ef@virginia.edu</a></Button>
+                </p>)}
+            </div>
+          </motion.div>
+        </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   )
 }
