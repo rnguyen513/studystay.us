@@ -8,7 +8,10 @@ export type ListingData = {
     baths: number,
     guests?: string,
     views?: string,
-    dates: string,
+    dates: {
+        from: string,
+        to: string
+    },
     price: number,
     rating?: number,
     lat?: number,
@@ -16,7 +19,8 @@ export type ListingData = {
     address: string,
     extraCosts?: string[],
     otherRoommates?: string[],
-    images: string[]
+    images: string[],
+    postedbyemail: string
 }
 
 export const tempListings: ListingData[] = [
@@ -24,7 +28,10 @@ export const tempListings: ListingData[] = [
         id: "1",
         location: 'Penhook, Virginia',
         views: 'Mountain and lake views',
-        dates: 'Oct 20 - 25',
+        dates: {
+            from: "Nov 18",
+            to: "Nov 23"
+        },
         price: 900,
         rating: 13,
         lat: 37.0024,
@@ -43,7 +50,10 @@ export const tempListings: ListingData[] = [
         id: "2",
         location: 'Broadway, Virginia', 
         views: 'Mountain and valley views', 
-        dates: 'Nov 18 - 23', 
+        dates: {
+            from: "Nov 18",
+            to: "Nov 23"
+        },
         price: 225, 
         rating: 2, 
         lat: 38.6126, 
@@ -58,7 +68,10 @@ export const tempListings: ListingData[] = [
         id: "3",
         location: 'Luray, Virginia', 
         views: 'Mountain and park views', 
-        dates: 'Nov 17 - 22',
+        dates: {
+            from: "Nov 18",
+            to: "Nov 23"
+        },
         address: "123 Fake Street",
         bedrooms: 2,
         baths: 1,
@@ -78,7 +91,10 @@ export const tempListings: ListingData[] = [
         id: "4",
         location: 'Dunmore, West Virginia', 
         views: 'Mountain and lake views', 
-        dates: 'Oct 13 - 18', 
+        dates: {
+            from: "Nov 18",
+            to: "Nov 23"
+        },
         price: 121, 
         rating: 23, 
         lat: 38.2762, 
@@ -93,7 +109,10 @@ export const tempListings: ListingData[] = [
         id: "5",
         location: 'Dunmore, West Virginia', 
         views: 'Mountain and lake views', 
-        dates: 'Oct 13 - 18', 
+        dates: {
+            from: "Nov 18",
+            to: "Nov 23"
+        },
         price: 121, 
         rating: 26, 
         lat: 38.2762, 
@@ -108,7 +127,10 @@ export const tempListings: ListingData[] = [
         id: "6",
         location: 'Luray, Virginia', 
         views: 'Mountain and park views', 
-        dates: 'Nov 17 - 22', 
+        dates: {
+            from: "Nov 18",
+            to: "Nov 23"
+        },
         price: 256, 
         rating: 5, 
         lat: 38.6651, 
@@ -123,7 +145,10 @@ export const tempListings: ListingData[] = [
         id: "7",
         location: 'Penhook, Virginia', 
         views: 'Mountain and lake views', 
-        dates: 'Oct 20 - 25', 
+        dates: {
+            from: "Nov 18",
+            to: "Nov 23"
+        },
         price: 900, 
         rating: 11, 
         lat: 37.0024, 
@@ -138,7 +163,10 @@ export const tempListings: ListingData[] = [
         id: "8",
         location: 'Broadway, Virginia', 
         views: 'Mountain and valley views', 
-        dates: 'Nov 18 - 23', 
+        dates: {
+            from: "Nov 18",
+            to: "Nov 23"
+        },
         price: 225, 
         rating: 25, 
         lat: 38.6126, 
@@ -153,7 +181,10 @@ export const tempListings: ListingData[] = [
         id: "9",
         location: 'Broadway, Virginia', 
         views: 'Mountain and valley views', 
-        dates: 'Nov 18 - 23', 
+        dates: {
+            from: "Nov 18",
+            to: "Nov 23"
+        },
         price: 225, 
         rating: 25, 
         lat: 38.6126, 

@@ -60,7 +60,7 @@ export default function Component() {
                       </div>
                     </div>
                     <p className="text-sm text-muted-foreground mb-1">{property.views}</p>
-                    <p className="text-sm text-muted-foreground">{property.dates}</p>
+                    <p className="text-sm text-muted-foreground">{property.dates.to} - {property.dates.from}</p>
                   </CardContent>
                   <CardFooter className="p-4 pt-0 flex justify-between items-end">
                     <div>

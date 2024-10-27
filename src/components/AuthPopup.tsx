@@ -45,23 +45,17 @@ export default function AuthPopup({ onClose }: { onClose: () => void }) {
 
   const handleSignUp = async () => {
     try {
-      // fetch('/api/auth2/signup', {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   },
-      //   body: JSON.stringify({ email, password }),
-      // }).then(res => res.json()).then(data => {
-      //   console.log("data:", data);
-      // })
       const { error } = await supabase.auth.signUp({ email, password });
-      console.log("Created user with: ", { email, password });
+
       if (error) {
-        console.error(error)
+        setErrorMessage(error.message);
+        throw new Error(error.message);
       }
-      router.refresh();
+
+      console.log("Created user with: ", { email, password });
     } catch (error) {
-      console.error('Error creating user:', error);
+      setErrorMessage(`${error}`);
+      throw new Error(`${error}`)
     }
   }
   const handleSignIn = async () => {
@@ -72,12 +66,14 @@ export default function AuthPopup({ onClose }: { onClose: () => void }) {
       })
 
       if (error) {
-        console.log("error signing in: " + (error as AuthApiError).message);
-      } else {
-        router.refresh();
+        setErrorMessage(error.message);
+        throw new Error(error.message)
       }
+
+      router.refresh()
     } catch (error) {
-      console.log("error signing in: " + error);
+      setErrorMessage(`${error}`)
+      throw new Error(`${error}`)
     }
   }
 
@@ -85,11 +81,12 @@ export default function AuthPopup({ onClose }: { onClose: () => void }) {
     if (step === 1 && email) {
       setStep(2)
     } else if (step === 2 && password && confirmPassword && password === confirmPassword && agreedToTerms) {
-      console.log('Signing up with:', { email, password })
 
       setLoading(true);
       try {
-        await handleSignUp();
+        await handleSignUp()
+      } catch (error) {
+        return error
       } finally {
         setLoading(false);
       }
@@ -101,6 +98,8 @@ export default function AuthPopup({ onClose }: { onClose: () => void }) {
       setLoading(true);
       try {
         await handleSignIn()
+      } catch (error) {
+        return error
       } finally {
         setLoading(false);
       }
@@ -136,7 +135,7 @@ export default function AuthPopup({ onClose }: { onClose: () => void }) {
 
   const renderSocialButtons = () => (
     <>
-      <div className="mt-4 text-center text-sm text-gray-500">or</div>
+      <div className="mt-4 text-center text-sm text-gray-500 blur-sm">or</div>
       <div className="mt-4 space-y-3">
         <Button variant="outline" className="w-full justify-start disabled blur-sm">
           <svg className="mr-2" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M3.064 7.51A9.996 9.996 0 0 1 12 2c2.695 0 4.959.99 6.69 2.605l-2.867 2.868C14.786 6.482 13.468 5.977 12 5.977c-2.605 0-4.81 1.76-5.595 4.123c-.2.6-.314 1.24-.314 1.9s.114 1.3.314 1.9c.786 2.364 2.99 4.123 5.595 4.123c1.345 0 2.49-.355 3.386-.955a4.6 4.6 0 0 0 1.996-3.018H12v-3.868h9.418c.118.654.182 1.336.182 2.045c0 3.046-1.09 5.61-2.982 7.35C16.964 21.105 14.7 22 12 22A9.996 9.996 0 0 1 2 12c0-1.614.386-3.14 1.064-4.49Z"/></svg>
@@ -186,7 +185,7 @@ export default function AuthPopup({ onClose }: { onClose: () => void }) {
                 <ArrowLeft className="h-6 w-6" />
               </Button>
             )}
-            <h2 className="text-3xl font-semibold">{status == "authenticated" ? "Sign out" :"Log in or sign up"}</h2>
+            <h2 className="text-3xl font-semibold">Sign up</h2>
           </div>
           <Button variant="ghost" size="icon" className="text-gray-500" onClick={onClose}>
             <X className="h-6 w-6" />
@@ -227,7 +226,7 @@ export default function AuthPopup({ onClose }: { onClose: () => void }) {
                               />
                             </div>
                             <p className="text-xs text-gray-500">
-                              We&apos;ll email you to confirm your address. Your email is used to log in to your account.
+                              Your email must be confirmed before you can log in. Check your email for confirmation.
                             </p>
                           </div>
                         ) : step === 2 ? (
@@ -308,13 +307,19 @@ export default function AuthPopup({ onClose }: { onClose: () => void }) {
                               />
                             </div>
                             <div className="text-sm">
-                              <a href="#" className="text-primary hover:underline">Forgot your password?</a>
+                              <a className="text-primary pointer-events-none blur-sm">Forgot your password?</a>
                             </div>
+                          </div>
+                        )}
+                        <div className="mt-5">
+                        {errorMessage && step != 1 && (
+                          <div className="text-red-600 font-bold">
+                            {errorMessage}
                           </div>
                         )}
                         <Button
                           type="submit"
-                          className="w-full bg-primary text-white mt-6"
+                          className="w-full bg-primary text-white"
                           disabled={
                             (step === 1 && !email) ||
                             (step === 2 && (!password || !confirmPassword || password !== confirmPassword || !agreedToTerms)) ||
@@ -323,6 +328,7 @@ export default function AuthPopup({ onClose }: { onClose: () => void }) {
                         >
                           {loading ? "loading..." : (step === 1 ? 'Continue' : step === 2 ? 'Sign Up' : 'Log In')}
                         </Button>
+                        </div>
                       </form>
                     </div>
                   </motion.div>
@@ -336,7 +342,7 @@ export default function AuthPopup({ onClose }: { onClose: () => void }) {
                     variant="outline"
                     onClick={() => setStep(3)}
                   >
-                    Log In
+                    Or log in
                   </Button>
                 </div>
               )}

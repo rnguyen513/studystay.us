@@ -72,10 +72,10 @@ const Header = () => {
             <Link href="/onboarding">List a lease</Link>
           </div>
           <div className="flex items-center space-x-4">
-            <a href="#" className="hidden md:block text-sm font-semibold hover:bg-gray-100 px-4 py-2 rounded-full transition-colors duration-200 blur-sm pointer-events-none">StudyStay your place</a>
+            {/* <a href="#" className="hidden md:block text-sm font-semibold hover:bg-gray-100 px-4 py-2 rounded-full transition-colors duration-200 blur-sm pointer-events-none">StudyStay your place</a>
             <button className="p-2 rounded-full hover:bg-gray-100 blur-sm pointer-events-none">
               <House className="w-5 h-5" />
-            </button>
+            </button> */}
             {/* {status == "unauthenticated" || status == "loading" ? (
                 <button onClick={() => setShowAuth(true)} className="flex items-center space-x-2 border rounded-full p-2 hover:shadow-md">
                   <Menu className="w-5 h-5" />
@@ -119,10 +119,10 @@ const Header = () => {
                     {/* <DropdownMenuLabel>Menu label</DropdownMenuLabel>
                     <DropdownMenuSeparator></DropdownMenuSeparator> */}
                     {/* <DropdownMenuItem onClick={() => router.push("/profile")} className="py-2 text-gray-500">My profile</DropdownMenuItem> */}
-                    <DropdownMenuItem onClick={() => router.push("/mylistings")} className="py-2 hover:cursor-pointer">My listings</DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => router.push("/mylistings")} className={`${leagueSpartan.className} text-xl py-2 hover:cursor-pointer`}>My listings</DropdownMenuItem>
                     <DropdownMenuSeparator/>
-                    <DropdownMenuItem className="py-2 hover:cursor-pointer">Saved stays</DropdownMenuItem>
-                    <DropdownMenuItem onClick={handleSignOut} className="py-2 hover:cursor-pointer">Sign out</DropdownMenuItem>
+                    <DropdownMenuItem className={`${leagueSpartan.className} text-xl py-2 hover:cursor-pointer text-gray-500 pointer-events-none blur-sm`}>Saved stays</DropdownMenuItem>
+                    <DropdownMenuItem onClick={handleSignOut} className={`${leagueSpartan.className} text-xl py-2 hover:cursor-pointer`}>Sign out</DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
             )}

@@ -38,7 +38,7 @@ const Listing = ({ listing }: { listing: ListingData }) => {
                     </div>
                 </div>
                 <p className="text-gray-500 text-sm">{listing.views}</p>
-                <p className="text-gray-500 text-sm">{listing.dates}</p>
+                <p className="text-gray-500 text-sm">{new Date(listing.dates.from).toDateString().substring(3)} - {new Date(listing.dates.to).toDateString().substring(3)}</p>
                 <div className="flex flex-row space-x-2 items-center">
                     <p className="font-semibold">${listing.price} <span className="font-normal">month</span></p>
                     {listing.extraCosts && listing.extraCosts?.map((cost, index) => (

@@ -11,6 +11,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { DateRange } from 'react-day-picker'
 import AuthPopup from '@/components/AuthPopup'
 import Link from 'next/link'
+import { GoogleMapsEmbed } from '@next/third-parties/google'
 
 import { createClient } from '@/utils/supabase/component'
 import type { User as SupabaseUser } from '@supabase/supabase-js'
@@ -57,11 +58,11 @@ export default function OnboardingForm() {
   const [images, setImages] = useState<File[]>([])
   const [uploadedImages, setUploadedImages] = useState<string[]>([])
   const [submitMessage, setSubmitMessage] = useState<{message: string, status: "pending" | "success" | "error"}>({message: "", status: "pending"})
-  const [price, setPrice] = useState(-1)
+  const [price, setPrice] = useState(0)
   const [extraCosts, setExtraCosts] = useState<string[]>([])
   const [otherRoommates, setOtherRoommates] = useState<string[]>([])
   const [dates, setDates] = useState<DateRange | undefined>()
-  const [views, setViews] = useState(0)
+  const [views, setViews] = useState("")
   const [error, setError] = useState<string | null>(null);
 
   const [showAuth, setShowAuth] = useState(false);
@@ -176,8 +177,9 @@ export default function OnboardingForm() {
         extraCosts: extraCosts,
         otherRoommates: otherRoommates,
         dates: dates,
-        views: views,
-        postedby: userData?.user?.id
+        postedby: userData?.user?.id,
+        postedbyemail: userData?.user?.email,
+        location: "University of Virginia (UVA)"
       }]);
 
       if (error) {
@@ -211,7 +213,7 @@ export default function OnboardingForm() {
       case 4:
         return title.trim() !== '' && description.trim() !== '' && images.length > 0
       case 5:
-        return price !== -1 && dates !== undefined
+        return price !== 0 && dates !== undefined
       case 6:
         return true // All fields in this step are optional
       default:
@@ -290,9 +292,16 @@ export default function OnboardingForm() {
             className="max-w-2xl mx-auto space-y-8"
           >
             <h2 className="text-3xl font-semibold text-center">Where&apos;s your place located?</h2>
-            <p className="text-center text-gray-600">Your address is only shared with guests after they&apos;ve made a reservation.</p>
-            <div className="relative">
-              <img src="/placeholder.svg?height=300&width=600" alt="Map" className="w-full h-64 object-cover rounded-lg" />
+            <p className="text-center text-gray-600">Your address is only shared with guests after they&apos;ve booked.</p>
+            <div className="relative bg-gray-400 rounded-lg">
+              {/* <img src="/placeholder.svg?height=300&width=600" alt="Map" className="w-full h-64 object-cover rounded-lg" /> */}
+              <GoogleMapsEmbed
+                apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ?? ""}
+                height={300}
+                width={600}
+                mode="place"
+                q={address == "" ? "University of Virginia, Charlottesville, VA" : address}
+                />
               <Input
                 type="text"
                 placeholder="Enter your address"
@@ -422,7 +431,7 @@ export default function OnboardingForm() {
                 <Input
                   id="extraCosts"
                   placeholder="e.g., Cleaning fee, Security deposit"
-                  value={"something"}
+                  value={extraCosts[0]}
                   onChange={(e) => setExtraCosts([e.target.value])}
                 />
               </div>
@@ -457,19 +466,19 @@ export default function OnboardingForm() {
                 <Input
                   id="otherRoommates"
                   placeholder="Describe other roommates, if any"
-                  value={"something"}
+                  value={otherRoommates[0]}
                   onChange={(e) => setOtherRoommates([e.target.value])}
                 />
               </div>
-              <div>
+              {/* <div>
                 <Label htmlFor="views" className="text-lg">Views</Label>
                 <Input
                   id="views"
                   placeholder="Describe the views from your place"
                   value={views}
-                  onChange={(e) => setViews(parseInt(e.target.value))}
+                  onChange={(e) => setViews(e.target.value)}
                 />
-              </div>
+              </div> */}
             </div>
           </motion.div>
         )
@@ -563,7 +572,7 @@ export default function OnboardingForm() {
               </p>
               {submitMessage.status == "error" && (
                 <p className="text-red-600 mb-4">
-                  <Button onClick={() => setPendingSubmit(false)}>Please contact Ryan at <a href="mailto:amk3ef@virginia.edu" className="bold">amk3ef@virginia.edu</a></Button>
+                  <Button onClick={() => setPendingSubmit(false)}>Send email<a href="mailto:amk3ef@virginia.edu" className="bold">amk3ef@virginia.edu</a></Button>
                 </p>)}
             </div>
           </motion.div>
