@@ -15,7 +15,7 @@ export default function MyListings({ user, listings} : { user: User, listings: L
   
         <main className="container mx-auto px-4 py-8">
             <div className="font-bold text-3xl mb-8">My listings</div>
-            <ListingsArray listings={listings}/>
+            <ListingsArray listings={listings} user={user}/>
         </main>
         </div>
     )

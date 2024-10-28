@@ -1,6 +1,7 @@
 import Image from "next/image"
-import { useState } from "react"
-import { MapPin, Users, Bed, Bath, Star, Share2, Heart, Mail, Bookmark } from "lucide-react"
+import { useRouter } from "next/navigation"
+import { useState, useEffect } from "react"
+import { MapPin, Users, Bed, Bath, Star, Share2, Heart, Mail, Bookmark, Pen, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -8,10 +9,44 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import DynamicPropertyGallery from "@/components/DynamicPropertyGallery"
 import type { ListingData } from "@/utils/tempData"
 import { GoogleMapsEmbed } from "@next/third-parties/google"
+import { leagueSpartan } from "@/utils/fonts"
+
+import { createClient } from "@/utils/supabase/component"
+import type { User } from "@supabase/supabase-js"
 
 export default function ExpandedListing({ listing }: { listing: ListingData }) {
-  const [isFavorite, setIsFavorite] = useState(false)
-  const [isBookingOpen, setIsBookingOpen] = useState(false)
+  // const [isFavorite, setIsFavorite] = useState(false)
+  const [isBookingOpen, setIsBookingOpen] = useState(false);
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+
+  const supabase = createClient();
+  const [userData, setUserData] = useState<User | null>(null);
+
+  const router = useRouter();
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      await supabase.auth.getUser().then( ({ data, error }) => setUserData(data.user));
+    }
+    fetchUserData();
+  }, [listing])
+
+  const handleDelete = async () => {
+    if (userData == null || listing.postedbyemail != userData.email) return
+
+    await supabase
+      .from('listings')
+      .delete()
+      .eq('id', listing.id)
+      .select()
+      .single()
+      .then(({ data, error }) => {
+        if (error) {
+          console.error(error)
+        }
+      })
+      router.push("/mylistings")
+  }
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -32,16 +67,21 @@ export default function ExpandedListing({ listing }: { listing: ListingData }) {
           <CardHeader>
             <CardTitle className="flex justify-between items-center">
               <span className="text-2xl font-bold">${listing.price} <span className="text-lg font-normal">/ month</span></span>
-              {/* <div className="flex gap-2">
-                <Button variant="outline" size="icon" onClick={() => setIsFavorite(!isFavorite)}>
+              <div className="flex gap-2">
+                {/* <Button variant="outline" size="icon" onClick={() => setIsFavorite(!isFavorite)}>
                   <Bookmark className={`h-4 w-4 ${isFavorite ? 'fill-red-500 text-red-500' : ''}`} />
                   <span className="sr-only">{isFavorite ? 'Remove from favorites' : 'Add to favorites'}</span>
                 </Button>
                 <Button variant="outline" size="icon">
                   <Share2 className="h-4 w-4" />
                   <span className="sr-only">Share listing</span>
-                </Button>
-              </div> */}
+                </Button> */}
+                {userData?.email == listing.postedbyemail && userData != null && (
+                  <Button variant="outline" size="icon" onClick={() => setIsDeleteOpen(true)}>
+                    <X className="h-4 w-4 font-bold text-red-500"/>
+                  </Button>
+                )}
+              </div>
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
@@ -82,6 +122,17 @@ export default function ExpandedListing({ listing }: { listing: ListingData }) {
                   <a href={`mailto:${listing.postedbyemail}`} className="text-lg font-medium hover:underline">
                     {listing.postedbyemail}
                   </a>
+                </div>
+              </DialogContent>
+            </Dialog>
+
+            <Dialog open={isDeleteOpen} onOpenChange={setIsDeleteOpen}>
+              <DialogContent className="bg-white">
+                <DialogHeader>
+                  <DialogTitle className={`font-bold text-red-500 ${leagueSpartan.className}`}>Are you sure you want to delete this listing?</DialogTitle>
+                </DialogHeader>
+                <div className="flex items-center justify-center p-6">
+                  <a onClick={handleDelete} className="text-lg font-bold text-red-500 hover:cursor-pointer hover:bg-red-100 px-4 py-2 rounded-lg">Yes I&apos;m sure</a>
                 </div>
               </DialogContent>
             </Dialog>
