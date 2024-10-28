@@ -103,12 +103,12 @@ export default function ExpandedListing({ listing }: { listing: ListingData }) {
               <span className="font-semibold">Available:</span>
               <span className="ml-2">{new Date(listing.dates.from).toLocaleDateString()} - {new Date(listing.dates.to).toLocaleDateString()}</span>
             </div>
-            {listing.rating && (
+            {/* {listing.rating && (
               <div className="flex items-center">
                 <Star className="w-5 h-5 mr-2 text-yellow-400" />
                 <span>{listing.rating} rating</span>
               </div>
-            )}
+            )} */}
             <Dialog open={isBookingOpen} onOpenChange={setIsBookingOpen}>
               <DialogTrigger asChild>
                 <Button className="w-full">Book Now</Button>
