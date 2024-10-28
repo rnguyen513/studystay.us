@@ -8,6 +8,7 @@ import SearchBar from '@/components/SearchBar'
 import ListingsArray from '@/components/ListingsArray'
 import { tempListings } from '@/utils/tempData'
 import SearchResults from '@/components/SearchResults'
+import StudyStayFooter from '@/components/StudyStayFooter'
 import { useRouter } from 'next/navigation'
 
 const mapContainerStyle = {
@@ -32,6 +33,7 @@ export default function LandingPage() {
   // })
 
   return (
+    <>
     <div className={`min-h-screen bg-white text-black ${leagueSpartan.className} text-xl overflow-hidden`}>
 
       <Header/>
@@ -85,5 +87,7 @@ export default function LandingPage() {
         </div>
       )}
     </div>
+    <StudyStayFooter/>
+    </>
   )
 }
