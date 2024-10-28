@@ -43,8 +43,8 @@ export default function ListingPage() {
   }, [listingId, supabase])
 
   return (
-    <div className={`min-h-screen bg-white text-black ${leagueSpartan.className}`}>
-      <Header />
+    <div className={`min-h-screen bg-white text-black ${leagueSpartan.className} text-xl overflow-hidden`}>
+      <Header/>
       <main className="container mx-auto px-4 py-8">
         {loading ? (
           <p className="text-center text-xl">Loading...</p>

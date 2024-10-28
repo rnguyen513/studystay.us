@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Calendar } from "@/components/ui/calendar"
-import { Home, Building, Home as Townhouse, HelpCircle, Upload, DollarSign, LoaderCircle } from 'lucide-react'
+import { Home, Building, Home as Townhouse, HelpCircle, Upload, DollarSign, LoaderCircle, CalendarDays, Camera, NotebookPen, School } from 'lucide-react'
 import { leagueSpartan } from '@/utils/fonts'
 import { useRouter } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -88,24 +88,24 @@ export default function OnboardingForm() {
     {
       title: "Tell us about your place",
       description: "Share some basic info, like where it is and how many guests can stay.",
-      icon: "/placeholder.svg?height=80&width=80"
+      icon: "NotebookPen"
     },
     {
       title: "Make it stand out",
       description: "Add photos, a title, and a description to showcase your place.",
-      icon: "/placeholder.svg?height=80&width=80"
+      icon: "Camera"
     },
     {
       title: "Finish up and publish",
       description: "Set your availability, price, and publish your listing.",
-      icon: "/placeholder.svg?height=80&width=80"
+      icon: "CalendarDays"
     }
   ]
 
   const typeOfPropertys = [
     { name: "House", icon: Home },
     { name: "Apartment", icon: Building },
-    { name: "Townhouse", icon: Townhouse },
+    { name: "Townhouse", icon: School },
   ]
 
   const handleIncrement = (setter: React.Dispatch<React.SetStateAction<number>>) => {
@@ -244,13 +244,21 @@ export default function OnboardingForm() {
           >
             <h1 className="text-4xl font-bold text-center">It&apos;s easy to get started on <a className="text-[#004aad] font-extrabold">StudyStay</a></h1>
             <div className="grid gap-8 md:grid-cols-3 w-full">
-              {introSteps.map((step, index) => (
-                <div key={index} className="flex flex-col items-center text-center gap-4">
-                  <img src={step.icon} alt="" className="w-24 h-24 object-contain" />
-                  <h2 className="text-xl font-semibold">{index + 1}. {step.title}</h2>
-                  <p className="text-gray-600">{step.description}</p>
-                </div>
-              ))}
+              <div className="flex flex-col items-center text-center gap-4">
+                <NotebookPen className="w-24 h-24"/>
+                <h2 className="text-xl font-semibold">1. {introSteps[0].title}</h2>
+                <p className="text-gray-600">{introSteps[0].description}</p>
+              </div>
+              <div className="flex flex-col items-center text-center gap-4">
+                <Camera className="w-24 h-24"/>
+                <h2 className="text-xl font-semibold">2. {introSteps[1].title}</h2>
+                <p className="text-gray-600">{introSteps[1].description}</p>
+              </div>
+              <div className="flex flex-col items-center text-center gap-4">
+                <CalendarDays className="w-24 h-24"/>
+                <h2 className="text-xl font-semibold">3. {introSteps[2].title}</h2>
+                <p className="text-gray-600">{introSteps[2].description}</p>
+              </div>
             </div>
             <Button className="w-full max-w-md" size="lg" onClick={() => setStep(prev => prev + 1)}>Get started</Button>
           </motion.div>
@@ -385,7 +393,10 @@ export default function OnboardingForm() {
                 />
               </div>
               <div>
-                <Label htmlFor="images" className="text-lg">Upload Images</Label>
+                <div className="flex flex-row items-center space-x-2">
+                  <Upload className="w-6 h-6"/>
+                  <Label htmlFor="images" className="text-lg">Upload Images</Label>
+                </div>
                 <div className="mt-2">
                   <Input
                     id="images"
@@ -394,6 +405,7 @@ export default function OnboardingForm() {
                     multiple
                     onChange={handleImageUpload}
                   />
+                  
                 </div>
                 {images.length > 0 && <ImagePreview images={images} />}
               </div>
@@ -513,7 +525,7 @@ export default function OnboardingForm() {
           <div className="flex items-center space-x-4">
             <Button variant="ghost" size="sm" onClick={() => router.push("/help")}>
               <HelpCircle className="h-5 w-5 mr-2" />
-              <a className="pt-1">Questions?</a>
+              <a href="mailto:amk3ef@virginia.edu" className="pt-1">Questions?</a>
             </Button>
           </div>
         </div>

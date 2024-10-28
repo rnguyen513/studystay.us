@@ -51,26 +51,29 @@ const SavedListings = () => {
                 setListingIds(userDataResponse?.savedlistings || []);
 
                 // Fetch details for each listing sequentially
-                const listingDataArray = await Promise.all(
-                    userDataResponse?.savedlistings.map(async (id: string) => {
-                        const { data: listingData, error: listingError } = await supabase
-                            .from("listings")
-                            .select("*")
-                            .eq("id", id)
-                            .single();
+                if (userDataResponse?.savedlistings) {
+                    const listingDataArray = await Promise.all(
+                        userDataResponse?.savedlistings.map(async (id: string) => {
+                            const { data: listingData, error: listingError } = await supabase
+                                .from("listings")
+                                .select("*")
+                                .eq("id", id)
+                                .single();
+    
+                            if (listingError) {
+                                console.error(`Error fetching listing with id ${id}:`, listingError);
+                                return null;
+                            }
+                            return listingData;
+                        }) || []
+                    );
 
-                        if (listingError) {
-                            console.error(`Error fetching listing with id ${id}:`, listingError);
-                            return null;
-                        }
-                        return listingData;
-                    }) || []
-                );
-
-                // Filter out any null values in case of errors
-                setListings(listingDataArray.filter((listing) => listing !== null) as ListingData[]);
+                    // Filter out any null values in case of errors
+                    setListings(listingDataArray.filter((listing) => listing !== null) as ListingData[]);
+                }
             } catch (error) {
                 console.error("Unexpected error:", error);
+                router.push("/in");
             } finally {
                 setLoading(false);
             }

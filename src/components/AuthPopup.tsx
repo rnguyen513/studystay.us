@@ -9,8 +9,6 @@ import { X, ArrowLeft } from 'lucide-react'
 import { motion, AnimatePresence } from "framer-motion"
 import { leagueSpartan } from '@/utils/fonts'
 
-// import { useSession, signIn, signOut } from "next-auth/react";
-
 import { createClient } from '@/utils/supabase/component'
 import type { AuthApiError } from '@supabase/supabase-js'
 
@@ -23,12 +21,11 @@ export default function AuthPopup({ onClose }: { onClose: () => void }) {
   const [step, setStep] = useState(1)
   const contentRef = useRef<HTMLDivElement>(null)
   const [contentHeight, setContentHeight] = useState(0)
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false)
+  //const [showConfirmation, setShowConfirmation] = useState(false) //Removed
 
-  // const { data, status } = useSession();
-
-  const supabase = createClient();
-  const router = useRouter();
+  const supabase = createClient()
+  const router = useRouter()
 
   useEffect(() => {
     const updateHeight = () => {
@@ -45,19 +42,20 @@ export default function AuthPopup({ onClose }: { onClose: () => void }) {
 
   const handleSignUp = async () => {
     try {
-      const { error } = await supabase.auth.signUp({ email, password });
+      const { error } = await supabase.auth.signUp({ email, password })
 
       if (error) {
-        setErrorMessage(error.message);
-        throw new Error(error.message);
+        setErrorMessage(error.message)
+        throw new Error(error.message)
       }
 
-      console.log("Created user with: ", { email, password });
+      router.push(`/checkemail?email=${encodeURIComponent(email)}`)
     } catch (error) {
-      setErrorMessage(`${error}`);
+      setErrorMessage(`${error}`)
       throw new Error(`${error}`)
     }
   }
+
   const handleSignIn = async () => {
     try {
       const { error } = await supabase.auth.signInWithPassword({
@@ -66,11 +64,12 @@ export default function AuthPopup({ onClose }: { onClose: () => void }) {
       })
 
       if (error) {
-        setErrorMessage(error.message);
+        setErrorMessage(error.message)
         throw new Error(error.message)
       }
 
       router.refresh()
+      onClose()
     } catch (error) {
       setErrorMessage(`${error}`)
       throw new Error(`${error}`)
@@ -81,29 +80,23 @@ export default function AuthPopup({ onClose }: { onClose: () => void }) {
     if (step === 1 && email) {
       setStep(2)
     } else if (step === 2 && password && confirmPassword && password === confirmPassword && agreedToTerms) {
-
-      setLoading(true);
+      setLoading(true)
       try {
         await handleSignUp()
       } catch (error) {
         return error
       } finally {
-        setLoading(false);
+        setLoading(false)
       }
-      onClose()
-
     } else if (step === 3 && email && password) {
-      console.log('Logging in with:', { email, password })
-
-      setLoading(true);
+      setLoading(true)
       try {
         await handleSignIn()
       } catch (error) {
         return error
       } finally {
-        setLoading(false);
+        setLoading(false)
       }
-      onClose()
     }
   }
 
@@ -117,6 +110,16 @@ export default function AuthPopup({ onClose }: { onClose: () => void }) {
     e.preventDefault()
     handleContinue()
   }
+
+  const handleResendEmail = async () => {
+    // Implement resend email logic here
+    console.log("Resending email to:", email)
+  }
+
+  //const handleBackToLogin = () => { //Removed
+  //  setShowConfirmation(false)
+  //  setStep(3)
+  //} //Removed
 
   const slideVariants = {
     enter: (direction: number) => ({
@@ -156,15 +159,25 @@ export default function AuthPopup({ onClose }: { onClose: () => void }) {
               Continue with phone number
             </Button>
           </div>
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="bg-black bg-opacity-25 text-white font-bold py-2 px-4 rounded-lg">
-                  Coming Soon
-                </div>
-              </div>
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="bg-black bg-opacity-25 text-white font-bold py-2 px-4 rounded-lg">
+              Coming Soon
+            </div>
+          </div>
         </div>
       </div>
     </>
   )
+
+  //if (showConfirmation) { //Removed
+  //  return (
+  //    <EmailConfirmationPage
+  //      email={email}
+  //      onResendEmail={handleResendEmail}
+  //      onBackToLogin={handleBackToLogin}
+  //    />
+  //  )
+  //} //Removed
 
   return (
     <div className={`fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 text-lg ${leagueSpartan.className}`}>
@@ -178,141 +191,139 @@ export default function AuthPopup({ onClose }: { onClose: () => void }) {
         }}
       >
         <div className="p-6 flex-grow overflow-y-auto">
-        <div className="flex justify-between items-center mb-6">
-          <div className="flex items-center">
-            {step > 1 && (
-              <Button variant="ghost" size="icon" className="mr-2" onClick={handleBack}>
-                <ArrowLeft className="h-6 w-6" />
-              </Button>
-            )}
-            <h2 className="text-3xl font-semibold">Sign up</h2>
+          <div className="flex justify-between items-center mb-6">
+            <div className="flex items-center">
+              {step > 1 && (
+                <Button variant="ghost" size="icon" className="mr-2" onClick={handleBack}>
+                  <ArrowLeft className="h-6 w-6" />
+                </Button>
+              )}
+              <h2 className="text-3xl font-semibold">Sign up</h2>
+            </div>
+            <Button variant="ghost" size="icon" className="text-gray-500" onClick={onClose}>
+              <X className="h-6 w-6" />
+            </Button>
           </div>
-          <Button variant="ghost" size="icon" className="text-gray-500" onClick={onClose}>
-            <X className="h-6 w-6" />
-          </Button>
-        </div>
-          {true ? (
-            <div>
-              <div ref={contentRef}>
-                <AnimatePresence initial={false} custom={step}>
-                  <motion.div
-                    key={step}
-                    custom={step}
-                    variants={slideVariants}
-                    initial="enter"
-                    animate="center"
-                    exit="exit"
-                    transition={{
-                      x: { type: "spring", stiffness: 300, damping: 30 },
-                      opacity: { duration: 0.2 }
-                    }}
-                  >
-                    <div className="relative">
-                      <form onSubmit={handleSubmit} className="">
-                        {step === 1 ? (
-                          <div className="space-y-4">
-                            <h1 className="text-2xl font-bold">Welcome</h1>
-                            <div>
-                              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                                Email
-                              </label>
-                              <Input
-                                id="email"
-                                type="email"
-                                placeholder="you@example.com"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                required
-                              />
-                            </div>
-                            <p className="text-xs text-gray-500">
-                              Your email must be confirmed before you can log in. Check your email for confirmation.
-                            </p>
+          <div>
+            <div ref={contentRef}>
+              <AnimatePresence initial={false} custom={step}>
+                <motion.div
+                  key={step}
+                  custom={step}
+                  variants={slideVariants}
+                  initial="enter"
+                  animate="center"
+                  exit="exit"
+                  transition={{
+                    x: { type: "spring", stiffness: 300, damping: 30 },
+                    opacity: { duration: 0.2 }
+                  }}
+                >
+                  <div className="relative">
+                    <form onSubmit={handleSubmit} className="">
+                      {step === 1 ? (
+                        <div  className="space-y-4">
+                          <h1 className="text-2xl font-bold">Welcome</h1>
+                          <div>
+                            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                              Email
+                            </label>
+                            <Input
+                              id="email"
+                              type="email"
+                              placeholder="you@example.com"
+                              value={email}
+                              onChange={(e) => setEmail(e.target.value)}
+                              required
+                            />
                           </div>
-                        ) : step === 2 ? (
-                          <div className="space-y-4">
-                            <h1 className="text-2xl font-bold">Create your account</h1>
-                            <div>
-                              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
-                                Password
-                              </label>
-                              <Input
-                                id="password"
-                                type="password"
-                                placeholder="Enter your password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                required
-                              />
-                            </div>
-                            <div>
-                              <label htmlFor="confirm-password" className="block text-sm font-medium text-gray-700 mb-1">
-                                Confirm Password
-                              </label>
-                              <Input
-                                id="confirm-password"
-                                type="password"
-                                placeholder="Confirm your password"
-                                value={confirmPassword}
-                                onChange={(e) => setConfirmPassword(e.target.value)}
-                                required
-                              />
-                            </div>
-                            {password && confirmPassword && password !== confirmPassword && (
-                              <p className="text-sm text-red-500">Passwords do not match</p>
-                            )}
-                            <div className="flex items-center space-x-2">
-                              <Checkbox
-                                id="terms"
-                                checked={agreedToTerms}
-                                onCheckedChange={(checked) => setAgreedToTerms(checked as boolean)}
-                                required
-                              />
-                              <label
-                                htmlFor="terms"
-                                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                              >
-                                I agree to the <a href="https://www.google.com" className="underline">terms</a> and <a href="https://www.google.com" className="underline">conditions</a>
-                              </label>
-                            </div>
+                          <p className="text-xs text-gray-500">
+                            Your email must be confirmed before you can log in. Check your email for confirmation.
+                          </p>
+                        </div>
+                      ) : step === 2 ? (
+                        <div className="space-y-4">
+                          <h1 className="text-2xl font-bold">Create your account</h1>
+                          <div>
+                            <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
+                              Password
+                            </label>
+                            <Input
+                              id="password"
+                              type="password"
+                              placeholder="Enter your password"
+                              value={password}
+                              onChange={(e) => setPassword(e.target.value)}
+                              required
+                            />
                           </div>
-                        ) : (
-                          <div className="space-y-4">
-                            <h1 className="text-2xl font-bold">Log in to your account</h1>
-                            <div>
-                              <label htmlFor="login-email" className="block text-sm font-medium text-gray-700 mb-1">
-                                Email
-                              </label>
-                              <Input
-                                id="login-email"
-                                type="email"
-                                placeholder="you@example.com"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                required
-                              />
-                            </div>
-                            <div>
-                              <label htmlFor="login-password" className="block text-sm font-medium text-gray-700 mb-1">
-                                Password
-                              </label>
-                              <Input
-
-                                id="login-password"
-                                type="password"
-                                placeholder="Enter your password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                required
-                              />
-                            </div>
-                            <div className="text-sm">
-                              <a className="text-primary pointer-events-none blur-sm">Forgot your password?</a>
-                            </div>
+                          <div>
+                            <label htmlFor="confirm-password" className="block text-sm font-medium text-gray-700 mb-1">
+                              Confirm Password
+                            </label>
+                            <Input
+                              id="confirm-password"
+                              type="password"
+                              placeholder="Confirm your password"
+                              value={confirmPassword}
+                              onChange={(e) => setConfirmPassword(e.target.value)}
+                              required
+                            />
                           </div>
-                        )}
-                        <div className="mt-5">
-                        {errorMessage && step != 1 && (
+                          {password && confirmPassword && password !== confirmPassword && (
+                            <p className="text-sm text-red-500">Passwords do not match</p>
+                          )}
+                          <div className="flex items-center space-x-2">
+                            <Checkbox
+                              id="terms"
+                              checked={agreedToTerms}
+                              onCheckedChange={(checked) => setAgreedToTerms(checked as boolean)}
+                              required
+                            />
+                            <label
+                              htmlFor="terms"
+                              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                            >
+                              I agree to the <a href="https://www.google.com" className="underline">terms</a> and <a href="https://www.google.com" className="underline">conditions</a>
+                            </label>
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="space-y-4">
+                          <h1 className="text-2xl font-bold">Log in to your account</h1>
+                          <div>
+                            <label htmlFor="login-email" className="block text-sm font-medium text-gray-700 mb-1">
+                              Email
+                            </label>
+                            <Input
+                              id="login-email"
+                              type="email"
+                              placeholder="you@example.com"
+                              value={email}
+                              onChange={(e) => setEmail(e.target.value)}
+                              required
+                            />
+                          </div>
+                          <div>
+                            <label htmlFor="login-password" className="block text-sm font-medium text-gray-700 mb-1">
+                              Password
+                            </label>
+                            <Input
+                              id="login-password"
+                              type="password"
+                              placeholder="Enter your password"
+                              value={password}
+                              onChange={(e) => setPassword(e.target.value)}
+                              required
+                            />
+                          </div>
+                          <div className="text-sm">
+                            <a className="text-primary pointer-events-none blur-sm">Forgot your password?</a>
+                          </div>
+                        </div>
+                      )}
+                      <div className="mt-5">
+                        {errorMessage && step !== 1 && (
                           <div className="text-red-600 font-bold">
                             {errorMessage}
                           </div>
@@ -328,32 +339,27 @@ export default function AuthPopup({ onClose }: { onClose: () => void }) {
                         >
                           {loading ? "loading..." : (step === 1 ? 'Continue' : step === 2 ? 'Sign Up' : 'Log In')}
                         </Button>
-                        </div>
-                      </form>
-                    </div>
-                  </motion.div>
-                </AnimatePresence>
+                      </div>
+                    </form>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+            </div>
+
+            {step === 1 && (
+              <div className="relative mt-2">
+                <Button
+                  className="w-full"
+                  variant="outline"
+                  onClick={() => setStep(3)}
+                >
+                  Or log in
+                </Button>
               </div>
+            )}
 
-              {step === 1 && (
-                <div className="relative mt-2">
-                  <Button
-                    className="w-full"
-                    variant="outline"
-                    onClick={() => setStep(3)}
-                  >
-                    Or log in
-                  </Button>
-                </div>
-              )}
-
-              {(step === 1 || step === 3) && renderSocialButtons()}
-            </div>
-          ) : (
-            <div className="flex flex-col items-center">
-              <p>Hello, how&apos;d you get here?</p>
-            </div>
-          )}
+            {(step === 1 || step === 3) && renderSocialButtons()}
+          </div>
         </div>
       </motion.div>
     </div>

@@ -5,6 +5,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/utils/supabase/component';
 import type { User } from '@supabase/supabase-js';
+import AuthPopup from '@/components/AuthPopup';
 
 type ListingsArrayProps = {
     listings: ListingData[],
@@ -59,6 +60,7 @@ const Listing = ({ listing, bookmarks, toggleBookmark }: { listing: ListingData,
 };
 
 const ListingsArray: React.FC<ListingsArrayProps> = ({ listings, user }) => {
+    const [showAuthPopup, setShowAuthPopup] = useState(false);
     const [bookmarkedListings, setBookmarkedListings] = useState<string[]>([]);
     const supabase = createClient();
 
@@ -86,6 +88,11 @@ const ListingsArray: React.FC<ListingsArrayProps> = ({ listings, user }) => {
     // Update bookmark in both state and database
     const toggleBookmark = useCallback(
         async (listingId: string) => {
+            if (!user) {
+                setShowAuthPopup(true);
+                return;
+            }
+
             const updatedBookmarks = bookmarkedListings.includes(listingId)
                 ? bookmarkedListings.filter(id => id !== listingId)
                 : [...bookmarkedListings, listingId];
@@ -121,6 +128,7 @@ const ListingsArray: React.FC<ListingsArrayProps> = ({ listings, user }) => {
             ) : (
                 <div>Nothing found...</div>
             )}
+            {showAuthPopup && <AuthPopup onClose={() => setShowAuthPopup(false)}/>}
         </div>
     );
 };
