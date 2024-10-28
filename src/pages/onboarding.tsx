@@ -303,6 +303,7 @@ export default function OnboardingForm() {
             <p className="text-center text-gray-600">Your address is only shared with guests after they&apos;ve booked.</p>
             <div className="relative bg-gray-400 rounded-lg">
               {/* <img src="/placeholder.svg?height=300&width=600" alt="Map" className="w-full h-64 object-cover rounded-lg" /> */}
+              <div className="hidden md:block">
               <GoogleMapsEmbed
                 apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ?? ""}
                 height={300}
@@ -310,6 +311,16 @@ export default function OnboardingForm() {
                 mode="place"
                 q={address == "" ? "University of Virginia, Charlottesville, VA" : address}
                 />
+              </div>
+              <div className="block md:hidden">
+              <GoogleMapsEmbed
+                apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ?? ""}
+                height={200}
+                width={400}
+                mode="place"
+                q={address == "" ? "University of Virginia, Charlottesville, VA" : address}
+                />
+              </div>
               <Input
                 type="text"
                 placeholder="Enter your address"

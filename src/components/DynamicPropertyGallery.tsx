@@ -57,11 +57,11 @@ export default function DynamicPropertyGallery({ images = [] }: GalleryProps) {
           animation: spin 1s linear infinite;
         }
       `}</style>
-      <div className="grid grid-cols-4 gap-2 h-[400px]">
-        {images.slice(0, 5).map((src, index) => (
+      <div className="grid grid-cols-1 sm:grid-cols-4 gap-2 h-[400px]">
+        {images.slice(0, 1).map((src, index) => (
           <div 
-            key={src} 
-            className={`relative rounded-lg overflow-hidden ${index === 0 ? 'col-span-2 row-span-2' : ''}`}
+            key={src}
+            className="relative rounded-lg overflow-hidden sm:col-span-2 sm:row-span-2"
           >
             {!loadedImages.has(src) && (
               <div className="absolute inset-0 flex items-center justify-center bg-gray-200">
@@ -78,9 +78,29 @@ export default function DynamicPropertyGallery({ images = [] }: GalleryProps) {
             />
           </div>
         ))}
+        {images.slice(1, 5).map((src, index) => (
+          <div 
+            key={src}
+            className="relative rounded-lg overflow-hidden hidden sm:block"
+          >
+            {!loadedImages.has(src) && (
+              <div className="absolute inset-0 flex items-center justify-center bg-gray-200">
+                <div className="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-12 w-12"></div>
+              </div>
+            )}
+            <Image
+              src={src}
+              alt={`Property image ${index + 2}`}
+              layout="fill"
+              objectFit="cover"
+              onLoad={() => handleImageLoad(src)}
+              className={loadedImages.has(src) ? 'opacity-100' : 'opacity-0'}
+            />
+          </div>
+        ))}
       </div>
 
-      {images.length > 5 && (
+      {images.length > 1 && (
         <button
           onClick={() => setShowAllImages(true)}
           className="absolute bottom-4 left-4 bg-white bg-opacity-90 text-gray-800 px-4 py-2 rounded-full shadow-lg hover:bg-opacity-100 transition-all duration-300 ease-in-out text-sm font-semibold tracking-wide"
@@ -107,7 +127,7 @@ export default function DynamicPropertyGallery({ images = [] }: GalleryProps) {
               {images.map((src, index) => (
                 <div
                   key={src}
-                  className="relative aspect-square rounded-lg overflow-hidden cursor-pointer transition-transform duration-300 hover:scale-105"
+                  className="relative aspect-square rounded-lg overflow-hidden cursor-pointer transition-all duration-300 hover:scale-105 group"
                   onClick={() => setSelectedImageIndex(index)}
                 >
                   {!loadedImages.has(src) && (
@@ -121,7 +141,7 @@ export default function DynamicPropertyGallery({ images = [] }: GalleryProps) {
                     layout="fill"
                     objectFit="cover"
                     onLoad={() => handleImageLoad(src)}
-                    className={loadedImages.has(src) ? 'opacity-100' : 'opacity-0'}
+                    className={`rounded-lg transition-all duration-300 group-hover:scale-110 ${loadedImages.has(src) ? 'opacity-100' : 'opacity-0'}`}
                   />
                 </div>
               ))}

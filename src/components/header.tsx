@@ -119,6 +119,7 @@ const Header = () => {
                     {/* <DropdownMenuLabel>Menu label</DropdownMenuLabel>
                     <DropdownMenuSeparator></DropdownMenuSeparator> */}
                     {/* <DropdownMenuItem onClick={() => router.push("/profile")} className="py-2 text-gray-500">My profile</DropdownMenuItem> */}
+                    <DropdownMenuItem onClick={() => router.push("/onboarding")} className={`${leagueSpartan.className} text-xl py-2 hover:cursor-pointer`}>List a<a className="text-[#004aad]">stay</a></DropdownMenuItem>
                     <DropdownMenuItem onClick={() => router.push("/mylistings")} className={`${leagueSpartan.className} text-xl py-2 hover:cursor-pointer`}>My listings</DropdownMenuItem>
                     <DropdownMenuSeparator/>
                     <DropdownMenuItem onClick={() => router.push("/savedlistings")} className={`${leagueSpartan.className} text-xl py-2 hover:cursor-pointer`}>Saved stays</DropdownMenuItem>
