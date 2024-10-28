@@ -1,6 +1,6 @@
 import Image from "next/image"
 import { useState } from "react"
-import { MapPin, Users, Bed, Bath, Star, Share2, Heart, Mail } from "lucide-react"
+import { MapPin, Users, Bed, Bath, Star, Share2, Heart, Mail, Bookmark } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -32,16 +32,16 @@ export default function ExpandedListing({ listing }: { listing: ListingData }) {
           <CardHeader>
             <CardTitle className="flex justify-between items-center">
               <span className="text-2xl font-bold">${listing.price} <span className="text-lg font-normal">/ month</span></span>
-              <div className="flex gap-2">
+              {/* <div className="flex gap-2">
                 <Button variant="outline" size="icon" onClick={() => setIsFavorite(!isFavorite)}>
-                  <Heart className={`h-4 w-4 ${isFavorite ? 'fill-red-500 text-red-500' : ''}`} />
+                  <Bookmark className={`h-4 w-4 ${isFavorite ? 'fill-red-500 text-red-500' : ''}`} />
                   <span className="sr-only">{isFavorite ? 'Remove from favorites' : 'Add to favorites'}</span>
                 </Button>
                 <Button variant="outline" size="icon">
                   <Share2 className="h-4 w-4" />
                   <span className="sr-only">Share listing</span>
                 </Button>
-              </div>
+              </div> */}
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">

@@ -5,6 +5,7 @@ import ListingsArray from '@/components/ListingsArray';
 import LoadingSkeleton from '@/components/ListingsArrayLoadingSkeleton';
 
 import { createClient } from '@/utils/supabase/component';
+import type { User as SupabaseUser } from '@supabase/supabase-js';
 
 type SearchResultsProps = {
     searchQuery: string,
@@ -14,39 +15,10 @@ type SearchResultsProps = {
 
 const SearchResults: React.FC<SearchResultsProps> = ({ searchQuery, date, home}) => {
     const [listings, setListings] = useState<ListingData[]>([]);
-    // const [listings, setListings] = useState<any[]>([]);
+    const [userData, setUserData] = useState<{user: SupabaseUser | null} | null>(null);
     const [loading, setLoading] = useState(true);
     let searchParams = useSearchParams();
     let typeOfProperty = (searchParams.get("typeofproperty") ?? "").toString();
-
-    // useEffect(() => {
-    //     console.log("type of property sent to server: " + typeOfProperty);
-    //     if (typeOfProperty != "" && typeOfProperty != undefined && typeOfProperty != null) {
-    //         fetch("/api/firestoreRequest", {
-    //             method: "POST",
-    //             headers: {
-    //                 "Content-Type": "application/json"
-    //             },
-    //             body: JSON.stringify({
-    //                 collection: "listings",
-    //                 attribute: "typeOfProperty",
-    //                 filterValue: typeOfProperty,
-    //                 typeOfRequest: "filterSearch"
-    //             })
-    //         }).then(res => res.json()).then(data => {
-    //             console.log("data:", data);
-    //             setListings(data);
-    //             setLoading(false);
-    //         });
-    //     }
-    //     else {
-    //         fetch("/api/firestoreRequest").then(res => res.json()).then(data => {
-    //             console.log("data:", data);
-    //             setListings(data);
-    //             setLoading(false);
-    //         });
-    //     }
-    // }, [searchQuery, date, searchParams]);
 
     const supabase = createClient();
     useEffect(() => {
@@ -61,6 +33,12 @@ const SearchResults: React.FC<SearchResultsProps> = ({ searchQuery, date, home})
             setLoading(false);
         }
         fetchListings();
+
+        const fetchUserData = async () => {
+            const { data, error } = await supabase.auth.getUser();
+            setUserData(data);
+        }
+        fetchUserData();
     }, [searchQuery, date, searchParams]);
 
     return (
@@ -72,7 +50,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({ searchQuery, date, home})
                 <>
                     <div className={`font-bold text-2xl mb-4 ${home && "hidden"}`}>Results for: {searchQuery} ({listings.length})</div>
                     {/* <pre className="max-w-full text-sm">{listings && JSON.stringify(listings, null, 2)}</pre> */}
-                    <ListingsArray listings={listings}/>
+                    <ListingsArray listings={listings} user={userData?.user ?? undefined}/>
                 </>
             ) : (
                 <div>No results found...</div>

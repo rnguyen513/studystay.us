@@ -121,7 +121,7 @@ const Header = () => {
                     {/* <DropdownMenuItem onClick={() => router.push("/profile")} className="py-2 text-gray-500">My profile</DropdownMenuItem> */}
                     <DropdownMenuItem onClick={() => router.push("/mylistings")} className={`${leagueSpartan.className} text-xl py-2 hover:cursor-pointer`}>My listings</DropdownMenuItem>
                     <DropdownMenuSeparator/>
-                    <DropdownMenuItem className={`${leagueSpartan.className} text-xl py-2 hover:cursor-pointer text-gray-500 pointer-events-none blur-sm`}>Saved stays</DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => router.push("/savedlistings")} className={`${leagueSpartan.className} text-xl py-2 hover:cursor-pointer`}>Saved stays</DropdownMenuItem>
                     <DropdownMenuItem onClick={handleSignOut} className={`${leagueSpartan.className} text-xl py-2 hover:cursor-pointer`}>Sign out</DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>

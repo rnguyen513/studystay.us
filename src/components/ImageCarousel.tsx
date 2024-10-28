@@ -5,12 +5,14 @@ const ImageCarousel = ({ images }:any) => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isAnimating, setIsAnimating] = useState(false);
 
-    const nextSlide = () => {
+    const nextSlide = (e: React.MouseEvent) => {
+        e.stopPropagation();
         setIsAnimating(true);
         setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
     };
 
-    const prevSlide = () => {
+    const prevSlide = (e: React.MouseEvent) => {
+        e.stopPropagation();
         setIsAnimating(true);
         setCurrentIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length);
     };
@@ -38,13 +40,13 @@ const ImageCarousel = ({ images }:any) => {
             ))}
         </div>
         <button 
-            className="absolute top-1/2 left-2 transform -translate-y-1/2 bg-white rounded-full p-1 shadow-md z-10"
+            className={`${currentIndex == 0 && "hidden"} absolute top-1/2 left-2 transform -translate-y-1/2 bg-white rounded-full p-1 shadow-md z-10`}
             onClick={prevSlide}
         >
             <ChevronLeft className="w-4 h-4 text-gray-800" />
         </button>
         <button 
-            className="absolute top-1/2 right-2 transform -translate-y-1/2 bg-white rounded-full p-1 shadow-md z-10"
+            className={`${currentIndex == images.length - 1 && "hidden"} absolute top-1/2 right-2 transform -translate-y-1/2 bg-white rounded-full p-1 shadow-md z-10`}
             onClick={nextSlide}
         >
             <ChevronRight className="w-4 h-4 text-gray-800" />
