@@ -21,7 +21,8 @@ export type ListingData = {
     otherRoommates?: string[],
     images: string[],
     postedbyemail: string,
-    gender: string
+    gender: string,
+    additionalcontact: string
 }
 
 export const tempListings: ListingData[] = [

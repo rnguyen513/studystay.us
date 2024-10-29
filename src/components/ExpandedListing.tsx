@@ -111,17 +111,22 @@ export default function ExpandedListing({ listing }: { listing: ListingData }) {
             )} */}
             <Dialog open={isBookingOpen} onOpenChange={setIsBookingOpen}>
               <DialogTrigger asChild>
-                <Button className="w-full">Book Now</Button>
+                <Button className="w-full">Contact</Button>
               </DialogTrigger>
               <DialogContent className="bg-white">
                 <DialogHeader>
-                  <DialogTitle>Contact Information</DialogTitle>
+                  <DialogTitle className={`${leagueSpartan.className}`}>Contact Information</DialogTitle>
                 </DialogHeader>
+                <div className={`flex flex-col items-center justify-center p-6 ${leagueSpartan.className}`}>
                 <div className="flex items-center justify-center p-6">
                   <Mail className="w-6 h-6 mr-2" />
                   <a href={`mailto:${listing.postedbyemail}`} className="text-lg font-medium hover:underline">
-                    {listing.postedbyemail}
+                    {listing.postedbyemail} 
                   </a>
+                </div>
+                {listing.additionalcontact && (<div className="bg-gray-100 rounded-lg px-4 py-2">
+                    or {listing.additionalcontact}
+                  </div>)}
                 </div>
               </DialogContent>
             </Dialog>

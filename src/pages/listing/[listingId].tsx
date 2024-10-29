@@ -32,6 +32,8 @@ export default function ListingPage() {
         }
 
         setListing(data as ListingData)
+        console.log("listing: ");
+        console.log((data as ListingData).additionalcontact);
       } catch (error) {
         console.error("Something went wrong:", error)
       } finally {

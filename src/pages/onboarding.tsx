@@ -64,6 +64,7 @@ export default function OnboardingForm() {
   const [dates, setDates] = useState<DateRange | undefined>()
   const [views, setViews] = useState("")
   const [gender, setGender] = useState("")
+  const [additionalContact, setAdditionalContact] = useState("")
   const [error, setError] = useState<string | null>(null);
 
   const [showAuth, setShowAuth] = useState(false);
@@ -502,6 +503,15 @@ export default function OnboardingForm() {
                   placeholder="If any"
                   value={gender}
                   onChange={(e) => setGender(e.target.value)}
+                />
+              </div>
+              <div>
+                <Label htmlFor="additionalContact" className="text-lg">Additional contact</Label>
+                <Input
+                  id="additionalContact"
+                  placeholder="Ex. instagram: @studystay.us, phone: 123-456-7890"
+                  value={additionalContact}
+                  onChange={(e) => setAdditionalContact(e.target.value)}
                 />
               </div>
               {/* <div>
