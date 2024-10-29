@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Calendar } from "@/components/ui/calendar"
-import { Home, Building, Home as Townhouse, HelpCircle, Upload, DollarSign, LoaderCircle, CalendarDays, Camera, NotebookPen, School } from 'lucide-react'
+import { Home, Building, HelpCircle, Upload, DollarSign, LoaderCircle, CalendarDays, Camera, NotebookPen, School } from 'lucide-react'
 import { leagueSpartan } from '@/utils/fonts'
 import { useRouter } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -63,6 +63,7 @@ export default function OnboardingForm() {
   const [otherRoommates, setOtherRoommates] = useState<string[]>([])
   const [dates, setDates] = useState<DateRange | undefined>()
   const [views, setViews] = useState("")
+  const [gender, setGender] = useState("")
   const [error, setError] = useState<string | null>(null);
 
   const [showAuth, setShowAuth] = useState(false);
@@ -179,7 +180,8 @@ export default function OnboardingForm() {
         dates: dates,
         postedby: userData?.user?.id,
         postedbyemail: userData?.user?.email,
-        location: "University of Virginia (UVA)"
+        location: "University of Virginia (UVA)",
+        gender: gender
       }]);
 
       if (error) {
@@ -450,7 +452,7 @@ export default function OnboardingForm() {
                 </div>
               </div>
               <div>
-                <Label htmlFor="extraCosts" className="text-lg">Extra costs  (optional)</Label>
+                <Label htmlFor="extraCosts" className="text-lg">Extra costs (optional)</Label>
                 <Input
                   id="extraCosts"
                   placeholder="e.g., Cleaning fee, Security deposit"
@@ -491,6 +493,15 @@ export default function OnboardingForm() {
                   placeholder="Describe other roommates, if any"
                   value={otherRoommates[0]}
                   onChange={(e) => setOtherRoommates([e.target.value])}
+                />
+              </div>
+              <div>
+                <Label htmlFor="gender" className="text-lg">Preferred gender</Label>
+                <Input
+                  id="gender"
+                  placeholder="If any"
+                  value={gender}
+                  onChange={(e) => setGender(e.target.value)}
                 />
               </div>
               {/* <div>
