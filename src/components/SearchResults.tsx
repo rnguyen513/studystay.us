@@ -23,7 +23,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({ searchQuery, date, home})
     const supabase = createClient();
     useEffect(() => {
         const fetchListings = async () => {
-            const { data, error } = typeOfProperty != "" && typeOfProperty != undefined && typeOfProperty != null ? await supabase.from("listings").select().eq("typeOfProperty", typeOfProperty) : await supabase.from("listings").select();
+            const { data, error } = typeOfProperty != "" && typeOfProperty != undefined && typeOfProperty != null ? await supabase.from("listings").select().eq("typeOfProperty", typeOfProperty).eq("available", true) : await supabase.from("listings").select().eq("available", true);
 
             if (error || !data) {
                 return console.log("Error fetching listings or no listings returned: ", error);

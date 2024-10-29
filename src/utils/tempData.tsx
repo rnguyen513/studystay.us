@@ -22,7 +22,8 @@ export type ListingData = {
     images: string[],
     postedbyemail: string,
     gender: string,
-    additionalcontact: string
+    additionalcontact: string,
+    available?: boolean
 }
 
 export const tempListings: ListingData[] = [
