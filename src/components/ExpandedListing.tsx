@@ -202,6 +202,7 @@ export default function ExpandedListing({ listing }: { listing: ListingData }) {
                 height={200}
                 width="100%"
                 mode="place"
+                loading="eager"
                 q={listing.address}
                 />
             </div>

@@ -312,6 +312,7 @@ export default function OnboardingForm() {
                 height={300}
                 width={600}
                 mode="place"
+                loading="eager"
                 q={address == "" ? "University of Virginia, Charlottesville, VA" : address}
                 />
               </div>
@@ -321,6 +322,7 @@ export default function OnboardingForm() {
                 height={200}
                 width={400}
                 mode="place"
+                loading="eager"
                 q={address == "" ? "University of Virginia, Charlottesville, VA" : address}
                 />
               </div>
