@@ -182,7 +182,8 @@ export default function OnboardingForm() {
         postedby: userData?.user?.id,
         postedbyemail: userData?.user?.email,
         location: "University of Virginia (UVA)",
-        gender: gender
+        gender: gender.toLowerCase(),
+        available: true
       }]);
 
       if (error) {
