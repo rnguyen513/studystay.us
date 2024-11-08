@@ -36,6 +36,7 @@ const Header = () => {
   const handleSignOut = async () => {
     await supabase.auth.signOut();
     setUserData(null);
+    router.push("/in");
   }
 
   // const { data, status } = useSession();

@@ -1,5 +1,5 @@
 import ImageCarousel from './ImageCarousel';
-import { Bookmark, ThumbsUp } from 'lucide-react';
+import { Bookmark, UserRound } from 'lucide-react';
 import type { ListingData } from '@/utils/tempData';
 import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
@@ -39,9 +39,9 @@ const Listing = ({ listing, bookmarks, toggleBookmark }: { listing: ListingData,
             <div className="space-y-1">
                 <div className="flex justify-between items-center">
                     <h3 className="font-semibold text-base">{listing.location}</h3>
-                    <div className="flex items-center hover:bg-gray-100 hover:cursor-pointer rounded-full px-2">
-                        <span className="mr-1">{listing.rating}</span>
-                        <ThumbsUp className="w-4 h-4 pb-1 fill-current text-black" />
+                    <div className="flex items-center px-2">
+                        <span className="mr-1">{listing.bedrooms}</span>
+                        <UserRound className="w-4 h-4 pb-1 fill-current text-black" />
                     </div>
                 </div>
                 <p className="text-gray-500 text-sm">{listing.views}</p>

@@ -341,7 +341,7 @@ export default function AuthPopup({ onClose }: { onClose: () => void }) {
                             (step === 3 && (!email || !password))
                           }
                         >
-                          {loading ? "loading..." : (step === 1 ? 'Continue' : step === 2 ? 'Sign Up' : 'Log In')}
+                          {loading ? "loading..." : (step === 1 ? 'Sign up' : step === 2 ? 'Sign Up' : 'Log In')}
                         </Button>
                       </div>
                     </form>
@@ -362,7 +362,7 @@ export default function AuthPopup({ onClose }: { onClose: () => void }) {
               </div>
             )}
 
-            {(step === 1 || step === 3) && renderSocialButtons()}
+            {/* {(step === 1 || step === 3) && renderSocialButtons()} */}
           </div>
         </div>
       </motion.div>

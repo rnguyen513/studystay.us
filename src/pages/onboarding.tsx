@@ -354,8 +354,8 @@ export default function OnboardingForm() {
             {[
               { label: "Guests", value: guests, setter: setGuests },
               { label: "Bedrooms", value: bedrooms, setter: setBedrooms },
-              { label: "Beds", value: beds, setter: setBeds },
-              { label: "baths", value: baths, setter: setbaths },
+              // { label: "Beds", value: beds, setter: setBeds },
+              { label: "Bathrooms", value: baths, setter: setbaths },
             ].map((item, index) => (
               <div key={index} className="flex items-center justify-between">
                 <Label htmlFor={item.label} className="text-lg">{item.label}</Label>
