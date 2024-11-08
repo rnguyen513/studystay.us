@@ -13,6 +13,8 @@ import AuthPopup from '@/components/AuthPopup'
 import Link from 'next/link'
 import { GoogleMapsEmbed } from '@next/third-parties/google'
 
+import { v4 } from "uuid"
+
 import { createClient } from '@/utils/supabase/component'
 import type { User as SupabaseUser } from '@supabase/supabase-js'
 
@@ -143,7 +145,7 @@ export default function OnboardingForm() {
       for (const image of images) {
         setSubmitMessage({message: `Uploading image ${images.indexOf(image) + 1} of ${images.length}...`, status: "pending"});
         try {
-          const { data, error } = await supabase.storage.from('uploadedimages').upload(image.name, image, {
+          const { data, error } = await supabase.storage.from('uploadedimages').upload(v4(), image, {
             cacheControl: '3600',
             upsert: true
           });
