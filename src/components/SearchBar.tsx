@@ -129,7 +129,7 @@ const SearchBar = () => {
                     <button onClick={() => {
                         router.query.typeofproperty = label.text == typeOfProperty ? "" : label.text; router.push(router);
                     }
-                        } key={index} className={`flex flex-col items-center space-y-2 ${label.text == typeOfProperty ? 'text-black border-b-2 border-black' : 'text-gray-500'}`}>
+                        } key={index} className={`flex flex-col items-center space-y-2 border-b-2 ${label.text == typeOfProperty ? 'text-black border-black' : 'border-transparent text-gray-500'}`}>
                         <img src={label.thumbnail} alt={label.text} className="w-6 h-6" />
                         <span className="text-xs whitespace-nowrap">{label.text}</span>
                     </button>
