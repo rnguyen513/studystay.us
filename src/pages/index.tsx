@@ -64,7 +64,7 @@ export default function LandingPage() {
             <li><a href="#" className="text-blue-800 hover:text-orange-500 transition-colors">Listings</a></li>
             <li><a href="#" className="text-blue-800 hover:text-orange-500 transition-colors">About us</a></li>
             <li><a href="#" className="text-blue-800 hover:text-orange-500 transition-colors">Safety</a></li> */}
-            <li><Link href="/onboarding" className="text-blue-800 hover:text-orange-500 transition-colors">Follow us on Instagram!</Link></li>
+            <li><Link href="https://www.instagram.com/studystay.us" target="_blank" className="text-blue-800 hover:text-orange-500 transition-colors">Follow us on Instagram!</Link></li>
           </ul>
         </nav>
         {/* <motion.button 
@@ -175,7 +175,7 @@ export default function LandingPage() {
               <span className="flex flex-row">Find a sublet <ArrowRight className="ml-2"/></span>
             </button>
             <button
-              onClick={() => router.replace("/onboarding")}
+              onClick={() => router.push("/onboarding")}
               className={`relative bg-blue-800 text-white px-6 py-3 rounded-lg hover:bg-blue-900 transition-colors text-lg font-semibold`}
             >
               <span className="flex flex-row">Post a sublet <ArrowRight className="ml-2"/></span>

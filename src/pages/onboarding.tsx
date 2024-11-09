@@ -540,6 +540,19 @@ export default function OnboardingForm() {
   if ((!userData?.user || !userData.user.email_confirmed_at) && !loading) {
     return (
       <div className={`min-h-screen bg-gray-50 flex flex-col ${leagueSpartan.className}`}>
+        <header className="bg-white shadow-sm">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div className="flex items-center">
+              <Link href="/in" className="text-[#004aad] text-2xl font-extrabold pointer-cursor">StudyStay</Link>
+            </div>
+            <div className="flex items-center space-x-4">
+              <Button variant="ghost" size="sm">
+                <HelpCircle className="h-5 w-5 mr-2" />
+                <a href="mailto:amk3ef@virginia.edu" className="pt-1">Questions?</a>
+              </Button>
+            </div>
+          </div>
+        </header>
         <Card className="w-full max-w-md my-auto mx-auto">
           <CardHeader>
             <CardTitle>Authentication Required</CardTitle>
@@ -584,7 +597,7 @@ export default function OnboardingForm() {
             <Link href="/in" className="text-[#004aad] text-2xl font-extrabold pointer-cursor">StudyStay</Link>
           </div>
           <div className="flex items-center space-x-4">
-            <Button variant="ghost" size="sm" onClick={() => router.push("/help")}>
+            <Button variant="ghost" size="sm">
               <HelpCircle className="h-5 w-5 mr-2" />
               <a href="mailto:amk3ef@virginia.edu" className="pt-1">Questions?</a>
             </Button>
