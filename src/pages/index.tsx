@@ -1,11 +1,12 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ArrowRight, Globe, Home, Users, Shield, Star, X, CheckCircle, CircleX, Menu, CircleHelp } from 'lucide-react'
+import { ArrowRight, Star, X, CheckCircle, CircleX, CircleHelp } from 'lucide-react'
 import { leagueSpartan } from '@/utils/fonts'
 import PropertyCarousel from '@/components/PropertyCarousel'
 import StudyStayFooter from '@/components/StudyStayFooter'
 
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 
 export default function LandingPage() {
   const [email, setEmail] = useState('');
@@ -63,6 +64,7 @@ export default function LandingPage() {
             <li><a href="#" className="text-blue-800 hover:text-orange-500 transition-colors">Listings</a></li>
             <li><a href="#" className="text-blue-800 hover:text-orange-500 transition-colors">About us</a></li>
             <li><a href="#" className="text-blue-800 hover:text-orange-500 transition-colors">Safety</a></li> */}
+            <li><Link href="/onboarding" className="text-blue-800 hover:text-orange-500 transition-colors">Follow us on Instagram!</Link></li>
           </ul>
         </nav>
         {/* <motion.button 
@@ -122,9 +124,9 @@ export default function LandingPage() {
             transition={{ duration: 0.8, delay: 0.2 }}
           >
             <a>StudyStay facilitates the process of sub-leasing on college campuses by connecting authenticated student leasers with fellow students.</a><br/>
-            <a href="https://www.instagram.com/studystay.us" target="_blank" className="text-blue-800 underline">Follow us on Instagram!</a>
+            {/* <a href="https://www.instagram.com/studystay.us" target="_blank" className="text-blue-800 underline">Follow us on Instagram!</a> */}
           </motion.p>
-          <motion.form 
+          {/* <motion.form 
             onSubmit={handleSubmit}
             className="flex justify-center mb-8"
             initial={{ opacity: 0, y: 20 }}
@@ -142,14 +144,41 @@ export default function LandingPage() {
             <button
               type="submit"
               disabled={firestoreRequestLoading}
-              className={`relative bg-blue-800 text-white px-6 py-3 md:rounded-r-lg md:rounded-none rounded-lg hover:bg-blue-900 transition-colors text-lg font-semibold ${firestoreRequestLoading ? 'text-transparent' : ''}`}
+              className={`relative bg-blue-800 text-white px-6 py-3 rounded-lg hover:bg-blue-900 transition-colors text-lg font-semibold ${firestoreRequestLoading ? 'text-transparent' : ''}`}
             >
               {firestoreRequestLoading && (
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="w-6 h-6 border-t-2 border-b-2 border-white rounded-full animate-spin"></div>
                 </div>
               )}
-              <span className={firestoreRequestLoading ? "invisible" : ""}>Subscribe for updates &rarr;</span>
+              <span className={firestoreRequestLoading ? "invisible" : ""}>Let's find a sublet &rarr;</span>
+            </button>
+          </motion.form> */}
+          <motion.p 
+            className="text-2xl font-semibold text-gray-700 mb-4 max-w-2xl mx-auto"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+          >
+            <a>I want to...</a><br/>
+          </motion.p>
+          <motion.form 
+            className="flex justify-center mb-8"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+          >
+            <button
+              onClick={() => router.push("/in")}
+              className={`relative bg-blue-800 text-white px-6 py-3 rounded-lg hover:bg-blue-900 transition-colors text-lg font-semibold mr-4`}
+            >
+              <span className="flex flex-row">Find a sublet <ArrowRight className="ml-2"/></span>
+            </button>
+            <button
+              onClick={() => router.replace("/onboarding")}
+              className={`relative bg-blue-800 text-white px-6 py-3 rounded-lg hover:bg-blue-900 transition-colors text-lg font-semibold`}
+            >
+              <span className="flex flex-row">Post a sublet <ArrowRight className="ml-2"/></span>
             </button>
           </motion.form>
           <div className="flex flex-col md:flex-row justify-center items-center space-y-2 md:space-y-0 md:space-x-4 text-sm text-gray-600">

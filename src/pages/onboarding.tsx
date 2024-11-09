@@ -4,7 +4,8 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Calendar } from "@/components/ui/calendar"
-import { Home, Building, HelpCircle, Upload, DollarSign, LoaderCircle, CalendarDays, Camera, NotebookPen, School } from 'lucide-react'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Home, Building, HelpCircle, Upload, DollarSign, LoaderCircle, CalendarDays, Camera, NotebookPen, School, LogIn } from 'lucide-react'
 import { leagueSpartan } from '@/utils/fonts'
 import { useRouter } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -538,13 +539,36 @@ export default function OnboardingForm() {
 
   if ((!userData?.user || !userData.user.email_confirmed_at) && !loading) {
     return (
-      <>
-      <div>You need to be signed in and confirmed to create a listing. Let&apos;s get started.</div>
-      <Button onClick={() => setShowAuth(true)}>Sign In</Button>
-      {showAuth && <div className="z-50">
-        <AuthPopup onClose={() => setShowAuth(false)}/>
-      </div>}
-      </>
+      <div className={`min-h-screen bg-gray-50 flex flex-col ${leagueSpartan.className}`}>
+        <Card className="w-full max-w-md my-auto mx-auto">
+          <CardHeader>
+            <CardTitle>Authentication Required</CardTitle>
+            <CardDescription>
+              You need to be signed in and confirmed to create a listing
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="flex flex-col items-center gap-6">
+            <div className="rounded-full bg-muted p-6">
+              <LogIn className="h-12 w-12 text-muted-foreground" />
+            </div>
+            <div className="text-center space-y-4">
+              <p className="text-muted-foreground">
+                Let&apos;s get started by signing into your account
+              </p>
+              <Button 
+                size="lg" 
+                className="w-full"
+                onClick={() => setShowAuth(true)}
+              >
+                Sign In
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+        {showAuth && <div>
+          <AuthPopup onClose={() => setShowAuth(false)}/>
+        </div>}
+      </div>
     );
   }
 

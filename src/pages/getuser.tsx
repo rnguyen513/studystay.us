@@ -14,7 +14,7 @@ const GetUser = () => {
             setLoading(false);
         }
         fetchUserData();
-    }, []);
+    }, [supabase]);
 
     if (loading) return <div>Loading...</div>;
 

@@ -31,7 +31,7 @@ const Header = () => {
       console.log("data:", data);
     }
     fetchUserData();
-  }, []);
+  }, [supabase]);
 
   const handleSignOut = async () => {
     await supabase.auth.signOut();

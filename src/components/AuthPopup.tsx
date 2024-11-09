@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect, FormEvent } from 'react'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -288,7 +289,7 @@ export default function AuthPopup({ onClose }: { onClose: () => void }) {
                               htmlFor="terms"
                               className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                             >
-                              I agree to the <a href="https://www.google.com" className="underline">terms</a> and <a href="https://www.google.com" className="underline">conditions</a>
+                              I agree to the <Link href="/terms-and-conditions" target="_blank" className="underline">terms and conditions</Link>
                             </label>
                           </div>
                         </div>

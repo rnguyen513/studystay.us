@@ -29,7 +29,7 @@ export default function ExpandedListing({ listing }: { listing: ListingData }) {
       await supabase.auth.getUser().then( ({ data, error }) => setUserData(data.user));
     }
     fetchUserData();
-  }, [listing])
+  }, [supabase, listing])
 
   const handleDelete = async () => {
     if (userData == null || listing.postedbyemail != userData.email) return
