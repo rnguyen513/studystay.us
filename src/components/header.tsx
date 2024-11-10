@@ -4,7 +4,7 @@ import AuthPopup from "@/components/AuthPopup";
 import { leagueSpartan } from "@/utils/fonts";
 
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, redirect } from "next/navigation";
 
 import { createClient } from "@/utils/supabase/component";
 import type { User as SupabaseUser } from "@supabase/supabase-js";

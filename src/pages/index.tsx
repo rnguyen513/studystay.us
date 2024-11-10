@@ -5,7 +5,7 @@ import { leagueSpartan } from '@/utils/fonts'
 import PropertyCarousel from '@/components/PropertyCarousel'
 import StudyStayFooter from '@/components/StudyStayFooter'
 
-import { useRouter } from 'next/navigation'
+import { useRouter, redirect } from 'next/navigation'
 import Link from 'next/link'
 
 export default function LandingPage() {
@@ -17,39 +17,39 @@ export default function LandingPage() {
 
   const router = useRouter();
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setFirestoreRequestLoading(true);
+  // const handleSubmit = async (e: React.FormEvent) => {
+  //   e.preventDefault()
+  //   setFirestoreRequestLoading(true);
 
-    try {
-      await fetch("/api/firestoreRequest", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          collection: "emails",
-          email: email
-        }),
-        signal: AbortSignal.timeout(5000)
-      }).then(res => {
-        console.log("res:", res);
-        if (res.status != 200) {
-          setPopupMessage("Something went wrong. Please try again later or contact Ryan at amk3ef@virginia.edu. ERROR_DATABASE_DOWN")
-        }
-        res.json();
-      }).then(data => {
-        console.log("data:", data)
-      })
-    } catch (error) {
-      console.error('Error with request: ', error);
-      setPopupMessage("Something went wrong. Please try again later or contact Ryan at amk3ef@virginia.edu. ERROR_FETCH_TIMEOUT_5000")
-    }
+  //   try {
+  //     await fetch("/api/firestoreRequest", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json"
+  //       },
+  //       body: JSON.stringify({
+  //         collection: "emails",
+  //         email: email
+  //       }),
+  //       signal: AbortSignal.timeout(5000)
+  //     }).then(res => {
+  //       console.log("res:", res);
+  //       if (res.status != 200) {
+  //         setPopupMessage("Something went wrong. Please try again later or contact Ryan at amk3ef@virginia.edu. ERROR_DATABASE_DOWN")
+  //       }
+  //       res.json();
+  //     }).then(data => {
+  //       console.log("data:", data)
+  //     })
+  //   } catch (error) {
+  //     console.error('Error with request: ', error);
+  //     setPopupMessage("Something went wrong. Please try again later or contact Ryan at amk3ef@virginia.edu. ERROR_FETCH_TIMEOUT_5000")
+  //   }
 
-    setFirestoreRequestLoading(false);
-    setShowPopup(true);
-    setEmail('')
-  }
+  //   setFirestoreRequestLoading(false);
+  //   setShowPopup(true);
+  //   setEmail('')
+  // }
 
   return (
     <div className={`min-h-screen bg-gradient-to-b from-blue-50 to-white ${leagueSpartan.className} overflow-x-hidden`}>
@@ -162,7 +162,8 @@ export default function LandingPage() {
           >
             <a>I want to...</a><br/>
           </motion.p>
-          <motion.form 
+          <motion.form
+            onSubmit={(e) => {e.preventDefault()}}
             className="flex justify-center mb-8"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
