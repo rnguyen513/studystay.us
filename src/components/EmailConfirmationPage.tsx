@@ -24,7 +24,7 @@ export default function EmailConfirmationPage({ email, onResendEmail, onBackToLo
             <Mail className="h-6 w-6 text-primary" />
           </div>
           <p className="text-center">
-            We&apos;ve sent an email to <strong>{email}</strong>. Click the link in the email to confirm your account.
+            We&apos;ve sent an email to <strong>{email}</strong>. Click the link in the email to confirm your account. It may take up to 5 minutes.
           </p>
         </CardContent>
         <CardFooter className="flex flex-col space-y-2">
