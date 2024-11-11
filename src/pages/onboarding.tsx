@@ -12,6 +12,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { DateRange } from 'react-day-picker'
 import AuthPopup from '@/components/AuthPopup'
 import Link from 'next/link'
+import Image from 'next/image'
 import { GoogleMapsEmbed } from '@next/third-parties/google'
 
 import { v4 } from "uuid"
@@ -38,9 +39,11 @@ const ImagePreview = ({ images }: { images: File[] }) => (
   <div className="grid grid-cols-2 gap-4 mt-4">
     {images.map((image, index) => (
       <div key={index} className="relative aspect-square">
-        <img
+        <Image
           src={URL.createObjectURL(image)}
           alt={`Preview ${index + 1}`}
+          width={0}
+          height={0}
           className="object-cover w-full h-full rounded-md"
         />
       </div>
@@ -85,7 +88,7 @@ export default function OnboardingForm() {
       setLoading(false);
     }
     fetchUserData();
-  }, [])
+  }, [supabase]);
 
   const totalSteps = 7
 

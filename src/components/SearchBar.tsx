@@ -5,6 +5,7 @@ import { Search, Menu } from "lucide-react";
 import { categoryIcons } from "@/utils/tempData";
 
 import { useEffect } from "react";
+import Image from "next/image";
 
 const SearchBar = () => {
     const [destination, setDestination] = useState("");

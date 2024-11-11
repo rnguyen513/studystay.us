@@ -81,9 +81,9 @@ export default function LandingPage() {
           ) : (
             <div>Loading map...</div>
           )} */}
-          <div>
-            <img src="https://cdn.britannica.com/51/93451-050-4C57C2D5/Shrek-sidekick-Donkey.jpg"/>
-          </div>
+          {/* <div>
+            <Image src="https://cdn.britannica.com/51/93451-050-4C57C2D5/Shrek-sidekick-Donkey.jpg"/>
+          </div> */}
         </div>
       )}
     </div>

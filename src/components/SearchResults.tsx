@@ -39,7 +39,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({ searchQuery, date, home})
             setUserData(data);
         }
         fetchUserData();
-    }, [searchQuery, date, searchParams, supabase]);
+    }, [searchQuery, date, searchParams, typeOfProperty, supabase]);
 
     return (
         <>
