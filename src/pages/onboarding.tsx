@@ -110,7 +110,7 @@ export default function OnboardingForm() {
     }
   ]
 
-  const typeOfPropertys = [
+  const typeOfProperties = [
     { name: "House", icon: Home },
     { name: "Apartment", icon: Building },
     { name: "Townhouse", icon: School },
@@ -125,6 +125,8 @@ export default function OnboardingForm() {
   }
 
   const handleFinish = async () => {
+    if (pendingSubmit) return;
+
     console.log('submitting listing:', {
       typeOfProperty,
       address,
@@ -197,7 +199,7 @@ export default function OnboardingForm() {
       } else {
         console.log('Listing submitted successfully!');
         setSubmitMessage({message: "Done!", status: "success"});
-        setPendingSubmit(false);
+        // setPendingSubmit(false);
         router.push("/mylistings");
       }
     } catch (error) {
@@ -285,7 +287,7 @@ export default function OnboardingForm() {
           >
             <h2 className="text-3xl font-semibold text-center">Which of these best describes your place?</h2>
             <div className="grid grid-cols-3 gap-6">
-              {typeOfPropertys.map((type, index) => (
+              {typeOfProperties.map((type, index) => (
                 <Button
                   key={index}
                   variant={typeOfProperty === type.name ? "default" : "outline"}

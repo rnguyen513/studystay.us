@@ -77,9 +77,10 @@ export default function ExpandedListing({ listing }: { listing: ListingData }) {
                   <span className="sr-only">Share listing</span>
                 </Button> */}
                 {userData?.email == listing.postedbyemail && userData != null && (
-                  <Button variant="outline" size="icon" onClick={() => setIsDeleteOpen(true)}>
-                    <X className="h-4 w-4 font-bold text-red-500"/>
-                  </Button>
+                  <div className="flex flex-row gap-2 text-red-500 px-2 py-1 rounded-lg hover:cursor-pointer hover:bg-gray-100" onClick={() => setIsDeleteOpen(true)}>
+                    <a>Delete</a>
+                    <X className="h-4 w-4 font-bold text-red-500 pt-1"/>
+                  </div>
                 )}
               </div>
             </CardTitle>
@@ -136,8 +137,8 @@ export default function ExpandedListing({ listing }: { listing: ListingData }) {
                 <DialogHeader>
                   <DialogTitle className={`font-bold text-red-500 ${leagueSpartan.className}`}>Are you sure you want to delete this listing?</DialogTitle>
                 </DialogHeader>
-                <div className="flex items-center justify-center p-6">
-                  <a onClick={handleDelete} className="text-lg font-bold text-red-500 hover:cursor-pointer hover:bg-red-100 px-4 py-2 rounded-lg">Yes I&apos;m sure</a>
+                <div className={`flex items-center justify-center p-6 ${leagueSpartan.className}`}>
+                  <a onClick={handleDelete} className="text-lg font-bold text-red-500 hover:cursor-pointer hover:bg-gray-100 px-4 py-2 rounded-lg">Yes I&apos;m sure</a>
                 </div>
               </DialogContent>
             </Dialog>
