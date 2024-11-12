@@ -243,7 +243,7 @@ export default function ExpandedListing({ listing: initialListing }: { listing: 
                   <Input id="price" name="price" type="number" value={updatedListing.price} onChange={handleInputChange} />
                 </div>
                 <div>
-                  <Label htmlFor="location">Location</Label>
+                  <Label htmlFor="location">University</Label>
                   <Input id="location" name="location" value={updatedListing.location} onChange={handleInputChange} />
                 </div>
                 <div>

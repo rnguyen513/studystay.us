@@ -38,7 +38,7 @@ const Listing = ({ listing, bookmarks, toggleBookmark }: { listing: ListingData,
             </div>
             <div className="space-y-1">
                 <div className="flex justify-between items-center">
-                    <h3 className="font-semibold text-base">{listing.location}</h3>
+                    <h3 className="font-semibold text-base">{listing.title}</h3>
                     <div className="flex items-center px-2">
                         <span className="mr-1">{listing.bedrooms}</span>
                         <UserRound className="w-4 h-4 pb-1 fill-current text-black" />
