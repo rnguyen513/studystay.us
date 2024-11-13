@@ -1,10 +1,10 @@
 'use client'
 
-import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { useState, useEffect } from "react"
-import { MapPin, Users, Bed, Bath, Star, Share2, Heart, Mail, Bookmark, Pen, X } from "lucide-react"
+import { MapPin, Users, Bed, Bath, Mail, Pen, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { Checkbox } from "@/components/ui/checkbox"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
@@ -26,6 +26,7 @@ export default function ExpandedListing({ listing: initialListing }: { listing: 
   const [isEditOpen, setIsEditOpen] = useState(false)
   const [updatedListing, setUpdatedListing] = useState<ListingData>(listing)
   const [loading, setLoading] = useState(false)
+  const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
   const supabase = createClient()
   const [userData, setUserData] = useState<User | null>(null)
@@ -79,7 +80,7 @@ export default function ExpandedListing({ listing: initialListing }: { listing: 
     if (loading) return;
 
     if (userData?.email !== listing.postedbyemail) {
-      console.error("Unauthorized to update this listing")
+      setErrorMessage("Unauthorized to update this listing")
       return
     }
 
@@ -94,6 +95,7 @@ export default function ExpandedListing({ listing: initialListing }: { listing: 
 
     if (error) {
       console.error("Error updating listing:", error)
+      setErrorMessage(error.message)
     } else {
       console.log("Listing updated successfully:", data)
       setListing(data)
@@ -145,7 +147,7 @@ export default function ExpandedListing({ listing: initialListing }: { listing: 
               </div>
               <div className="flex items-center">
                 <Bath className="w-5 h-5 mr-2" />
-                <span>{listing.baths} baths</span>
+                <span>{listing.baths} baths {listing.sharedbathroom && <a className="text-gray-400 text-md">(shared)</a>}</span>
               </div>
             </div>
             <div className="flex items-center">
@@ -215,7 +217,7 @@ export default function ExpandedListing({ listing: initialListing }: { listing: 
                 width="100%"
                 mode="place"
                 loading="eager"
-                q={listing.address}
+                q={listing.address + ", Charlottesville, VA"}
               />
             </div>
           </CardContent>
@@ -258,6 +260,10 @@ export default function ExpandedListing({ listing: initialListing }: { listing: 
                   <div>
                     <Label htmlFor="baths">Bathrooms</Label>
                     <Input id="baths" name="baths" type="number" value={updatedListing.baths} onChange={handleInputChange} />
+                    <div className={`flex space-x-2 m-2 items-center ${updatedListing.sharedbathroom ? "" : "opacity-50"}`}>
+                      <Label htmlFor="sharedbathroom">Shared Bathroom?</Label>
+                      <Checkbox id="sharedbathroom" name="sharedbathroom" checked={updatedListing.sharedbathroom} onCheckedChange={() => setUpdatedListing(prev => ({ ...prev, sharedbathroom: !prev.sharedbathroom }))} />
+                    </div>
                   </div>
                 </div>
                 <div>
@@ -270,7 +276,7 @@ export default function ExpandedListing({ listing: initialListing }: { listing: 
                     <SelectTrigger>
                       <SelectValue placeholder="Select gender preference" />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className={`${leagueSpartan.className}`}>
                       <SelectItem value="male">Male</SelectItem>
                       <SelectItem value="female">Female</SelectItem>
                       <SelectItem value="any">Any</SelectItem>
@@ -303,8 +309,9 @@ export default function ExpandedListing({ listing: initialListing }: { listing: 
                   <Label htmlFor="additionalcontact">Additional Contact Info</Label>
                   <Input id="additionalcontact" name="additionalcontact" value={updatedListing.additionalcontact || ''} onChange={handleInputChange} />
                 </div>
+                {errorMessage && <p className="text-red-500">{errorMessage}</p>}
                 <div className="flex justify-end space-x-2 mt-4">
-                  <Button type="button" variant="outline" disabled={loading} onClick={() => setIsEditOpen(false)}>Cancel</Button>
+                  <Button type="button" variant="outline" disabled={loading} onClick={() => {setIsEditOpen(false);setErrorMessage(null)}}>Cancel</Button>
                   <Button type="submit" disabled={loading}>Update Listing</Button>
                 </div>
               </form>

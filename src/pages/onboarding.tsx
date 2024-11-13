@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Calendar } from "@/components/ui/calendar"
+import { Checkbox } from '@/components/ui/checkbox'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Home, Building, HelpCircle, Upload, DollarSign, LoaderCircle, CalendarDays, Camera, NotebookPen, School, LogIn } from 'lucide-react'
 import { leagueSpartan } from '@/utils/fonts'
@@ -71,6 +72,7 @@ export default function OnboardingForm() {
   const [views, setViews] = useState("")
   const [gender, setGender] = useState("")
   const [additionalContact, setAdditionalContact] = useState("")
+  const [sharedBathroom, setSharedBathroom] = useState(false)
   const [error, setError] = useState<string | null>(null);
 
   const [showAuth, setShowAuth] = useState(false);
@@ -141,6 +143,8 @@ export default function OnboardingForm() {
       otherRoommates,
       dates,
       views,
+      gender,
+      sharedBathroom
     })
 
     setPendingSubmit(true);
@@ -191,7 +195,8 @@ export default function OnboardingForm() {
         postedbyemail: userData?.user?.email,
         location: "University of Virginia (UVA)",
         gender: gender.toLowerCase(),
-        available: true
+        available: true,
+        sharedbathroom: sharedBathroom
       }]);
 
       if (error) {
@@ -356,12 +361,12 @@ export default function OnboardingForm() {
             className="max-w-xl mx-auto space-y-8"
           >
             <h2 className="text-3xl font-semibold text-center">Share some basics about your place</h2>
-            <p className="text-center text-gray-600">You&apos;ll add more details later, like bed types.</p>
+            <p className="text-center text-gray-600">You&apos;ll add more details later, like a description and amenities</p>
             {[
-              { label: "Guests", value: guests, setter: setGuests },
-              { label: "Bedrooms", value: bedrooms, setter: setBedrooms },
+              { label: "Spots available", value: guests, setter: setGuests },
+              { label: "Bedrooms for lease", value: bedrooms, setter: setBedrooms },
               // { label: "Beds", value: beds, setter: setBeds },
-              { label: "Bathrooms", value: baths, setter: setbaths },
+              { label: "Bathrooms for lease", value: baths, setter: setbaths },
             ].map((item, index) => (
               <div key={index} className="flex items-center justify-between">
                 <Label htmlFor={item.label} className="text-lg">{item.label}</Label>
@@ -384,6 +389,10 @@ export default function OnboardingForm() {
                 </div>
               </div>
             ))}
+            <div className={`flex items-center justify-between ${sharedBathroom ? "" : "opacity-50"}`}>
+              <Label htmlFor="sharedBathroom" className="text-lg">- Shared bathroom?</Label>
+              <Checkbox checked={sharedBathroom} onCheckedChange={() => setSharedBathroom(!sharedBathroom)}/>
+            </div>
           </motion.div>
         )
       case 4:

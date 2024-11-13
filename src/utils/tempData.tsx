@@ -23,7 +23,8 @@ export type ListingData = {
     postedbyemail: string,
     gender: string,
     additionalcontact: string,
-    available: boolean
+    available: boolean,
+    sharedbathroom: boolean
 }
 
 export const tempListings: ListingData[] = [
