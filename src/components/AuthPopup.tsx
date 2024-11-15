@@ -43,7 +43,7 @@ export default function AuthPopup({ onClose }: { onClose: () => void }) {
 
   const handleSignUp = async () => {
     try {
-      if (!email.includes("@virginia.edu")) throw new Error("Please use your @virginia.edu email address")
+      // if (!email.includes("@virginia.edu")) throw new Error("Please use your @virginia.edu email address")
       const { error } = await supabase.auth.signUp({ email, password })
 
       if (error) {
@@ -81,8 +81,9 @@ export default function AuthPopup({ onClose }: { onClose: () => void }) {
   const handleContinue = async () => {
     setErrorMessage("")
     if (step === 1 && email) {
-      if (email.includes("@virginia.edu")) return setStep(2);
-      setErrorMessage("Please use your @virginia.edu email address")
+      // if (email.includes("@virginia.edu")) return setStep(2);
+      // setErrorMessage("Please use your @virginia.edu email address")
+      return setStep(2);
     } else if (step === 2 && password && confirmPassword && password === confirmPassword && agreedToTerms) {
       setLoading(true)
       try {
@@ -242,8 +243,11 @@ export default function AuthPopup({ onClose }: { onClose: () => void }) {
                               required
                             />
                           </div>
-                          <p className="text-xs text-gray-500">
+                          {/* <p className="text-xs text-gray-500">
                             Your email end with @virginia.edu and must be confirmed before you can log in. Check your email for confirmation.
+                          </p> */}
+                          <p className="text-xs text-gray-500">
+                            Your email must be confirmed before you can log in. Check your email for confirmation.
                           </p>
                         </div>
                       ) : step === 2 ? (
