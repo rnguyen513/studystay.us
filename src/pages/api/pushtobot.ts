@@ -7,20 +7,17 @@ export default async function handler(
     console.log(req.body);
     if (!req.body.record) return res.status(500).send("No record");
 
-    //check if from supabase otherwise quit
+    //TODO: check if from supabase otherwise quit
 
-    const url = "https://api.groupme.com/v3/bots/post";
-    const data = {
-        text: `${req.body.record.title} posted by ${req.body.record.postedbyemail}`,
-        bot_id: process.env.GROUPME_BOT_ID
-    };
-
-    fetch(url, {
+    fetch("https://api.groupme.com/v3/bots/post", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify({
+            "text": `${req.body.record.title} posted by ${req.body.record.postedbyemail}`,
+            "bot_id": process.env.GROUPME_BOT_ID
+        })
     })
     .then(response => response.json())
     .then(data => {
