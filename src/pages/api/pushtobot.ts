@@ -5,6 +5,7 @@ export default async function handler(
   res: NextApiResponse
 ) {
     console.log(req.body);
+    if (!req.body.record) return res.status(500).send("No record");
 
     //check if from supabase otherwise quit
 
@@ -23,7 +24,7 @@ export default async function handler(
     })
     .then(response => response.json())
     .then(data => {
-        console.log(data);
+        console.log("Success:", data);
         return res.status(200).send("OK");
     })
     .catch(error => {
