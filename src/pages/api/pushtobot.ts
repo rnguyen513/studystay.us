@@ -17,7 +17,7 @@ export default async function handler(
         body: JSON.stringify({
             "text": `${req.body.record.title} posted by ${req.body.record.postedbyemail}`,
             // "text": `${Math.random()}`,
-            "bot_id": "c68985a4af0a7029e116747223"
+            "bot_id": process.env.GROUPME_BOT_ID
         })
     })
     .catch(error => {
