@@ -4,7 +4,9 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-    console.log("query: " + JSON.stringify(req.query, null, 2) + ", body: " + JSON.stringify(req.body, null, 2) + ", req: " + JSON.stringify(req, null, 2));
+    const { _key } = req.query;
+    console.log(_key);
+    console.log(req.query);
     if (req.body.SUPABASE_ANON_KEY as string != process.env.SUPABASE_ANON_KEY as string) return res.status(401).send("Unauthorized");
     if (!req.body.record) return res.status(400).send("No record");
 
