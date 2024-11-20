@@ -4,9 +4,9 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-    if (req.body.SUPABASE_ANON_KEY != process.env.SUPABASE_ANON_KEY) return res.status(401).send("Unauthorized");
-    if (!req.body.record) return res.status(400).send("No record");
     console.log(req.body);
+    if (req.body.SUPABASE_ANON_KEY as string != process.env.SUPABASE_ANON_KEY as string) return res.status(401).send("Unauthorized");
+    if (!req.body.record) return res.status(400).send("No record");
 
     //TODO: check if from supabase otherwise quit
 
