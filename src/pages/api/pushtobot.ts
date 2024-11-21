@@ -1,4 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
+import type { ListingData } from "@/utils/tempData";
 
 export default async function handler(
   req: NextApiRequest,
@@ -6,6 +7,8 @@ export default async function handler(
 ) {
     if (req.query.SUPABASE_ANON_KEY as string != process.env.SUPABASE_ANON_KEY as string) return res.status(401).send("Unauthorized");
     if (!req.body.record) return res.status(400).send("No record");
+
+    const listing = req.body.record as ListingData;
 
     //TODO: check if from supabase otherwise quit
 
@@ -15,8 +18,8 @@ export default async function handler(
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            "text": `Posted by ${req.body.record.postedbyemail} at https://www.studystay.us/listing/${req.body.record.id}`,
-            // "text": `${Math.random()}`,
+            // "text": `Posted by ${req.body.record.postedbyemail} at https://www.studystay.us/listing/${req.body.record.id}`,
+            "text": `https://www.studystay.us/listing/${req.body.record.id}\n${req.body.record.title}`,
             "bot_id": process.env.GROUPME_BOT_ID
         })
     })
