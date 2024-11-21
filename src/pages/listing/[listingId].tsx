@@ -6,6 +6,8 @@ import Header from "@/components/header"
 import ExpandedListing from "@/components/ExpandedListing"
 import type { ListingData } from "@/utils/tempData"
 
+import Head from "next/head"
+
 export default function ListingPage() {
   const router = useRouter()
   const { listingId } = router.query
@@ -45,17 +47,28 @@ export default function ListingPage() {
   }, [listingId, supabase])
 
   return (
-    <div className={`min-h-screen bg-white text-black ${leagueSpartan.className} text-xl overflow-hidden`}>
-      <Header/>
-      <main className="container mx-auto px-4 py-8">
-        {loading ? (
-          <p className="text-center text-xl">Loading...</p>
-        ) : listing ? (
-          <ExpandedListing listing={listing} />
-        ) : (
-          <p className="text-center text-xl">Listing not found</p>
-        )}
-      </main>
-    </div>
+    <>
+      <Head>
+        <title>{listing?.title}</title>
+        <meta name="description" content={listing?.title}/>
+        <meta property="og:title" content={listing?.title}/>
+        <meta property="og:description" content={listing?.description}/>
+        <meta property="og:image" content={listing?.images[0]}/>
+        <meta property="og:url" content={`https://studystay.us/listing/${listingId}`}/>
+        <meta property="og:type" content="website"/>
+      </Head>
+      <div className={`min-h-screen bg-white text-black ${leagueSpartan.className} text-xl overflow-hidden`}>
+        <Header/>
+        <main className="container mx-auto px-4 py-8">
+          {loading ? (
+            <p className="text-center text-xl">Loading...</p>
+          ) : listing ? (
+            <ExpandedListing listing={listing} />
+          ) : (
+            <p className="text-center text-xl">Listing not found</p>
+          )}
+        </main>
+      </div>
+    </>
   )
 }

@@ -9,7 +9,11 @@ export default function App({ Component, pageProps }: AppProps) {
       <Head>
         <title>StudyStay</title>
         <link rel="icon" href="/favicon.ico"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+
+        <meta name="og:title" content="StudyStay"/>
+        <meta name="og:description" content="The better way to sublet"/>
+        <meta name="og:type" content="website"/>
       </Head>
       <Component {...pageProps}/>
       <Analytics/>

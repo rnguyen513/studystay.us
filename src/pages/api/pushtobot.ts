@@ -4,7 +4,6 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-    console.log(req.query.SUPABASE_ANON_KEY);
     if (req.query.SUPABASE_ANON_KEY as string != process.env.SUPABASE_ANON_KEY as string) return res.status(401).send("Unauthorized");
     if (!req.body.record) return res.status(400).send("No record");
 
@@ -16,7 +15,7 @@ export default async function handler(
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            "text": `${req.body.record.title} posted by ${req.body.record.postedbyemail}`,
+            "text": `${req.body.record.title} posted by ${req.body.record.postedbyemail} at https://www.studystay.us/listing/${req.body.record.id}`,
             // "text": `${Math.random()}`,
             "bot_id": process.env.GROUPME_BOT_ID
         })
