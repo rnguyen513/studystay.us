@@ -15,7 +15,7 @@ export default async function handler(
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            "text": `${req.body.record.title} posted by ${req.body.record.postedbyemail} at https://www.studystay.us/listing/${req.body.record.id}`,
+            "text": `Posted by ${req.body.record.postedbyemail} at https://www.studystay.us/listing/${req.body.record.id}`,
             // "text": `${Math.random()}`,
             "bot_id": process.env.GROUPME_BOT_ID
         })
