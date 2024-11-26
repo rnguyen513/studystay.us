@@ -162,6 +162,9 @@ export default function ExpandedListing({ listing: initialListing }: { listing: 
               <span className="font-semibold">Available:</span>
               <span className="ml-2">{new Date(listing.dates.from).toLocaleDateString()} - {new Date(listing.dates.to).toLocaleDateString()}</span>
             </div>
+            <div>
+              <span className="font-semibold">Semester:</span> {listing.available_semester} {listing.available_year}
+            </div>
             <div className="flex flex-wrap gap-2">
               {listing.furnished && <Badge variant="outline"><Armchair className="w-4 h-4 mr-1" /> Furnished</Badge>}
               {listing.pets_allowed && <Badge variant="outline"><Dog className="w-4 h-4 mr-1" /> Pets Allowed</Badge>}
@@ -170,10 +173,7 @@ export default function ExpandedListing({ listing: initialListing }: { listing: 
               {listing.handicap_accessible && <Badge variant="outline"><Accessibility className="w-4 h-4 mr-1" /> Accessible</Badge>}
             </div>
             <div>
-              <span className="font-semibold">Type of Property:</span> {listing.typeOfProperty}
-            </div>
-            <div>
-              <span className="font-semibold">Available for:</span> {listing.available_semester} {listing.available_year}
+              <span className="font-semibold">Type:</span> {listing.typeOfProperty}
             </div>
             <Button className="w-full" onClick={() => setIsBookingOpen(true)}>Contact</Button>
           </CardContent>
