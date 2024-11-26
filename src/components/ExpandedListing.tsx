@@ -158,19 +158,19 @@ export default function ExpandedListing({ listing: initialListing }: { listing: 
               <Users className={`w-5 h-5 mr-2 ${listing.gender === "male" ? "fill-blue-500" : listing.gender === "female" ? "fill-pink-500" : ""}`}/>
               <span>Space for {listing.guests} guest(s){listing.gender && `: ${listing.gender}`}</span>
             </div>
-            <div className="flex items-center">
-              <span className="font-semibold">Available:</span>
-              <span className="ml-2">{new Date(listing.dates.from).toLocaleDateString()} - {new Date(listing.dates.to).toLocaleDateString()}</span>
-            </div>
-            <div>
-              <span className="font-semibold">Semester:</span> {listing.available_semester} {listing.available_year}
-            </div>
             <div className="flex flex-wrap gap-2">
               {listing.furnished && <Badge variant="outline"><Armchair className="w-4 h-4 mr-1" /> Furnished</Badge>}
               {listing.pets_allowed && <Badge variant="outline"><Dog className="w-4 h-4 mr-1" /> Pets Allowed</Badge>}
               {listing.car_parking_space && <Badge variant="outline"><Car className="w-4 h-4 mr-1" /> Parking</Badge>}
               {listing.washer_and_dryer && <Badge variant="outline"><WashingMachine className="w-4 h-4 mr-1" /> Washer/Dryer</Badge>}
               {listing.handicap_accessible && <Badge variant="outline"><Accessibility className="w-4 h-4 mr-1" /> Accessible</Badge>}
+            </div>
+            <div className="flex items-center">
+              <span className="font-semibold">Available:</span>
+              <span className="ml-2">{new Date(listing.dates.from).toLocaleDateString()} - {new Date(listing.dates.to).toLocaleDateString()}</span>
+            </div>
+            <div>
+              <span className="font-semibold">Semester:</span> {listing.available_semester} {listing.available_year}
             </div>
             <div>
               <span className="font-semibold">Type:</span> {listing.typeOfProperty}
