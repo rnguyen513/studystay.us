@@ -21,7 +21,6 @@ export default function Page() {
 
             <main className="container mx-auto px-4 py-8 ">
                 <SearchBar/>
-                {/* <hr className="hidden md:flex mb-4"/> */}
 
                 <Suspense fallback={<LoadingSkeleton/>}>
                     <SearchResults searchQuery={searchQuery as string} date={date ? date : undefined} home={false}/>

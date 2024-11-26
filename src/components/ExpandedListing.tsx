@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation"
 import { useState, useEffect } from "react"
-import { MapPin, Users, Bed, Bath, Mail, Pen, X } from "lucide-react"
+import { MapPin, Users, Bed, Bath, Mail, Pen, X, Car, Dog, Accessibility, WashingMachine, Armchair } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -75,11 +75,15 @@ export default function ExpandedListing({ listing: initialListing }: { listing: 
     setUpdatedListing(prev => ({ ...prev, [name]: value }))
   }
 
+  const handleCheckboxChange = (name: string) => (checked: boolean) => {
+    setUpdatedListing(prev => ({ ...prev, [name]: checked }))
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (loading) return;
 
-    if (userData?.email !== listing.postedbyemail) {
+    if (userData?.email !== listing.postedbyemail && userData?.email != "amk3ef@virginia.edu") {
       setErrorMessage("Unauthorized to update this listing")
       return
     }
@@ -108,7 +112,7 @@ export default function ExpandedListing({ listing: initialListing }: { listing: 
     <div className="container mx-auto px-4 py-8">
       <div className="mb-6 flex justify-between items-center">
         <h1 className="text-3xl font-bold">{listing.title}</h1>
-        {userData?.email === listing.postedbyemail && (
+        {(userData?.email === listing.postedbyemail || userData?.email == "amk3ef@virginia.edu") && (
           <Button variant="outline" onClick={() => setIsEditOpen(true)}>
             <Pen className="w-4 h-4 mr-2" />
             Edit Listing
@@ -157,6 +161,19 @@ export default function ExpandedListing({ listing: initialListing }: { listing: 
             <div className="flex items-center">
               <span className="font-semibold">Available:</span>
               <span className="ml-2">{new Date(listing.dates.from).toLocaleDateString()} - {new Date(listing.dates.to).toLocaleDateString()}</span>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {listing.furnished && <Badge variant="outline"><Armchair className="w-4 h-4 mr-1" /> Furnished</Badge>}
+              {listing.pets_allowed && <Badge variant="outline"><Dog className="w-4 h-4 mr-1" /> Pets Allowed</Badge>}
+              {listing.car_parking_space && <Badge variant="outline"><Car className="w-4 h-4 mr-1" /> Parking</Badge>}
+              {listing.washer_and_dryer && <Badge variant="outline"><WashingMachine className="w-4 h-4 mr-1" /> Washer/Dryer</Badge>}
+              {listing.handicap_accessible && <Badge variant="outline"><Accessibility className="w-4 h-4 mr-1" /> Accessible</Badge>}
+            </div>
+            <div>
+              <span className="font-semibold">Type of Property:</span> {listing.typeOfProperty}
+            </div>
+            <div>
+              <span className="font-semibold">Available for:</span> {listing.available_semester} {listing.available_year}
             </div>
             <Button className="w-full" onClick={() => setIsBookingOpen(true)}>Contact</Button>
           </CardContent>
@@ -217,7 +234,7 @@ export default function ExpandedListing({ listing: initialListing }: { listing: 
                 width="100%"
                 mode="place"
                 loading="eager"
-                q={listing.address + ", Charlottesville, VA"}
+                q={listing.address + ", Charlottesville, VA, USA"}
               />
             </div>
           </CardContent>
@@ -252,6 +269,10 @@ export default function ExpandedListing({ listing: initialListing }: { listing: 
                   <Label htmlFor="address">Address</Label>
                   <Input id="address" name="address" value={updatedListing.address} onChange={handleInputChange} />
                 </div>
+                <div>
+                  <Label htmlFor="typeOfProperty">Type of Property</Label>
+                  <Input id="typeOfProperty" name="typeOfProperty" value={updatedListing.typeOfProperty} onChange={handleInputChange} />
+                </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <Label htmlFor="bedrooms">Bedrooms</Label>
@@ -260,9 +281,13 @@ export default function ExpandedListing({ listing: initialListing }: { listing: 
                   <div>
                     <Label htmlFor="baths">Bathrooms</Label>
                     <Input id="baths" name="baths" type="number" value={updatedListing.baths} onChange={handleInputChange} />
-                    <div className={`flex space-x-2 m-2 items-center ${updatedListing.sharedbathroom ? "" : "opacity-50"}`}>
-                      <Label htmlFor="sharedbathroom">Shared Bathroom?</Label>
-                      <Checkbox id="sharedbathroom" name="sharedbathroom" checked={updatedListing.sharedbathroom} onCheckedChange={() => setUpdatedListing(prev => ({ ...prev, sharedbathroom: !prev.sharedbathroom }))} />
+                    <div className="flex items-center space-x-2 mt-2">
+                      <Checkbox 
+                        id="sharedbathroom" 
+                        checked={updatedListing.sharedbathroom} 
+                        onCheckedChange={handleCheckboxChange('sharedbathroom')} 
+                      />
+                      <Label htmlFor="sharedbathroom">Shared Bathroom</Label>
                     </div>
                   </div>
                 </div>
@@ -276,7 +301,7 @@ export default function ExpandedListing({ listing: initialListing }: { listing: 
                     <SelectTrigger>
                       <SelectValue placeholder="Select gender preference" />
                     </SelectTrigger>
-                    <SelectContent className={`${leagueSpartan.className}`}>
+                    <SelectContent>
                       <SelectItem value="male">Male</SelectItem>
                       <SelectItem value="female">Female</SelectItem>
                       <SelectItem value="any">Any</SelectItem>
@@ -295,7 +320,8 @@ export default function ExpandedListing({ listing: initialListing }: { listing: 
                     />
                   </div>
                   <div>
-                    <Label htmlFor="dateTo">Available To</Label>
+                    <Label htmlFor="dateTo">
+Available To</Label>
                     <Input
                       id="dateTo"
                       name="dateTo"
@@ -308,6 +334,56 @@ export default function ExpandedListing({ listing: initialListing }: { listing: 
                 <div>
                   <Label htmlFor="additionalcontact">Additional Contact Info</Label>
                   <Input id="additionalcontact" name="additionalcontact" value={updatedListing.additionalcontact || ''} onChange={handleInputChange} />
+                </div>
+                <div>
+                  <Label htmlFor="available_semester">Available Semester</Label>
+                  <Input id="available_semester" name="available_semester" value={updatedListing.available_semester || ''} onChange={handleInputChange} />
+                </div>
+                <div>
+                  <Label htmlFor="available_year">Available Year</Label>
+                  <Input id="available_year" name="available_year" type="number" value={updatedListing.available_year || ''} onChange={handleInputChange} />
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="flex items-center space-x-2">
+                    <Checkbox 
+                      id="furnished" 
+                      checked={updatedListing.furnished} 
+                      onCheckedChange={handleCheckboxChange('furnished')} 
+                    />
+                    <Label htmlFor="furnished">Furnished</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Checkbox 
+                      id="pets_allowed" 
+                      checked={updatedListing.pets_allowed} 
+                      onCheckedChange={handleCheckboxChange('pets_allowed')} 
+                    />
+                    <Label htmlFor="pets_allowed">Pets Allowed</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Checkbox 
+                      id="car_parking_space" 
+                      checked={updatedListing.car_parking_space} 
+                      onCheckedChange={handleCheckboxChange('car_parking_space')} 
+                    />
+                    <Label htmlFor="car_parking_space">Car Parking Space</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Checkbox 
+                      id="washer_and_dryer" 
+                      checked={updatedListing.washer_and_dryer} 
+                      onCheckedChange={handleCheckboxChange('washer_and_dryer')} 
+                    />
+                    <Label htmlFor="washer_and_dryer">Washer and Dryer</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Checkbox 
+                      id="handicap_accessible" 
+                      checked={updatedListing.handicap_accessible} 
+                      onCheckedChange={handleCheckboxChange('handicap_accessible')} 
+                    />
+                    <Label htmlFor="handicap_accessible">Handicap Accessible</Label>
+                  </div>
                 </div>
                 {errorMessage && <p className="text-red-500">{errorMessage}</p>}
                 <div className="flex justify-end space-x-2 mt-4">
@@ -366,3 +442,4 @@ export default function ExpandedListing({ listing: initialListing }: { listing: 
     </div>
   )
 }
+

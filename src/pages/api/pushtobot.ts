@@ -19,7 +19,7 @@ export default async function handler(
         },
         body: JSON.stringify({
             // "text": `Posted by ${req.body.record.postedbyemail} at https://www.studystay.us/listing/${req.body.record.id}`,
-            "text": `https://www.studystay.us/listing/${req.body.record.id}\n${req.body.record.title}, ${req.body.record.price}/month`,
+            "text": `https://www.studystay.us/listing/${req.body.record.id}\n${req.body.record.title}, $${req.body.record.price}/month`,
             "bot_id": process.env.GROUPME_BOT_ID
         })
     })

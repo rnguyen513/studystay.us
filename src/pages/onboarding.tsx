@@ -73,6 +73,13 @@ export default function OnboardingForm() {
   const [gender, setGender] = useState("")
   const [additionalContact, setAdditionalContact] = useState("")
   const [sharedBathroom, setSharedBathroom] = useState(false)
+  const [available_semester, setAvailable_semester] = useState("");
+  const [available_year, setAvailable_year] = useState(-1);
+  const [furnished, setFurnished] = useState(false);
+  const [petsAllowed, setPetsAllowed] = useState(false);
+  const [carParkingSpace, setCarParkingSpace] = useState(false);
+  const [washerAndDryer, setWasherAndDryer] = useState(false);
+  const [handicapAccessible, setHandicapAccessible] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const [showAuth, setShowAuth] = useState(false);
@@ -196,7 +203,14 @@ export default function OnboardingForm() {
         location: "University of Virginia (UVA)",
         gender: gender.toLowerCase(),
         available: true,
-        sharedbathroom: sharedBathroom
+        sharedbathroom: sharedBathroom,
+        available_semester: available_semester,
+        available_year: available_year,
+        furnished: furnished,
+        pets_allowed: petsAllowed,
+        car_parking_space: carParkingSpace,
+        washer_and_dryer: washerAndDryer,
+        handicap_accessible: handicapAccessible
       }]);
 
       if (error) {
@@ -481,15 +495,44 @@ export default function OnboardingForm() {
                   onChange={(e) => setExtraCosts([e.target.value])}
                 />
               </div>
-              <div className="flex flex-col items-center">
-                <Label className="text-lg">Available dates</Label>
-                <div className="mt-2">
-                  <Calendar
-                    mode="range"
-                    selected={dates}
-                    onSelect={setDates}
-                    className="rounded-md border mx-auto"
-                  />
+              <div className="flex flex-row gap-4 items-center">
+                <div className="flex flex-col items-center">
+                  <Label className="text-lg">Available dates</Label>
+                  <div className="mt-2">
+                    <Calendar
+                      mode="range"
+                      selected={dates}
+                      onSelect={setDates}
+                      className="rounded-md border mx-auto"
+                    />
+                  </div>
+                </div>
+                <div className="space-y-4">
+                  <h3 className="text-lg font-medium">Semester and Year</h3>
+                  <div className="grid grid-cols-4 gap-2">
+                    {["Fall", "Winter", "Spring", "Summer"].map((semester) => (
+                      <Button
+                        key={semester}
+                        variant="outline"
+                        className={`w-full hover:bg-[#004aad] hover:text-white ${available_semester === semester ? "bg-[#004aad] text-white" : ""}`}
+                        onClick={() => setAvailable_semester(semester)}
+                      >
+                        {semester}
+                      </Button>
+                    ))}
+                  </div>
+                  <div className="grid grid-cols-4 gap-2">
+                    {[2024, 2025, 2026, 2027].map((year) => (
+                      <Button
+                        key={year}
+                        variant="outline"
+                        className={`w-full hover:bg-[#004aad] hover:text-white ${available_year == year ? "bg-[#004aad] text-white" : ""}`}
+                        onClick={() => setAvailable_year(year)}
+                      >
+                        {year}
+                      </Button>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
@@ -498,14 +541,15 @@ export default function OnboardingForm() {
       case 6:
         return (
           <motion.div
-            key="step6"
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -50 }}
-            transition={{ duration: 0.3 }}
-            className="max-w-2xl mx-auto space-y-8"
-          >
-            <h2 className="text-3xl font-semibold text-center">Additional Information</h2>
+          key="step6"
+          initial={{ opacity: 0, x: 50 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: -50 }}
+          transition={{ duration: 0.3 }}
+          className="max-w-2xl mx-auto space-y-8"
+        >
+          <h2 className="text-3xl font-semibold text-center">Additional Information</h2>
+          <div className="space-y-6">
             <div className="space-y-4">
               <div>
                 <Label htmlFor="otherRoommates" className="text-lg">Other Roommates</Label>
@@ -534,17 +578,52 @@ export default function OnboardingForm() {
                   onChange={(e) => setAdditionalContact(e.target.value)}
                 />
               </div>
-              {/* <div>
-                <Label htmlFor="views" className="text-lg">Views</Label>
-                <Input
-                  id="views"
-                  placeholder="Describe the views from your place"
-                  value={views}
-                  onChange={(e) => setViews(e.target.value)}
-                />
-              </div> */}
             </div>
-          </motion.div>
+            
+            <div className="grid grid-cols-2 gap-4">
+              <div className="flex items-center space-x-2">
+                <Checkbox 
+                  id="furnished" 
+                  checked={furnished}
+                  onCheckedChange={(checked) => setFurnished(checked.valueOf() ? true : false)}
+                />
+                <Label htmlFor="furnished">Furnished</Label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Checkbox 
+                  id="petsAllowed" 
+                  checked={petsAllowed}
+                  onCheckedChange={(checked) => setPetsAllowed(checked.valueOf() ? true : false)}
+                />
+                <Label htmlFor="petsAllowed">Pets Allowed</Label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Checkbox 
+                  id="carParkingSpace" 
+                  checked={carParkingSpace}
+                  onCheckedChange={(checked) => setCarParkingSpace(checked.valueOf() ? true : false)}
+                />
+                <Label htmlFor="carParkingSpace">Car Parking Space</Label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Checkbox 
+                  id="washerAndDryer" 
+                  checked={washerAndDryer}
+                  onCheckedChange={(checked) => setWasherAndDryer(checked.valueOf() ? true : false)}
+                />
+                <Label htmlFor="washerAndDryer">Washer and Dryer</Label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Checkbox 
+                  id="handicapAccessible" 
+                  checked={handicapAccessible}
+                  onCheckedChange={(checked) => setHandicapAccessible(checked.valueOf() ? true : false)}
+                />
+                <Label htmlFor="handicapAccessible">Handicap Accessible</Label>
+              </div>
+            </div>
+          </div>
+        </motion.div>
         )
       default:
         return null
@@ -598,10 +677,6 @@ export default function OnboardingForm() {
       </div>
     );
   }
-
-  // if (pendingSubmit) {
-  //   return <div className="z-50">Submitting your listing, please wait...</div>
-  // }
 
   return (
     <div className={`min-h-screen bg-gray-50 flex flex-col ${leagueSpartan.className}`}>

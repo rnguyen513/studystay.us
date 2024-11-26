@@ -66,7 +66,7 @@ const Header = () => {
       <>
         <header className={`border-b z-100 ${leagueSpartan.className}`}>
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <div className="text-[#004aad] text-2xl font-extrabold"><Link href="/in">studystay</Link></div>
+          <div className="text-[#004aad] text-2xl font-extrabold"><Link href="/">studystay</Link></div>
           <div className="hidden md:flex space-x-4 absolute left-1/2 transform -translate-x-1/2 text-[#004aad]">
             <Link href="/in" className="font-bold">Find a sublease</Link>
             <a>|</a>

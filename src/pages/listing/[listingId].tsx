@@ -11,9 +11,9 @@ export default function ListingPage({ listing }: { listing: ListingData | null})
     <>
       <Head>
         <title>{listing?.title}</title>
-        <meta name="description" content={listing?.description}/>
-        <meta property="og:title" content={listing?.title}/>
-        <meta property="og:description" content={listing?.description}/>
+        <meta name="description" content={listing?.description ?? "The better way to sublet"}/>
+        <meta property="og:title" content={listing?.title ?? "Listing unavailable"}/>
+        <meta property="og:description" content={listing?.description ?? "Listing unavailable"}/>
         <meta property="og:image" content={`https://zinuafgdmiwpkvlixboz.supabase.co/storage/v1/render/image/public/uploadedimages/${listing?.images[0].split("/").at(-1)}?width=1200&height=630&resize=cover`}/>
         <meta property="og:url" content={`https://studystay.us/listing/${listing?.id}}`}/>
         <meta property="og:type" content="website"/>

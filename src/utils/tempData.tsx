@@ -21,10 +21,23 @@ export type ListingData = {
     otherRoommates?: string[],
     images: string[],
     postedbyemail: string,
-    gender: string,
-    additionalcontact: string,
-    available: boolean,
-    sharedbathroom: boolean
+    gender?: string,
+    additionalcontact?: string,
+    available?: boolean,
+    sharedbathroom?: boolean,
+    available_semester?: string,
+    available_year?: number,
+    furnished?: boolean,
+    pets_allowed?: boolean,
+    car_parking_space?: boolean,
+    washer_and_dryer?: boolean,
+    handicap_accessible?: boolean
+}
+
+export type SearchQuery = {
+    listing: Partial<ListingData>,
+    minPrice?: number,
+    maxPrice?: number
 }
 
 export const tempListings: ListingData[] = [

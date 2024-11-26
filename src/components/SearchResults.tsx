@@ -10,10 +10,11 @@ import type { User as SupabaseUser } from '@supabase/supabase-js';
 type SearchResultsProps = {
     searchQuery: string,
     date?: string,
-    home: boolean
+    home: boolean,
+    setNumListings?: (numListings: number) => void
 }
 
-const SearchResults: React.FC<SearchResultsProps> = ({ searchQuery, date, home}) => {
+const SearchResults: React.FC<SearchResultsProps> = ({ searchQuery, date, home, setNumListings}) => {
     const [listings, setListings] = useState<ListingData[]>([]);
     const [userData, setUserData] = useState<{user: SupabaseUser | null} | null>(null);
     const [loading, setLoading] = useState(true);
@@ -23,13 +24,31 @@ const SearchResults: React.FC<SearchResultsProps> = ({ searchQuery, date, home})
     const supabase = createClient();
     useEffect(() => {
         const fetchListings = async () => {
-            const { data, error } = typeOfProperty != "" && typeOfProperty != undefined && typeOfProperty != null ? await supabase.from("listings").select().eq("typeOfProperty", typeOfProperty).eq("available", true) : await supabase.from("listings").select().eq("available", true);
+            const urlParams = new URLSearchParams(window.location.search);
+            const filters = Object.fromEntries(urlParams.entries());
+            let query = supabase.from("listings").select();
+
+            for (const [key, value] of Object.entries(filters)) {
+                if (value !== "" && value !== undefined && value !== null && key != "location") {
+                    if (key === "minPrice") query = query.gte("price", parseFloat(value));
+                    else if (key === "maxPrice") query = query.lte("price", parseFloat(value));
+                    else if (value === "true" || value === "false") query = query.eq(key, value === "true");
+                    else query = query.eq(key, value);
+                }
+            }
+
+            query = query.eq("available", true);
+
+            const { data, error } = await query;
 
             if (error || !data) {
-                return console.log("Error fetching listings or no listings returned: ", error);
+                console.log("Error fetching listings or no listings returned: ", error);
+                setLoading(false);
+                return;
             }
 
             setListings(data);
+            if (setNumListings) setNumListings(data.length);
             setLoading(false);
         }
         fetchListings();
@@ -53,7 +72,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({ searchQuery, date, home})
                     <ListingsArray listings={listings} user={userData?.user ?? undefined}/>
                 </>
             ) : (
-                <div>No results found...</div>
+                <div>No results found... Broaden your search.</div>
             )}
         </>
     );
