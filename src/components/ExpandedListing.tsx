@@ -320,8 +320,7 @@ export default function ExpandedListing({ listing: initialListing }: { listing: 
                     />
                   </div>
                   <div>
-                    <Label htmlFor="dateTo">
-Available To</Label>
+                    <Label htmlFor="dateTo">Available To</Label>
                     <Input
                       id="dateTo"
                       name="dateTo"
@@ -337,7 +336,20 @@ Available To</Label>
                 </div>
                 <div>
                   <Label htmlFor="available_semester">Available Semester</Label>
-                  <Input id="available_semester" name="available_semester" value={updatedListing.available_semester || ''} onChange={handleInputChange} />
+                    <div className="grid grid-cols-4 gap-2">
+                      {["Fall", "Winter", "Spring", "Summer"].map((semester) => (
+                          <Button
+                            id="available_semester"
+                            name="available_semester"
+                            key={semester}
+                            variant="outline"
+                            className={`w-full hover:bg-black hover:text-white ${updatedListing.available_semester === semester ? "bg-black text-white" : ""}`}
+                            onClick={(e) => {e.preventDefault();handleSelectChange("available_semester")(semester)}}
+                          >
+                            {semester}
+                          </Button>
+                        ))}
+                    </div>
                 </div>
                 <div>
                   <Label htmlFor="available_year">Available Year</Label>
