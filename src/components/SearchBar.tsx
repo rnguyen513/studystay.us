@@ -19,12 +19,12 @@ const SearchBar = ({numListings}: {numListings?: number | null | undefined}) => 
     const [typeOfProperty, setTypeOfProperty] = useState(searchParams.get("typeOfProperty") ?? "");
 
     const [modalOpen, setModalOpen] = useState(false);
-    const [searchQuery, setSearchQuery] = useState<SearchQuery>({listing: {location: "University of Virginia (UVA)"}, minPrice: 0, maxPrice: 2000});
+    const [searchQuery, setSearchQuery] = useState<SearchQuery>({listing: {location: "University of Virginia (UVA)"}, minPrice: 0, maxPrice: 2000, demographic: "All"});
 
     useEffect(() => {
         setTypeOfProperty(searchParams.get("typeOfProperty") ?? "");
         getSearchParamsAndSetPassedQuery();
-        console.log("updated search query:", searchQuery);
+        // console.log("updated search query:", searchQuery);
     }, [searchParams]);
 
     const handleSubmit = (e: React.FormEvent) => {
@@ -55,6 +55,7 @@ const SearchBar = ({numListings}: {numListings?: number | null | undefined}) => 
 
         params.append("minPrice", String(searchQuery.minPrice ?? 0));
         params.append("maxPrice", String(searchQuery.maxPrice ?? 2000));
+        params.append("open_to_demographics", String(searchQuery.demographic ?? "All"));
     
         return params.toString();
     }
@@ -81,7 +82,7 @@ const SearchBar = ({numListings}: {numListings?: number | null | undefined}) => 
                 {/* Mobile menu button */}
                 <button 
                     className="md:hidden p-2 rounded-full border mr-4"
-                    onClick={() => setIsMenuOpen(!isMenuOpen)}
+                    onClick={() => setModalOpen(!modalOpen)}
                 >
                     <Menu className="w-5 h-5" />
                 </button>
@@ -111,13 +112,13 @@ const SearchBar = ({numListings}: {numListings?: number | null | undefined}) => 
                             <p className="w-full outline-none text-sm text-gray-500">{date}</p>
                     </div>
 
-                    <button type="submit" className="bg-[#004aad] text-white p-4 rounded-full hover:bg-blue-700 m-2">
+                    <button disabled type="submit" className="bg-[#004aad] text-white p-4 rounded-full hover:bg-blue-700 m-2">
                         <Search className="w-5 h-5" />
                     </button>
                 </form>
 
                 {/* Mobile search form */}
-                <form onSubmit={handleSubmit} className="md:hidden flex items-center shadow-md rounded-full border flex-1">
+                <form onClick={() => setModalOpen(!modalOpen)} onSubmit={handleSubmit} className="md:hidden flex items-center shadow-md rounded-full border flex-1">
                     <div className="px-4 py-2 flex-1">
                         <input
                         type="text"
@@ -135,7 +136,7 @@ const SearchBar = ({numListings}: {numListings?: number | null | undefined}) => 
             </div>
 
             {/* Mobile menu */}
-            {isMenuOpen && (
+            {/* {isMenuOpen && (
                 <div className="md:hidden mb-4">
                     <div className="mb-4">
                         <div className="text-sm mb-1">When</div>
@@ -155,7 +156,7 @@ const SearchBar = ({numListings}: {numListings?: number | null | undefined}) => 
                         </button>
                     </div>
                 </div>
-            )}
+            )} */}
 
             <hr className="hidden md:flex mb-8"/>
 

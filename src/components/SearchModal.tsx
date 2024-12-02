@@ -96,6 +96,25 @@ const SearchModal = ({open, onOpenChange, searchQuery, setSearchQuery, submitQue
                 ))}
               </div>
             </div>
+
+            <div className="space-y-2">
+              <h3 className="text-lg font-medium mb-2">Demographic</h3>
+              <Select onValueChange={(value) => updateQuery("demographic", value)}>
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Select which describes you best" />
+                </SelectTrigger>
+                <SelectContent className={`${leagueSpartan.className}`}>
+                  <SelectItem value="Any">Any</SelectItem>
+                  <SelectItem value="International Student">International Student</SelectItem>
+                  <SelectItem value="Transfer Student">Transfer Student</SelectItem>
+                  <SelectItem value="Traveling Nurse">Traveling Nurse</SelectItem>
+                  <SelectItem value="Summer Student">Summer Student</SelectItem>
+                  <SelectItem value="Monthly Stay">Monthly Stay</SelectItem>
+                  <SelectItem value="Winter Break">Winter Break</SelectItem>
+                  <SelectItem value="Internships/Co-ops">Internships/Co-ops</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
   
             <div className="space-y-4 w-full">
               <h3 className="text-lg font-medium">Price</h3>

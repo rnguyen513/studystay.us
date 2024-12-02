@@ -31,13 +31,15 @@ export type ListingData = {
     pets_allowed?: boolean,
     car_parking_space?: boolean,
     washer_and_dryer?: boolean,
-    handicap_accessible?: boolean
+    handicap_accessible?: boolean,
+    open_to_demographics?: string[]
 }
 
 export type SearchQuery = {
     listing: Partial<ListingData>,
     minPrice?: number,
-    maxPrice?: number
+    maxPrice?: number,
+    demographic?: string
 }
 
 export const tempListings: ListingData[] = [

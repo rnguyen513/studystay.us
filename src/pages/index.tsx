@@ -197,7 +197,7 @@ export default function LandingPage() {
             </div> */}
             <div className="flex items-center">
               <Star className="w-5 h-5 text-blue-800 mr-1"/>
-              <span>For UVA students, by UVA students</span>
+              <span>For UVA students, open to all</span>
             </div>
           </div>
         </section>

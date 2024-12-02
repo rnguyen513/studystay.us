@@ -636,7 +636,7 @@ export default function OnboardingForm() {
         <header className="bg-white shadow-sm">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
             <div className="flex items-center">
-              <Link href="/in" className="text-[#004aad] text-2xl font-extrabold pointer-cursor">StudyStay</Link>
+              <Link href="/in" className="text-[#004aad] text-2xl font-extrabold pointer-cursor">studystay</Link>
             </div>
             <div className="flex items-center space-x-4">
               <Button variant="ghost" size="sm">
@@ -683,7 +683,7 @@ export default function OnboardingForm() {
       <header className="bg-white shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <div className="flex items-center">
-            <Link href="/in" className="text-[#004aad] text-2xl font-extrabold pointer-cursor">StudyStay</Link>
+            <Link href="/in" className="text-[#004aad] text-2xl font-extrabold pointer-cursor">studystay</Link>
           </div>
           <div className="flex items-center space-x-4">
             <Button variant="ghost" size="sm">

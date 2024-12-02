@@ -19,7 +19,7 @@ export default function LandingPage() {
       <Header/>
       <main className="container mx-auto px-4 py-8">
         <SearchBar numListings={numListings}/>
-        <SearchResults searchQuery={""} date={""} home={true} setNumListings={setNumListings}/>
+        <SearchResults searchQuery={""} date={""} home={true} setNumListings={setNumListings} randomized={true}/>
       </main>
     </div>
     <StudyStayFooter/>

@@ -11,10 +11,11 @@ type SearchResultsProps = {
     searchQuery: string,
     date?: string,
     home: boolean,
-    setNumListings?: (numListings: number) => void
+    setNumListings?: (numListings: number) => void,
+    randomized?: boolean
 }
 
-const SearchResults: React.FC<SearchResultsProps> = ({ searchQuery, date, home, setNumListings}) => {
+const SearchResults: React.FC<SearchResultsProps> = ({ searchQuery, date, home, setNumListings, randomized}) => {
     const [listings, setListings] = useState<ListingData[]>([]);
     const [userData, setUserData] = useState<{user: SupabaseUser | null} | null>(null);
     const [loading, setLoading] = useState(true);
@@ -33,6 +34,9 @@ const SearchResults: React.FC<SearchResultsProps> = ({ searchQuery, date, home, 
                     if (key === "minPrice") query = query.gte("price", parseFloat(value));
                     else if (key === "maxPrice") query = query.lte("price", parseFloat(value));
                     else if (value === "true" || value === "false") query = query.eq(key, value === "true");
+                    else if (key == "open_to_demographics") {
+                        if (value != "Any") query = query.contains("open_to_demographics", value);
+                    }
                     else query = query.eq(key, value);
                 }
             }
@@ -47,7 +51,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({ searchQuery, date, home, 
                 return;
             }
 
-            setListings(data);
+            setListings(randomized ? data.sort(() => Math.random() - 0.5) : data);
             if (setNumListings) setNumListings(data.length);
             setLoading(false);
         }
