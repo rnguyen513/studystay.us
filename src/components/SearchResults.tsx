@@ -35,7 +35,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({ searchQuery, date, home, 
                     else if (key === "maxPrice") query = query.lte("price", parseFloat(value));
                     else if (value === "true" || value === "false") query = query.eq(key, value === "true");
                     else if (key == "open_to_demographics") {
-                        if (value != "Any") query = query.contains("open_to_demographics", value);
+                        if (value != "Any") query = query.contains("open_to_demographics", [value]);
                     }
                     else query = query.eq(key, value);
                 }
