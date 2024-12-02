@@ -397,6 +397,36 @@ export default function ExpandedListing({ listing: initialListing }: { listing: 
                     <Label htmlFor="handicap_accessible">Handicap Accessible</Label>
                   </div>
                 </div>
+
+                <hr/>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <p>Select all lessors you are open to:</p>
+
+                  <div className="flex items-center space-x-2">
+                    <Checkbox
+                      checked={updatedListing.open_to_demographics?.includes("Any") || (updatedListing.open_to_demographics && updatedListing.open_to_demographics.length >= 7)}
+                      onCheckedChange={(checked) => setUpdatedListing(checked.valueOf() ? { ...updatedListing, open_to_demographics: ["International Students", "Transfer Students", "Traevling Nurses",
+                      "Summer Stays", "Monthly Stays", "Winter Break", "Internships/Co-ops"] } : { ...updatedListing, open_to_demographics: [] })}
+                    />
+                    <Label htmlFor="Any">Any</Label>
+                  </div>
+
+                  {
+                    ["International Students", "Transfer Students", "Traevling Nurses",
+                      "Summer Stays", "Monthly Stays", "Winter Break", "Internships/Co-ops"].map((demographic) => (
+                        <div className="flex items-center space-x-2" key={demographic}>
+                          <Checkbox
+                            checked={updatedListing.open_to_demographics?.includes(demographic)}
+                            onCheckedChange={(checked) => setUpdatedListing(
+                              checked.valueOf() ? { ...updatedListing, open_to_demographics: [...updatedListing.open_to_demographics ?? [], demographic] } : { ...updatedListing, open_to_demographics: updatedListing.open_to_demographics?.filter((item) => item !== demographic) })}
+                          />
+                          <Label htmlFor={demographic}>{demographic}</Label>
+                        </div>
+                      ))
+                  }
+                </div>
+
                 {errorMessage && <p className="text-red-500">{errorMessage}</p>}
                 <div className="flex justify-end space-x-2 mt-4">
                   <Button type="button" variant="outline" disabled={loading} onClick={() => {setIsEditOpen(false);setErrorMessage(null)}}>Cancel</Button>

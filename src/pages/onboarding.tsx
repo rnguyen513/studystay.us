@@ -80,6 +80,7 @@ export default function OnboardingForm() {
   const [carParkingSpace, setCarParkingSpace] = useState(false);
   const [washerAndDryer, setWasherAndDryer] = useState(false);
   const [handicapAccessible, setHandicapAccessible] = useState(false);
+  const [open_to_demographics, setOpen_to_demographics] = useState<string[]>(["International Students", "Transfer Students", "Traevling Nurses", "Summer Stays", "Monthly Stays", "Winter Break", "Internships/Co-ops"]);
   const [error, setError] = useState<string | null>(null);
 
   const [showAuth, setShowAuth] = useState(false);
@@ -151,7 +152,8 @@ export default function OnboardingForm() {
       dates,
       views,
       gender,
-      sharedBathroom
+      sharedBathroom,
+      open_to_demographics
     })
 
     setPendingSubmit(true);
@@ -210,7 +212,8 @@ export default function OnboardingForm() {
         pets_allowed: petsAllowed,
         car_parking_space: carParkingSpace,
         washer_and_dryer: washerAndDryer,
-        handicap_accessible: handicapAccessible
+        handicap_accessible: handicapAccessible,
+        open_to_demographics: open_to_demographics
       }]);
 
       if (error) {
@@ -621,6 +624,34 @@ export default function OnboardingForm() {
                 />
                 <Label htmlFor="handicapAccessible">Handicap Accessible</Label>
               </div>
+            </div>
+
+            <hr/>
+
+            <div className="grid grid-cols-2 gap-4">
+              <p>Select all lessors you are open to:</p>
+
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  checked={open_to_demographics.includes("Any") || open_to_demographics.length >= 7}
+                  onCheckedChange={(checked) => setOpen_to_demographics(checked.valueOf() ? ["International Students", "Transfer Students", "Traevling Nurses",
+                  "Summer Stays", "Monthly Stays", "Winter Break", "Internships/Co-ops"] : [])}
+                />
+                <Label htmlFor="Any">Any</Label>
+              </div>
+
+              {
+                ["International Students", "Transfer Students", "Traevling Nurses",
+                  "Summer Stays", "Monthly Stays", "Winter Break", "Internships/Co-ops"].map((demographic) => (
+                    <div className="flex items-center space-x-2" key={demographic}>
+                      <Checkbox
+                        checked={open_to_demographics.includes(demographic)}
+                        onCheckedChange={(checked) => setOpen_to_demographics(checked.valueOf() ? [...open_to_demographics, demographic] : open_to_demographics.filter(d => d !== demographic))}
+                      />
+                      <Label htmlFor={demographic}>{demographic}</Label>
+                    </div>
+                  ))
+              }
             </div>
           </div>
         </motion.div>

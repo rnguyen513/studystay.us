@@ -162,14 +162,14 @@ const SearchBar = ({numListings}: {numListings?: number | null | undefined}) => 
 
             {/*subheader*/}
             <div className="flex items-start justify-between content-center">
-                <div className="space-x-4 hidden md:flex hover:cursor-default opacity-50 text-gray-500">
+                {/* <div className="space-x-4 hidden md:flex hover:cursor-default opacity-50 text-gray-500">
                     <button className="flex items-center space-x-2 border rounded-lg px-4 py-2 whitespace-nowrap hover:cursor-default">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-4 h-4">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
                     </svg>
                     <span className="text-sm font-semibold">Filters</span>
                     </button>
-                </div>
+                </div> */}
                 <div className="relative flex-grow overflow-hidden mr-4">
                     <div className="flex space-x-8 overflow-x-auto pb-4 px-4 md:px-8 categories-scroll">
                         <>
