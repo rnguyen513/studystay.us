@@ -83,7 +83,7 @@ export default function ExpandedListing({ listing: initialListing }: { listing: 
     e.preventDefault()
     if (loading) return;
 
-    if (userData?.email !== listing.postedbyemail && userData?.email != "amk3ef@virginia.edu") {
+    if (userData?.email !== listing.postedbyemail && userData?.email != "amk3ef@virginia.edu" && userData?.email != "uww9ws@virginia.edu") {
       setErrorMessage("Unauthorized to update this listing")
       return
     }
@@ -112,7 +112,7 @@ export default function ExpandedListing({ listing: initialListing }: { listing: 
     <div className="container mx-auto px-4 py-8">
       <div className="mb-6 flex justify-between items-center">
         <h1 className="text-3xl font-bold">{listing.title}</h1>
-        {(userData?.email === listing.postedbyemail || userData?.email == "amk3ef@virginia.edu") && (
+        {(userData?.email === listing.postedbyemail || ["amk3ef@virginia.edu", "uww9ws@virginia.edu"].includes(userData?.email ?? "")) && (
           <Button variant="outline" onClick={() => setIsEditOpen(true)}>
             <Pen className="w-4 h-4 mr-2" />
             Edit Listing
