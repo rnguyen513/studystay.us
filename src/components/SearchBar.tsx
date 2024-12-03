@@ -183,7 +183,7 @@ const SearchBar = ({numListings}: {numListings?: number | null | undefined}) => 
                                 </button>
                             ))}
                         </>
-                        {numListings && <b className="text-md text-gray-500">{numListings} available</b>}
+                        {numListings && numListings > 0 && <b className="text-md text-gray-500">{numListings} available</b>}
                     </div>
                 </div>
             </div>

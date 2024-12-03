@@ -105,11 +105,11 @@ const SearchModal = ({open, onOpenChange, searchQuery, setSearchQuery, submitQue
                 </SelectTrigger>
                 <SelectContent className={`${leagueSpartan.className}`}>
                   <SelectItem value="Any">Any</SelectItem>
-                  <SelectItem value="International Student">International Student</SelectItem>
-                  <SelectItem value="Transfer Student">Transfer Student</SelectItem>
-                  <SelectItem value="Traveling Nurse">Traveling Nurse</SelectItem>
-                  <SelectItem value="Summer Student">Summer Student</SelectItem>
-                  <SelectItem value="Monthly Stay">Monthly Stay</SelectItem>
+                  <SelectItem value="International Students">International Student</SelectItem>
+                  <SelectItem value="Transfer Students">Transfer Student</SelectItem>
+                  <SelectItem value="Traveling Nurses">Traveling Nurse</SelectItem>
+                  <SelectItem value="Summer Stays">Summer Student</SelectItem>
+                  <SelectItem value="Monthly Stays">Monthly Stay</SelectItem>
                   <SelectItem value="Winter Break">Winter Break</SelectItem>
                   <SelectItem value="Internships/Co-ops">Internships/Co-ops</SelectItem>
                 </SelectContent>
