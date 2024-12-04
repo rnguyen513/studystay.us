@@ -82,15 +82,20 @@ export default function LandingPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="flex flex-row items-center space-x-4 justify-center my-8"
+            className="flex flex-col items-center space-y-4 my-8 px-4 w-full max-w-7xl mx-auto"
           >
-            <b className="text-gray-500">Or find housing for:</b>
-            <div className="flex flex-row space-x-4 justify-center items-center">
-              {
-                ["International Students", "Transfer Students", "Traevling Nurses", "Summer Stays", "Monthly Stays", "Winter Break", "Internships/Co-ops"].map((demographic) => (
-                  <Button onClick={() => router.push(`/s/UVA?open_to_demographics=${demographic}`)} className="px-2 py-1 bg-gray-500 rounded-lg" key={demographic}>{demographic}</Button>
-                ))
-              }
+            <b className="text-gray-500 text-center">Or find housing for:</b>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 w-full">
+              {["International Students", "Transfer Students", "Traevling Nurses", "Summer Stays", "Monthly Stays", "Winter Break", "Internships/Co-ops"].map((demographic) => (
+                <Button
+                  key={demographic}
+                  onClick={() => router.push(`/s/UVA?open_to_demographics=${demographic}`)}
+                  className="w-full bg-gray-500 hover:bg-gray-600 text-white"
+                  variant="secondary"
+                >
+                  {demographic}
+                </Button>
+              ))}
             </div>
           </motion.div>
           <motion.div
