@@ -413,7 +413,7 @@ export default function ExpandedListing({ listing: initialListing }: { listing: 
                   </div>
 
                   {
-                    ["International Students", "Transfer Students", "Traevling Nurses",
+                    ["International Students", "Transfer Students", "Traveling Nurses",
                       "Summer Stays", "Monthly Stays", "Winter Break", "Internships/Co-ops"].map((demographic) => (
                         <div className="flex items-center space-x-2" key={demographic}>
                           <Checkbox

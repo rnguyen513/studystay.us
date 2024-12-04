@@ -634,14 +634,14 @@ export default function OnboardingForm() {
               <div className="flex items-center space-x-2">
                 <Checkbox
                   checked={open_to_demographics.includes("Any") || open_to_demographics.length >= 7}
-                  onCheckedChange={(checked) => setOpen_to_demographics(checked.valueOf() ? ["International Students", "Transfer Students", "Traevling Nurses",
+                  onCheckedChange={(checked) => setOpen_to_demographics(checked.valueOf() ? ["International Students", "Transfer Students", "Traveling Nurses",
                   "Summer Stays", "Monthly Stays", "Winter Break", "Internships/Co-ops"] : [])}
                 />
                 <Label htmlFor="Any">Any</Label>
               </div>
 
               {
-                ["International Students", "Transfer Students", "Traevling Nurses",
+                ["International Students", "Transfer Students", "Traveling Nurses",
                   "Summer Stays", "Monthly Stays", "Winter Break", "Internships/Co-ops"].map((demographic) => (
                     <div className="flex items-center space-x-2" key={demographic}>
                       <Checkbox
