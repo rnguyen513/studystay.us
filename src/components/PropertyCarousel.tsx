@@ -5,9 +5,12 @@ import Image from "next/image"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { Bookmark, ThumbsUp } from "lucide-react"
 import { tempListings } from "@/utils/tempData"
+import { useRouter } from "next/router"
 
 export default function Component() {
-  const [offset, setOffset] = useState(-15)
+  const [offset, setOffset] = useState(-15);
+
+  const router = useRouter();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -22,19 +25,19 @@ export default function Component() {
 
   return (
     <div className="container px-4 py-8 relative min-h-[400px]">
-      <div className="absolute inset-0 flex items-center justify-center z-50">
+      {/* <div className="absolute inset-0 flex items-center justify-center z-50">
         <div className="bg-primary opacity-75 text-primary-foreground px-6 py-3 rounded-full text-2xl font-bold shadow-lg">
           Coming Soon
         </div>
-      </div>
-      <div className="blur">
+      </div> */}
+      <div className="">
         <div className="relative">
           <div
             className="flex transition-transform duration-[50ms] ease-linear"
             style={{ transform: `translateX(${offset}%)` }}
           >
             {[...tempListings, ...tempListings, ...tempListings].map((property, index) => (
-              <div key={`${property.id}-${index}`} className="w-full md:w-1/2 lg:w-1/3 flex-shrink-0 px-2">
+              <div key={`${property.id}-${index}`} className="w-full md:w-1/2 lg:w-1/3 flex-shrink-0 px-2 hover:cursor-pointer" onClick={()=>router.push(`/listing/${property.id}`)}>
                 <Card className="overflow-hidden">
                   <div className="relative">
                     <Image

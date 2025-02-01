@@ -44,14 +44,14 @@ export type SearchQuery = {
 
 export const tempListings: ListingData[] = [
     {
-        id: "1",
-        location: 'Penhook, Virginia',
+        id: "51",
+        location: 'Graduate Court',
         views: 'Mountain and lake views',
         dates: {
             from: "Nov 18",
             to: "Nov 23"
         },
-        price: 900,
+        price: 110,
         rating: 13,
         lat: 37.0024,
         lng: -79.6397,
@@ -60,32 +60,30 @@ export const tempListings: ListingData[] = [
             "Electricity"
         ],
         images: [
-        'https://a0.muscache.com/im/pictures/miso/Hosting-892669485442312919/original/d6226d33-5397-43b6-8806-9c9f2ffdacef.jpeg?im_w=720',
-        'https://a0.muscache.com/im/pictures/miso/Hosting-892669485442312919/original/d051d89a-be7d-47ac-b368-21e9a6b3e4ec.jpeg?im_w=720',
-        'https://a0.muscache.com/im/pictures/miso/Hosting-892669485442312919/original/bc78c584-9b93-4eaf-be31-7c35aeca9f88.jpeg?im_w=720',
+        'https://zinuafgdmiwpkvlixboz.supabase.co/storage/v1/object/uploadedimages/b3781d3b-8717-4436-97cb-59d008bea97c',
+        'https://zinuafgdmiwpkvlixboz.supabase.co/storage/v1/object/uploadedimages/ab386879-f9b0-462c-96e7-f31c1c701fbc',
+        'https://zinuafgdmiwpkvlixboz.supabase.co/storage/v1/object/uploadedimages/52b0af4b-1adb-46c8-8caa-2ebfe9f9b213',
         ]
     } as ListingData,
     {
-        id: "2",
+        id: "61",
         location: 'Broadway, Virginia', 
         views: 'Mountain and valley views', 
         dates: {
             from: "Nov 18",
             to: "Nov 23"
         },
-        price: 225, 
+        price: 1250, 
         rating: 2, 
         lat: 38.6126, 
         lng: -78.7992,
         images: [
-        'https://a0.muscache.com/im/pictures/miso/Hosting-625495310891506269/original/a701c888-2d26-4bcd-bfd7-7e5ad9a5ad4d.jpeg?im_w=720',
-        'https://a0.muscache.com/im/pictures/miso/Hosting-625495310891506269/original/7fb13042-18f0-4eb5-8361-dd15296d40c1.jpeg?im_w=720',
-        'https://a0.muscache.com/im/pictures/miso/Hosting-625495310891506269/original/63a41d17-b31e-4ff7-afdb-58627cd22267.jpeg?im_w=720',
+        'https://zinuafgdmiwpkvlixboz.supabase.co/storage/v1/object/uploadedimages/ee441742-23a2-4a03-94c2-1b1d4a1067a1'
         ]
     } as ListingData,
     {
-        id: "3",
-        location: 'Luray, Virginia', 
+        id: "74",
+        location: '1819 Jefferson Park Ave.', 
         views: 'Mountain and park views', 
         dates: {
             from: "Nov 18",
@@ -96,74 +94,66 @@ export const tempListings: ListingData[] = [
         baths: 1,
         description: "The Luxury Lake House is located near some of the area's finest restaurants, wineries, breweries, and golf courses. Bring your golf clubs and fishing poles along, as our property features an expansive lake front with excellent catch and release, providing a serene and picturesque setting to appreciate the beauty of the area and an unmatched view of Robert Trent Jones Golf course. The Lake House is a wildlife habitat and it is not uncommon to see wild animals and farm animals on the property.",
         guests: "3-6",
-        price: 256, 
+        price: 1300, 
         rating: 18, 
         lat: 38.6651, 
         lng: -78.4594,
         images: [
-        'https://a0.muscache.com/im/pictures/23be904d-ba59-4814-91b5-b23f82481421.jpg?im_w=720',
-        'https://a0.muscache.com/im/pictures/db3bfcf3-cd0c-4884-a83a-b8b6ab206935.jpg?im_w=720',
-        'https://a0.muscache.com/im/pictures/f0e49c18-15de-47d2-84c1-a1c70d5d9371.jpg?im_w=720',
+        'https://zinuafgdmiwpkvlixboz.supabase.co/storage/v1/object/uploadedimages/894c1e08-e705-420f-ad28-8787f63ddc8c',
         ]
     } as ListingData,
     {
-        id: "4",
-        location: 'Dunmore, West Virginia', 
+        id: "97",
+        location: '714 B Madison Ave', 
         views: 'Mountain and lake views', 
         dates: {
             from: "Nov 18",
             to: "Nov 23"
         },
-        price: 121, 
+        price: 1150, 
         rating: 23, 
         lat: 38.2762, 
         lng: -79.7764,
         images: [
-        'https://a0.muscache.com/im/pictures/miso/Hosting-49569025/original/96dad999-3c42-49f7-b04f-1b6616dfd126.jpeg?im_w=720',
-        'https://a0.muscache.com/im/ml/photo_enhancement/pictures/miso/Hosting-49569025/original/d3896651-4cde-4241-afb2-2c2f29b3c2f0.jpeg?im_w=720',
-        'https://a0.muscache.com/im/ml/photo_enhancement/pictures/miso/Hosting-49569025/original/c37eb15e-f926-4c40-8621-41a4411f429a.jpeg?im_w=720',
+        'https://zinuafgdmiwpkvlixboz.supabase.co/storage/v1/object/uploadedimages/806d5f44-4fff-4134-894d-bdc0f008b4ad',
         ]
     } as ListingData,
     {
-        id: "5",
+        id: "101",
         location: 'Dunmore, West Virginia', 
         views: 'Mountain and lake views', 
         dates: {
             from: "Nov 18",
             to: "Nov 23"
         },
-        price: 121, 
+        price: 850, 
         rating: 26, 
         lat: 38.2762, 
         lng: -79.7764,
         images: [
-        'https://a0.muscache.com/im/pictures/miso/Hosting-49569025/original/96dad999-3c42-49f7-b04f-1b6616dfd126.jpeg?im_w=720',
-        'https://a0.muscache.com/im/ml/photo_enhancement/pictures/miso/Hosting-49569025/original/d3896651-4cde-4241-afb2-2c2f29b3c2f0.jpeg?im_w=720',
-        'https://a0.muscache.com/im/ml/photo_enhancement/pictures/miso/Hosting-49569025/original/c37eb15e-f926-4c40-8621-41a4411f429a.jpeg?im_w=720',
+        'https://zinuafgdmiwpkvlixboz.supabase.co/storage/v1/object/uploadedimages/6dbfadc1-e420-4fb8-85ba-510639023a79',
         ]
     } as ListingData,
     {
-        id: "6",
-        location: 'Luray, Virginia', 
+        id: "103",
+        location: 'Mill Creek', 
         views: 'Mountain and park views', 
         dates: {
             from: "Nov 18",
             to: "Nov 23"
         },
-        price: 256, 
+        price: 800, 
         rating: 5, 
         lat: 38.6651, 
         lng: -78.4594,
         images: [
-        'https://a0.muscache.com/im/pictures/23be904d-ba59-4814-91b5-b23f82481421.jpg?im_w=720',
-        'https://a0.muscache.com/im/pictures/db3bfcf3-cd0c-4884-a83a-b8b6ab206935.jpg?im_w=720',
-        'https://a0.muscache.com/im/pictures/f0e49c18-15de-47d2-84c1-a1c70d5d9371.jpg?im_w=720',
+        'https://zinuafgdmiwpkvlixboz.supabase.co/storage/v1/object/uploadedimages/31880cbd-2c06-4eab-a450-64fbc1ee6b2f',
         ]
     } as ListingData,
     {
-        id: "7",
-        location: 'Penhook, Virginia', 
-        views: 'Mountain and lake views', 
+        id: "104",
+        location: 'Corner, UVA', 
+        views: 'Mountain and lake views',
         dates: {
             from: "Nov 18",
             to: "Nov 23"
@@ -173,45 +163,23 @@ export const tempListings: ListingData[] = [
         lat: 37.0024, 
         lng: -79.6397,
         images: [
-        'https://a0.muscache.com/im/pictures/miso/Hosting-892669485442312919/original/d6226d33-5397-43b6-8806-9c9f2ffdacef.jpeg?im_w=720',
-        'https://a0.muscache.com/im/pictures/miso/Hosting-892669485442312919/original/d051d89a-be7d-47ac-b368-21e9a6b3e4ec.jpeg?im_w=720',
-        'https://a0.muscache.com/im/pictures/miso/Hosting-892669485442312919/original/bc78c584-9b93-4eaf-be31-7c35aeca9f88.jpeg?im_w=720',
+        'https://zinuafgdmiwpkvlixboz.supabase.co/storage/v1/object/uploadedimages/b444caef-ff40-4d5b-9f91-9bffd3ad9064',
         ]
     } as ListingData,
     {
-        id: "8",
-        location: 'Broadway, Virginia', 
+        id: "110",
+        location: 'Graduate Court', 
         views: 'Mountain and valley views', 
         dates: {
             from: "Nov 18",
             to: "Nov 23"
         },
-        price: 225, 
+        price: 1000, 
         rating: 25, 
         lat: 38.6126, 
         lng: -78.7992,
         images: [
-        'https://a0.muscache.com/im/pictures/miso/Hosting-625495310891506269/original/a701c888-2d26-4bcd-bfd7-7e5ad9a5ad4d.jpeg?im_w=720',
-        'https://a0.muscache.com/im/pictures/miso/Hosting-625495310891506269/original/7fb13042-18f0-4eb5-8361-dd15296d40c1.jpeg?im_w=720',
-        'https://a0.muscache.com/im/pictures/miso/Hosting-625495310891506269/original/63a41d17-b31e-4ff7-afdb-58627cd22267.jpeg?im_w=720',
-        ]
-    } as ListingData,
-    {
-        id: "9",
-        location: 'Broadway, Virginia', 
-        views: 'Mountain and valley views', 
-        dates: {
-            from: "Nov 18",
-            to: "Nov 23"
-        },
-        price: 225, 
-        rating: 25, 
-        lat: 38.6126, 
-        lng: -78.7992,
-        images: [
-        'https://a0.muscache.com/im/pictures/miso/Hosting-625495310891506269/original/a701c888-2d26-4bcd-bfd7-7e5ad9a5ad4d.jpeg?im_w=720',
-        'https://a0.muscache.com/im/pictures/miso/Hosting-625495310891506269/original/7fb13042-18f0-4eb5-8361-dd15296d40c1.jpeg?im_w=720',
-        'https://a0.muscache.com/im/pictures/miso/Hosting-625495310891506269/original/63a41d17-b31e-4ff7-afdb-58627cd22267.jpeg?im_w=720',
+        'https://zinuafgdmiwpkvlixboz.supabase.co/storage/v1/object/uploadedimages/82341a96-0ba6-4400-bbfe-47c04f6c2357',
         ]
     } as ListingData
 ];
