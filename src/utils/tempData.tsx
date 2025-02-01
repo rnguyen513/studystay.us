@@ -67,7 +67,7 @@ export const tempListings: ListingData[] = [
     } as ListingData,
     {
         id: "61",
-        location: 'Broadway, Virginia', 
+        location: 'Graduate Court', 
         views: 'Mountain and valley views', 
         dates: {
             from: "Nov 18",
@@ -120,7 +120,7 @@ export const tempListings: ListingData[] = [
     } as ListingData,
     {
         id: "101",
-        location: 'Dunmore, West Virginia', 
+        location: 'The Corner, UVA',
         views: 'Mountain and lake views', 
         dates: {
             from: "Nov 18",
