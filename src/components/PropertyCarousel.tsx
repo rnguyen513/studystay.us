@@ -48,7 +48,7 @@ export default function Component() {
                       className="object-cover w-full h-48"
                     />
                     <div className="absolute top-2 left-2 bg-white px-2 py-1 text-sm font-semibold rounded">
-                      Guest favorite
+                      Favorite
                     </div>
                     <div className="absolute top-2 right-2 bg-white bg-opacity-50 p-2 rounded-full">
                       <Bookmark className="h-4 w-4" />

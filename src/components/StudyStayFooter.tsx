@@ -39,7 +39,7 @@ const StudyStayFooter = () => {
             </div>
           </div>
           <div className="mt-8 text-center text-sm">
-            <p>&copy; 2024 StudyStay. All rights reserved.</p>
+            <p>&copy; {new Date().getFullYear()} StudyStay. All rights reserved.</p>
             {/* <p className="mt-2">Trusted by universities worldwide. Licensed and insured.</p> */}
             {/* <p className="mt-2">Trusted by UVA students</p> */}
           </div>
