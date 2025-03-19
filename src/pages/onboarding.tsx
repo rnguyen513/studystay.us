@@ -334,7 +334,7 @@ export default function OnboardingForm() {
             className="max-w-2xl mx-auto space-y-8"
           >
             <h2 className="text-3xl font-semibold text-center">Where&apos;s your place located?</h2>
-            <p className="text-center text-gray-600">Your address is only shared with guests after they&apos;ve booked.</p>
+            <p className="text-center text-gray-600">This information will be available to the public. Use the name of your apartment complex or just a general location.</p>
             <div className="relative bg-gray-400 rounded-lg">
               {/* <img src="/placeholder.svg?height=300&width=600" alt="Map" className="w-full h-64 object-cover rounded-lg" /> */}
               <div className="hidden md:block">
