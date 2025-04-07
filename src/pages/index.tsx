@@ -71,14 +71,14 @@ export default function LandingPage() {
               <span className="flex flex-row">Post a sublet <ArrowRight className="ml-2"/></span>
             </button>
           </motion.form>
-          <motion.div
+          {/* <motion.div
             initial={{opacity: 0, y: 20}}
             animate={{opacity: 1, y: 0}}
             transition={{duration: 0.8, delay: 0.6}}
             >
               <hr/>
-          </motion.div>
-          <motion.div
+          </motion.div> */}
+          {/* <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
@@ -97,7 +97,7 @@ export default function LandingPage() {
                 </Button>
               ))}
             </div>
-          </motion.div>
+          </motion.div> */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
