@@ -49,7 +49,8 @@ const Listing = ({ listing, bookmarks, toggleBookmark }: { listing: ListingData,
                     {new Date(listing.dates.from).toDateString().substring(3)} - {new Date(listing.dates.to).toDateString().substring(3)}
                 </p>
                 <div className="flex flex-row space-x-2 items-center">
-                    <p className="font-semibold">${listing.price} <span className="font-normal">month</span></p>
+                    <p className={`font-semibold ${listing.discount && "line-through"}`}>${listing.price} <span className="font-normal">month</span></p>
+                    {listing.discount && <p className="text-red-400 font-black">${listing.discount}</p>}
                     {listing.extraCosts?.map((cost, index) => (
                         <p key={index} className="text-gray-500 text-xs mt-1">+ {cost}</p>
                     ))}

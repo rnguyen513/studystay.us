@@ -13,6 +13,7 @@ export type ListingData = {
         to: string
     },
     price: number,
+    discount?: number,
     rating?: number,
     lat?: number,
     lng?: number,
@@ -45,13 +46,15 @@ export type SearchQuery = {
 export const tempListings: ListingData[] = [
     {
         id: "51",
+        title: "Cool apt by the corner",
         location: 'Graduate Court',
-        views: 'Mountain and lake views',
         dates: {
-            from: "Nov 18",
-            to: "Nov 23"
+            "to": "2025-08-01T23:10:00.568Z",
+            "from": "2025-01-01T23:10:00.568Z"
         },
         price: 110,
+        discount: 50,
+        bedrooms: 1,
         rating: 13,
         lat: 37.0024,
         lng: -79.6397,
@@ -67,13 +70,15 @@ export const tempListings: ListingData[] = [
     } as ListingData,
     {
         id: "61",
-        location: 'Graduate Court', 
-        views: 'Mountain and valley views', 
+        location: 'Graduate Court',
+        title: "Cool apt by the corner",
+        bedrooms: 1,
         dates: {
-            from: "Nov 18",
-            to: "Nov 23"
+            "to": "2025-08-01T23:10:00.568Z",
+            "from": "2025-01-01T23:10:00.568Z"
         },
-        price: 1250, 
+        price: 1250,
+        discount: 750,
         rating: 2, 
         lat: 38.6126, 
         lng: -78.7992,
@@ -83,18 +88,19 @@ export const tempListings: ListingData[] = [
     } as ListingData,
     {
         id: "74",
-        location: '1819 Jefferson Park Ave.', 
-        views: 'Mountain and park views', 
+        location: '1819 Jefferson Park Ave.',
         dates: {
-            from: "Nov 18",
-            to: "Nov 23"
+            "to": "2025-08-01T23:10:00.568Z",
+            "from": "2025-01-01T23:10:00.568Z"
         },
         address: "123 Fake Street",
+        title: "Cool apt by the corner",
         bedrooms: 2,
         baths: 1,
         description: "The Luxury Lake House is located near some of the area's finest restaurants, wineries, breweries, and golf courses. Bring your golf clubs and fishing poles along, as our property features an expansive lake front with excellent catch and release, providing a serene and picturesque setting to appreciate the beauty of the area and an unmatched view of Robert Trent Jones Golf course. The Lake House is a wildlife habitat and it is not uncommon to see wild animals and farm animals on the property.",
         guests: "3-6",
-        price: 1300, 
+        price: 1300,
+        discount: 800,
         rating: 18, 
         lat: 38.6651, 
         lng: -78.4594,
@@ -104,13 +110,15 @@ export const tempListings: ListingData[] = [
     } as ListingData,
     {
         id: "97",
-        location: '714 B Madison Ave', 
-        views: 'Mountain and lake views', 
+        location: '714 B Madison Ave',
+        title: "Cool apt by the corner",
+        bedrooms: 1,
         dates: {
-            from: "Nov 18",
-            to: "Nov 23"
+            "to": "2025-08-01T23:10:00.568Z",
+            "from": "2025-01-01T23:10:00.568Z"
         },
-        price: 1150, 
+        price: 1150,
+        discount: 500,
         rating: 23, 
         lat: 38.2762, 
         lng: -79.7764,
@@ -121,12 +129,14 @@ export const tempListings: ListingData[] = [
     {
         id: "101",
         location: 'The Corner, UVA',
-        views: 'Mountain and lake views', 
+        title: "Cool apt by the corner",
+        bedrooms: 1,
         dates: {
-            from: "Nov 18",
-            to: "Nov 23"
+            "to": "2025-08-01T23:10:00.568Z",
+            "from": "2025-01-01T23:10:00.568Z"
         },
-        price: 850, 
+        price: 850,
+        discount: 300,
         rating: 26, 
         lat: 38.2762, 
         lng: -79.7764,
@@ -136,13 +146,15 @@ export const tempListings: ListingData[] = [
     } as ListingData,
     {
         id: "103",
-        location: 'Mill Creek', 
-        views: 'Mountain and park views', 
+        location: 'Mill Creek',
+        title: "Cool apt by the corner",
+        bedrooms: 1,
         dates: {
-            from: "Nov 18",
-            to: "Nov 23"
+            "to": "2025-08-01T23:10:00.568Z",
+            "from": "2025-01-01T23:10:00.568Z"
         },
-        price: 800, 
+        price: 800,
+        discount: 300,
         rating: 5, 
         lat: 38.6651, 
         lng: -78.4594,
@@ -152,13 +164,15 @@ export const tempListings: ListingData[] = [
     } as ListingData,
     {
         id: "104",
-        location: 'Corner, UVA', 
-        views: 'Mountain and lake views',
+        location: 'Corner, UVA',
+        title: "Cool apt by the corner",
+        bedrooms: 1,
         dates: {
-            from: "Nov 18",
-            to: "Nov 23"
+            "to": "2025-08-01T23:10:00.568Z",
+            "from": "2025-01-01T23:10:00.568Z"
         },
-        price: 900, 
+        price: 900,
+        discount: 400,
         rating: 11, 
         lat: 37.0024, 
         lng: -79.6397,
@@ -168,13 +182,15 @@ export const tempListings: ListingData[] = [
     } as ListingData,
     {
         id: "110",
-        location: 'Graduate Court', 
-        views: 'Mountain and valley views', 
+        location: 'Graduate Court',
+        title: "Cool apt by the corner",
+        bedrooms: 1,
         dates: {
-            from: "Nov 18",
-            to: "Nov 23"
+            "to": "2025-08-01T23:10:00.568Z",
+            "from": "2025-01-01T23:10:00.568Z"
         },
-        price: 1000, 
+        price: 1000,
+        discount: 600,
         rating: 25, 
         lat: 38.6126, 
         lng: -78.7992,
