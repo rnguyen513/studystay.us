@@ -5,17 +5,12 @@ import Header from '@/components/header'
 import SearchBar from '@/components/SearchBar'
 import SearchResults from '@/components/SearchResults'
 import StudyStayFooter from '@/components/StudyStayFooter'
-import { useRouter } from 'next/navigation'
 import ListingsArray from '@/components/ListingsArray'
 
 import { tempListings } from '@/utils/tempData'
 
 export default function LandingPage() {
   const [numListings, setNumListings] = useState<number>(0);
-
-  const router = useRouter();
-
-  const clearanceListings = {}
 
   return (
     <>
