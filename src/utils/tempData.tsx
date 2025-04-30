@@ -35,7 +35,8 @@ export type ListingData = {
     washer_and_dryer?: boolean,
     handicap_accessible?: boolean,
     open_to_demographics?: string[],
-    agreementUrl: string
+    agreementUrl: string,
+    seller_signature: string
 }
 
 export type SearchQuery = {

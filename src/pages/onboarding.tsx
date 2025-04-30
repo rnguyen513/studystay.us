@@ -30,6 +30,7 @@ import AuthPopup from "@/components/AuthPopup"
 import Link from "next/link"
 import Image from "next/image"
 import { GoogleMapsEmbed } from "@next/third-parties/google"
+import { PDFDocument, rgb, StandardFonts } from "pdf-lib"
 
 import { v4 } from "uuid"
 
@@ -104,6 +105,7 @@ export default function OnboardingForm() {
     const [uploadedAgreementUrl, setUploadedAgreementUrl] = useState<string | null>(null)
     const [signedAgreementUrl, setSignedAgreementUrl] = useState<string | null>(null)
 
+    const [sellerSignature, setSellerSignature] = useState("")
 
     const [showAuth, setShowAuth] = useState(false)
     const [loading, setLoading] = useState(true)
@@ -122,7 +124,7 @@ export default function OnboardingForm() {
         fetchUserData()
     }, [supabase])
 
-    const totalSteps = 9
+    const totalSteps = 10
 
     const introSteps = [
         {
@@ -235,7 +237,8 @@ export default function OnboardingForm() {
                     car_parking_space: carParkingSpace,
                     washer_and_dryer: washerAndDryer,
                     handicap_accessible: handicapAccessible,
-                    agreementUrl: uploadedAgreementUrl
+                    agreementUrl: uploadedAgreementUrl,
+                    seller_signature: sellerSignature
                 },
             ])
 
@@ -258,42 +261,113 @@ export default function OnboardingForm() {
 
     const handleAgreementUpload = async (file: File) => {
         try {
-          const filePath = `agreements/${v4()}-${file.name}` // Ensure filename includes folder
-          const { data, error } = await supabase.storage
-            .from("uploadedagreements")
-            .upload(filePath, file, {
-              cacheControl: "3600",
-              upsert: true,
-            })
-      
-          if (error) {
-            console.error("Error uploading agreement:", error)
-            setSubmitMessage({ message: "Failed to upload agreement file", status: "error" })
-            return
-          }
-      
-          // Save the exact file path for database insert later
-          setUploadedAgreementUrl(filePath)
-      
-          // Generate a signed URL
-          const { data: signedData, error: signedError } = await supabase.storage
-            .from("uploadedagreements")
-            .createSignedUrl(filePath, 60 * 60) // 1 hour
-      
-          if (signedError || !signedData?.signedUrl) {
-            console.error("Failed to generate signed URL:", signedError)
-            setSubmitMessage({ message: "Failed to create signed link", status: "error" })
-            return
-          }
-      
-          setSignedAgreementUrl(signedData.signedUrl)
-          console.log("Agreement uploaded and signed URL generated:", signedData.signedUrl)
-      
+            const filePath = `agreements/${v4()}-${file.name}` // Ensure filename includes folder
+            const { data, error } = await supabase.storage
+                .from("uploadedagreements")
+                .upload(filePath, file, {
+                    cacheControl: "3600",
+                    upsert: true,
+                })
+
+            if (error) {
+                console.error("Error uploading agreement:", error)
+                setSubmitMessage({ message: "Failed to upload agreement file", status: "error" })
+                return
+            }
+
+            // Save the exact file path for database insert later
+            setUploadedAgreementUrl(filePath)
+
+            // Generate a signed URL
+            const { data: signedData, error: signedError } = await supabase.storage
+                .from("uploadedagreements")
+                .createSignedUrl(filePath, 60 * 60) // 1 hour
+
+            if (signedError || !signedData?.signedUrl) {
+                console.error("Failed to generate signed URL:", signedError)
+                setSubmitMessage({ message: "Failed to create signed link", status: "error" })
+                return
+            }
+
+            setSignedAgreementUrl(signedData.signedUrl)
+            console.log("Agreement uploaded and signed URL generated:", signedData.signedUrl)
+
         } catch (err) {
-          console.error("Unexpected error uploading agreement:", err)
-          setSubmitMessage({ message: "Unexpected upload error", status: "error" })
+            console.error("Unexpected error uploading agreement:", err)
+            setSubmitMessage({ message: "Unexpected upload error", status: "error" })
         }
-      }      
+    }
+
+    const generateAndUploadSignedAgreement = async (fullName: string) => {
+        try {
+            const existingPdfBytes = await fetch("/studystay-seller-agreement.pdf").then(res => res.arrayBuffer())
+            const pdfDoc = await PDFDocument.load(existingPdfBytes)
+
+            const pages = pdfDoc.getPages()
+            const firstPage = pages[1]
+            const { height, width } = firstPage.getSize()
+
+            const font = await pdfDoc.embedFont(StandardFonts.HelveticaBold)
+            const smallFont = await pdfDoc.embedFont(StandardFonts.Helvetica)
+
+            const signatureY = height - 680
+
+            // 🔏 Signature block
+            firstPage.drawText(`Signed by: ${fullName}`, {
+                x: 50,
+                y: signatureY,
+                size: 12,
+                font,
+                color: rgb(0, 0, 0),
+            })
+
+            firstPage.drawText(`Date: ${new Date().toLocaleDateString()}`, {
+                x: 50,
+                y: signatureY - 20,
+                size: 12,
+                font,
+                color: rgb(0, 0, 0),
+            })
+
+            // 💧 Watermark footer
+            firstPage.drawText("Digitally signed via StudyStay", {
+                x: width / 2 - 100,
+                y: 20,
+                size: 10,
+                font: smallFont,
+                color: rgb(0.5, 0.5, 0.5),
+            })
+
+            const signedPdfBytes = await pdfDoc.save()
+            const signedBlob = new Blob([signedPdfBytes], { type: "application/pdf" })
+            const signedFile = new File([signedBlob], `signed-seller-agreement-${v4()}.pdf`, { type: "application/pdf" })
+
+            const filePath = `agreements/${signedFile.name}`
+
+            const { data, error } = await supabase.storage
+                .from("uploadedagreements")
+                .upload(filePath, signedFile, { upsert: true })
+
+            if (error) {
+                throw new Error("Upload failed: " + error.message)
+            }
+
+            setUploadedAgreementUrl(filePath)
+
+            const { data: signedUrlData } = await supabase.storage
+                .from("uploadedagreements")
+                .createSignedUrl(filePath, 60 * 60)
+
+            if (signedUrlData?.signedUrl) {
+                setSignedAgreementUrl(signedUrlData.signedUrl)
+            }
+
+            console.log("Signed agreement uploaded successfully:", filePath)
+        } catch (err) {
+            console.error("Error generating/saving signed agreement:", err)
+            setSubmitMessage({ message: "Failed to sign and upload agreement.", status: "error" })
+        }
+    }
 
     const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.files) {
@@ -321,6 +395,8 @@ export default function OnboardingForm() {
                 return true // All fields in this step are optional
             case 8:
                 return uploadedAgreementUrl
+            case 9:
+                return sellerSignature.trim().length > 0
             default:
                 return true
         }
@@ -816,6 +892,57 @@ export default function OnboardingForm() {
                         </div>
                     </motion.div>
                 )
+            case 9:
+                return (
+                    <motion.div
+                        key="step10"
+                        initial={{ opacity: 0, x: 50 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: -50 }}
+                        transition={{ duration: 0.3 }}
+                        className="max-w-2xl mx-auto space-y-6"
+                    >
+                        <h2 className="text-3xl font-semibold text-center">Sign the StudyStay Seller Agreement</h2>
+                        <p className="text-center text-gray-600">
+                            This document outlines your agreement with StudyStay. Please read it carefully and sign below.
+                        </p>
+
+                        <div className="border rounded-md overflow-hidden shadow">
+                            <iframe
+                                src="/studystay-seller-agreement.pdf"
+                                width="100%"
+                                height="500px"
+                                className="w-full"
+                                title="StudyStay Seller Agreement"
+                            />
+                        </div>
+
+                        <div className="space-y-2">
+                            <Label htmlFor="signature" className="text-lg">Full Name (Typed Signature)</Label>
+                            <Input
+                                id="signature"
+                                placeholder="e.g., John Doe"
+                                value={sellerSignature}
+                                onChange={(e) => setSellerSignature(e.target.value)}
+                            />
+                        </div>
+
+                        <p className="text-sm text-muted-foreground">
+                            By typing your name, you agree to the terms of the agreement above. This will serve as your official signature.
+                        </p>
+
+                        <Button
+                            disabled={!sellerSignature.trim()}
+                            onClick={async () => {
+                                await generateAndUploadSignedAgreement(sellerSignature);
+                                handleNextStep()
+                            }}
+                        >
+                            Sign and Continue
+                        </Button>
+
+                    </motion.div>
+                )
             default:
                 return null
         }
@@ -834,8 +961,8 @@ export default function OnboardingForm() {
                         <div className="flex items-center space-x-4">
                             <Button variant="ghost" size="sm">
                                 <HelpCircle className="h-5 w-5 mr-2" />
-                                <a href="mailto:amk3ef@virginia.edu" className="pt-1">
-                                    Questions?
+                                <a href="mailto:ryan@studystay.us" className="pt-1">
+                                    Let us help!
                                 </a>
                             </Button>
                         </div>
