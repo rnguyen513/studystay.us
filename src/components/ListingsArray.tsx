@@ -14,8 +14,9 @@ type ListingsArrayProps = {
 
 export const depreciationStart = new Date("Tue Apr 29 2025").getTime();
 
-const Listing = ({ listing, bookmarks, toggleBookmark }: { listing: ListingData, bookmarks: string[], toggleBookmark: (id: string) => void }) => {
+const Listing = ({ listing, bookmarks, toggleBookmark, user }: { listing: ListingData, bookmarks: string[], toggleBookmark: (id: string) => void, user?: User }) => {
     const router = useRouter();
+    const supabase = createClient();
 
     const goToExpandedPage = () => {
         router.push(`/listing/${listing.id}`);
@@ -37,6 +38,20 @@ const Listing = ({ listing, bookmarks, toggleBookmark }: { listing: ListingData,
                 <div className="absolute top-2 left-2 bg-white rounded-full px-2 py-1 text-xs font-semibold z-10">
                     Favorite
                 </div>
+                {user?.email == listing.postedbyemail && <div onClick={async ()=> {
+                    const { error } = await supabase.from("sell_now_emails").insert([
+                        {
+                            price: Math.floor(listing.price*(0.05 - 0.005*Math.floor((Date.now()-depreciationStart)/86_400_000))),
+                            email: user?.email || "no email found??",
+                            listing_id: listing.id
+                        },
+                        ])
+                    if (!error) {
+                        alert("The StudyStay Team has been notified. You'll hear back soon.")
+                    }
+                }} className="absolute top-2 left-20 bg-green-200 rounded-full px-2 py-1 text-xs font-semibold z-10">
+                    Sell to StudyStay (<a className="text-sm">${listing.price*(0.05)}</a>)
+                </div>}
             </div>
             <div className="space-y-1">
                 <div className="flex justify-between items-center">
@@ -52,7 +67,7 @@ const Listing = ({ listing, bookmarks, toggleBookmark }: { listing: ListingData,
                 </p>
                 <div className="flex flex-row space-x-2 items-center">
                     <p className={`font-semibold line-through`}>${listing.price} <span className="font-normal">month</span></p>
-                    <p className="text-red-400 font-black">${Math.ceil(listing.price*(0.5 - 0.08*(Math.floor((Date.now() - depreciationStart)/86_400_000))))}</p>
+                    <p className="text-red-400 font-black">${Math.ceil(listing.price*(0.5 - 0.045*(Math.floor((Date.now() - depreciationStart)/86_400_000))))}</p>
                     {/* {listing.extraCosts?.map((cost, index) => (
                         <p key={index} className="text-gray-500 text-xs mt-1">+ {cost}</p>
                     ))} */}
@@ -126,6 +141,7 @@ const ListingsArray: React.FC<ListingsArrayProps> = ({ listings, user }) => {
                         listing={listing}
                         bookmarks={bookmarkedListings}
                         toggleBookmark={toggleBookmark}
+                        user={user}
                     />
                 ))
             ) : (
