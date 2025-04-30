@@ -38,6 +38,8 @@ export default function ExpandedListing({ listing: initialListing }: { listing: 
   const router = useRouter()
 
   const depreciationStart = new Date(listing.created_at).getTime();
+  const studystay_price = Math.floor((listing.price*0.05)*(0.85**Math.floor((Date.now()-depreciationStart)/86_400_000)));
+  const market_price = Math.floor((listing.price*0.5)*(0.6**(Math.floor((Date.now() - depreciationStart)/86_400_000))));
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -88,21 +90,35 @@ export default function ExpandedListing({ listing: initialListing }: { listing: 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (loading) return;
-
-    if (userData?.email !== listing.postedbyemail && userData?.email != "amk3ef@virginia.edu" && userData?.email != "uww9ws@virginia.edu") {
+  
+    if (userData?.email !== listing.postedbyemail &&
+        userData?.email != "amk3ef@virginia.edu" &&
+        userData?.email != "uww9ws@virginia.edu") {
       setErrorMessage("Unauthorized to update this listing")
       return
     }
+  
+    if (updatedListing.price > listing.price) {
+      setErrorMessage("Price can only be lowered, not increased.")
+      return
+    } else if (updatedListing.price < listing.price) {
+        console.log("price reduced")
+    }
 
+    if (!updatedListing.price || updatedListing.price < 0) {
+        setErrorMessage("Price is invalid!")
+        return
+    }
+  
     setLoading(true);
-
+  
     const { data, error } = await supabase
       .from('listings')
       .update(updatedListing)
       .eq('id', listing.id)
       .select()
       .single()
-
+  
     if (error) {
       console.error("Error updating listing:", error)
       setErrorMessage(error.message)
@@ -113,13 +129,14 @@ export default function ExpandedListing({ listing: initialListing }: { listing: 
       setIsEditOpen(false)
     }
   }
+  
 
   return (
     <div className="container mx-auto px-4 py-8">
     {userData?.email === listing.postedbyemail && <div className="flex flex-row justify-center gap-2 p-2 bg-green-200 font-bold rounded-lg hover:cursor-pointer hover:bg-gray-100 mb-2 mt-[-2rem]" onClick={async () => {
         const { error } = await supabase.from("sell_now_emails").insert([
             {
-                price: Math.floor((listing.price*0.05)*(0.85**Math.floor((Date.now()-depreciationStart)/86_400_000))),
+                price: studystay_price,
                 email: userData?.email || "no email found??",
                 listing_id: listing.id
             },
@@ -128,7 +145,7 @@ export default function ExpandedListing({ listing: initialListing }: { listing: 
             alert("The StudyStay Team has been notified. You'll hear back soon.")
         }
     }}>
-        <p>Sell to StudyStay for <a className="text-2xl">${Math.floor((listing.price*0.05)*(0.85**Math.floor((Date.now()-depreciationStart)/86_400_000)))}</a>! It&apos;s not too late!</p>
+        <p>Sell to StudyStay for <a className="text-2xl">${studystay_price}</a>! It&apos;s not too late!</p>
     </div>}
       <div className="mb-6 flex justify-between items-center">
         <h1 className="text-3xl font-bold">{listing.title}</h1>
@@ -154,7 +171,7 @@ export default function ExpandedListing({ listing: initialListing }: { listing: 
             <CardTitle className="flex justify-between items-center">
               <div className="flex flex-row space-x-3">
                 <span className="text-2xl font-bold line-through">${listing.price} <span className="text-lg font-normal">/ month</span></span>
-                <p className="text-red-400 font-black text-3xl">${Math.floor((listing.price*0.5)*(0.6**(Math.floor((Date.now() - depreciationStart)/86_400_000))))}</p>
+                <p className="text-red-400 font-black text-3xl">${market_price}</p>
               </div>
               <div className="flex gap-2">
                 {userData?.email === listing.postedbyemail && userData != null && (
@@ -202,13 +219,13 @@ export default function ExpandedListing({ listing: initialListing }: { listing: 
                 const { error } = await supabase.from("request_information").insert([
                     {
                         email: userData?.email || " ",
-                        price: Math.floor((listing.price*0.5)*(0.6**(Math.floor((Date.now() - depreciationStart)/86_400_000)))),
+                        price: market_price,
                         listing_id: listing.id
                     },
                 ])
                 if (error) alert("Something went wrong with the database...oops")
                 setIsBookingOpen(true)
-            }}>Contact</Button>
+            }}>Contact to buy</Button>
           </CardContent>
         </Card>
       </div>
@@ -293,6 +310,7 @@ export default function ExpandedListing({ listing: initialListing }: { listing: 
                 <div>
                   <Label htmlFor="price">Price (per month)</Label>
                   <Input id="price" name="price" type="number" value={updatedListing.price} onChange={handleInputChange} />
+                  {updatedListing.price != listing.price && <p className="text-sm text-red-400">New market price: ${Math.floor((updatedListing.price*0.5)*(0.6**(Math.floor((Date.now() - depreciationStart)/86_400_000))))}</p>}
                 </div>
                 <div>
                   <Label htmlFor="location">University</Label>
@@ -363,10 +381,10 @@ export default function ExpandedListing({ listing: initialListing }: { listing: 
                     />
                   </div>
                 </div>
-                <div>
+                {/* <div>
                   <Label htmlFor="additionalcontact">Additional Contact Info</Label>
                   <Input id="additionalcontact" name="additionalcontact" value={updatedListing.additionalcontact || ''} onChange={handleInputChange} />
-                </div>
+                </div> */}
                 <div>
                   <Label htmlFor="available_semester">Available Semester</Label>
                     <div className="grid grid-cols-4 gap-2">
@@ -433,7 +451,7 @@ export default function ExpandedListing({ listing: initialListing }: { listing: 
 
                 <hr/>
 
-                <div className="grid grid-cols-2 gap-4">
+                {/* <div className="grid grid-cols-2 gap-4">
                   <p>Select all lessors you are open to:</p>
 
                   <div className="flex items-center space-x-2">
@@ -458,7 +476,7 @@ export default function ExpandedListing({ listing: initialListing }: { listing: 
                         </div>
                       ))
                   }
-                </div>
+                </div> */}
 
                 {errorMessage && <p className="text-red-500">{errorMessage}</p>}
                 <div className="flex justify-end space-x-2 mt-4">
@@ -520,4 +538,3 @@ export default function ExpandedListing({ listing: initialListing }: { listing: 
     </div>
   )
 }
-
