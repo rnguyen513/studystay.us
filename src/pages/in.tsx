@@ -20,7 +20,7 @@ export default function LandingPage() {
         <div>
             <div className="mb-5 text-red-400">
                 <h1 className="font-bold text-3xl">StudyStay last minute sublets</h1>
-                <h3>Up to 30-40% off this summer!</h3>
+                <h3>Up to 70-80% off this summer!</h3>
             </div>
             {/* <ListingsArray listings={tempListings}/> */}
             <SearchResults searchQuery={""} date={""} home={true} setNumListings={setNumListings} randomized={true}/>

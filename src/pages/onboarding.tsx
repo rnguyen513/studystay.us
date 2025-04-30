@@ -99,7 +99,6 @@ export default function OnboardingForm() {
   const [washerAndDryer, setWasherAndDryer] = useState(false)
   const [handicapAccessible, setHandicapAccessible] = useState(false)
   const [error, setError] = useState<string | null>(null)
-//   const [listingOption, setListingOption] = useState<"sell" | "list" | "">("")
 
   const [showAuth, setShowAuth] = useState(false)
   const [loading, setLoading] = useState(true)
@@ -252,9 +251,9 @@ export default function OnboardingForm() {
   const isStepValid = useCallback(() => {
     switch (step) {
       case 0:
-        return true // Intro screen is always valid
+        return price > 0 // Rent screen requires price
       case 1:
-        return price > 0
+        return true // Intro screen is always valid
       case 2:
         return typeOfProperty !== ""
       case 3:
@@ -270,20 +269,7 @@ export default function OnboardingForm() {
       default:
         return true
     }
-  }, [
-    step,
-    typeOfProperty,
-    address,
-    guests,
-    bedrooms,
-    beds,
-    baths,
-    title,
-    description,
-    images,
-    price,
-    dates
-  ])
+  }, [step, typeOfProperty, address, guests, bedrooms, beds, baths, title, description, images, price, dates])
 
   const handleNextStep = useCallback(() => {
     if (isStepValid()) {
@@ -300,6 +286,73 @@ export default function OnboardingForm() {
         return (
           <motion.div
             key="step0"
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -50 }}
+            transition={{ duration: 0.3 }}
+            className="max-w-2xl mx-auto space-y-8"
+          >
+            <h2 className="text-4xl font-semibold text-center">How much is your rent?</h2>
+            <div className="space-y-6">
+              <div className="relative mt-1">
+                <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                <Input
+                  id="price"
+                  type="number"
+                  placeholder="Enter your monthly rent"
+                  value={price || ""}
+                  onChange={(e) => setPrice(Number.parseInt(e.target.value) || 0)}
+                  className="pl-10"
+                />
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
+                <Button
+                  className="h-auto py-6 flex flex-col items-center gap-4 hover:bg-green-200"
+                  variant="outline"
+                  disabled={price ? false : true}
+                  onClick={async () => {
+                    const { error } = await supabase.from("sell_now_emails").insert([
+                        {
+                          price: price,
+                          email: userData?.user?.email,
+                        },
+                      ])
+                    if (!error) {
+                        alert("The StudyStay Team has been notified. You'll hear back soon.")
+                        router.push("/in")
+                    }
+                  }}
+                >
+                  <DollarSign className="w-8 h-8"/>
+                  <span className="text-lg">
+                    Sell now for <a className="font-black">${price ? Math.floor(price * 0.05) : "__"}</a>
+                  </span>
+                  <span className="text-sm text-muted-foreground text-wrap">
+                    StudyStay will buy your sublease. You&apos;ll be paid immediately.
+                  </span>
+                </Button>
+
+                <Button
+                  className="h-auto py-6 flex flex-col items-center gap-4"
+                  variant="outline"
+                  disabled={price ? false : true}
+                  onClick={() => setStep(1)}
+                >
+                  <Building className="w-8 h-8" />
+                  <span className="text-lg">List for 50%: ${price ? Math.floor(price*0.5) : "__"}</span>
+                  <span className="text-sm text-muted-foreground text-wrap">
+                    Your sublease will be posted to the market with no guarantee of purchase.
+                  </span>
+                </Button>
+              </div>
+            </div>
+          </motion.div>
+        )
+      case 1:
+        return (
+          <motion.div
+            key="step1"
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -50 }}
@@ -326,57 +379,9 @@ export default function OnboardingForm() {
                 <p className="text-gray-600">{introSteps[2].description}</p>
               </div>
             </div>
-            <Button className="w-full max-w-md" size="lg" onClick={() => setStep((prev) => prev + 1)}>
+            <Button className="w-full max-w-md" size="lg" onClick={() => setStep(2)}>
               Get started
             </Button>
-          </motion.div>
-        )
-      case 1:
-        return (
-          <motion.div
-            key="step1"
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -50 }}
-            transition={{ duration: 0.3 }}
-            className="max-w-2xl mx-auto space-y-8"
-          >
-            <h2 className="text-3xl font-semibold text-center">How much is your rent?</h2>
-            <div className="space-y-6">
-              <div className="relative mt-1">
-                <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-                <Input
-                  id="price"
-                  type="number"
-                  placeholder="Enter your monthly rent"
-                  value={price || ""}
-                  onChange={(e) => setPrice(Number.parseInt(e.target.value) || 0)}
-                  className="pl-10"
-                />
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
-                <Button
-                  className="h-auto py-6 flex flex-col items-center gap-4 hover:bg-green-200"
-                  variant="outline"
-                  onClick={() => alert("The StudyStay Team has been notified. You'll hear back soon.")}
-                >
-                  <DollarSign className="w-8 h-8" />
-                  <span className="text-lg">Sell now for <a className="font-black">{price ? "$" + Math.floor(price*0.05) : "5%"}</a></span>
-                  <span className="text-sm text-muted-foreground text-wrap">StudyStay will buy your sublease. You'll be paid immediately.</span>
-                </Button>
-
-                <Button
-                  className="h-auto py-6 flex flex-col items-center gap-4"
-                  variant="outline"
-                  onClick={handleNextStep}
-                >
-                  <Building className="w-8 h-8" />
-                  <span className="text-lg">List for 50%</span>
-                  <span className="text-sm text-muted-foreground text-wrap">Your sublease will be posted to the market with no guarantee of purchase.</span>
-                </Button>
-              </div>
-            </div>
           </motion.div>
         )
       case 2:
@@ -789,7 +794,7 @@ export default function OnboardingForm() {
         )}
         <AnimatePresence mode="wait">{renderStep()}</AnimatePresence>
       </main>
-      {step > 0 && (
+      {step > 1 && (
         <footer className="bg-white shadow-sm-top">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
             <Button variant="ghost" onClick={() => setStep((prev) => prev - 1)}>

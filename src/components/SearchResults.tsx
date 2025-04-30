@@ -76,7 +76,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({ searchQuery, date, home, 
                     <ListingsArray listings={listings} user={userData?.user ?? undefined}/>
                 </>
             ) : (
-                <div>No results found... Broaden your search.</div>
+                <div>Nothing to see here...</div>
             )}
         </>
     );

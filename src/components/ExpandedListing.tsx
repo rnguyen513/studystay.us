@@ -180,7 +180,16 @@ export default function ExpandedListing({ listing: initialListing }: { listing: 
             <div>
               <span className="font-semibold">Type:</span> {listing.typeOfProperty}
             </div>
-            <Button className="w-full bg-red-400" onClick={() => setIsBookingOpen(true)}>Contact</Button>
+            <Button className="w-full bg-red-400" onClick={async () => {
+                const { error } = await supabase.from("request_information").insert([
+                    {
+                        email: userData?.email || " ",
+                        listing_id: listing.id
+                    },
+                ])
+                if (error) alert("Something went wrong with the database...oops")
+                setIsBookingOpen(true)
+            }}>Contact</Button>
           </CardContent>
         </Card>
       </div>
@@ -447,7 +456,7 @@ export default function ExpandedListing({ listing: initialListing }: { listing: 
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <Card className="w-full max-w-md">
             <CardHeader>
-              <CardTitle className={`${leagueSpartan.className}`}>Contact Information</CardTitle>
+              <CardTitle className={`${leagueSpartan.className}`}>StudyStay has been notified that you&apos;re interested. For an immediate response, contact:</CardTitle>
             </CardHeader>
             <CardContent>
               <div className={`flex flex-col items-center justify-center p-6 ${leagueSpartan.className}`}>
