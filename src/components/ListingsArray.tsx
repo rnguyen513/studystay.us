@@ -12,7 +12,7 @@ type ListingsArrayProps = {
     user?: User
 };
 
-export const depreciationStart = new Date("Tue Apr 29 2025").getTime();
+// export const depreciationStart = new Date("Tue Apr 29 2025").getTime();
 
 const Listing = ({ listing, bookmarks, toggleBookmark, user }: { listing: ListingData, bookmarks: string[], toggleBookmark: (id: string) => void, user?: User }) => {
     const router = useRouter();
@@ -21,6 +21,8 @@ const Listing = ({ listing, bookmarks, toggleBookmark, user }: { listing: Listin
     const goToExpandedPage = () => {
         router.push(`/listing/${listing.id}`);
     };
+
+    const depreciationStart = new Date(listing.created_at).getTime();
 
     return (
         <div onClick={goToExpandedPage} className="space-y-4 hover:cursor-pointer">
@@ -41,7 +43,7 @@ const Listing = ({ listing, bookmarks, toggleBookmark, user }: { listing: Listin
                 {user?.email == listing.postedbyemail && <div onClick={async ()=> {
                     const { error } = await supabase.from("sell_now_emails").insert([
                         {
-                            price: Math.floor(listing.price*(0.05 - 0.005*Math.floor((Date.now()-depreciationStart)/86_400_000))),
+                            price: Math.floor((listing.price*0.05)*(0.85**Math.floor((Date.now()-depreciationStart)/86_400_000))),
                             email: user?.email || "no email found??",
                             listing_id: listing.id
                         },
@@ -50,7 +52,7 @@ const Listing = ({ listing, bookmarks, toggleBookmark, user }: { listing: Listin
                         alert("The StudyStay Team has been notified. You'll hear back soon.")
                     }
                 }} className="absolute top-2 left-20 bg-green-200 rounded-full px-2 py-1 text-xs font-semibold z-10">
-                    Sell to StudyStay (<a className="text-sm">${listing.price*(0.05)}</a>)
+                    Sell to StudyStay (<a className="text-sm">${Math.floor((listing.price*0.05)*(0.85**Math.floor((Date.now()-depreciationStart)/86_400_000)))}</a>)
                 </div>}
             </div>
             <div className="space-y-1">
@@ -67,7 +69,7 @@ const Listing = ({ listing, bookmarks, toggleBookmark, user }: { listing: Listin
                 </p>
                 <div className="flex flex-row space-x-2 items-center">
                     <p className={`font-semibold line-through`}>${listing.price} <span className="font-normal">month</span></p>
-                    <p className="text-red-400 font-black">${Math.ceil(listing.price*(0.5 - 0.045*(Math.floor((Date.now() - depreciationStart)/86_400_000))))}</p>
+                    <p className="text-red-400 font-black">${Math.floor((listing.price*0.5)*(0.6**(Math.floor((Date.now() - depreciationStart)/86_400_000))))}</p>
                     {/* {listing.extraCosts?.map((cost, index) => (
                         <p key={index} className="text-gray-500 text-xs mt-1">+ {cost}</p>
                     ))} */}

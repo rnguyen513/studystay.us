@@ -19,7 +19,9 @@ import { leagueSpartan } from "@/utils/fonts"
 import { createClient } from "@/utils/supabase/component"
 import type { User } from "@supabase/supabase-js"
 
-import { depreciationStart } from "./ListingsArray"
+// import { depreciationStart } from "./ListingsArray"
+// studystay depreciation: 0.85, starting from 0.05
+// market depreciation: 0.6, starting from 0.5
 
 export default function ExpandedListing({ listing: initialListing }: { listing: ListingData }) {
   const [listing, setListing] = useState(initialListing)
@@ -34,6 +36,8 @@ export default function ExpandedListing({ listing: initialListing }: { listing: 
   const [userData, setUserData] = useState<User | null>(null)
 
   const router = useRouter()
+
+  const depreciationStart = new Date(listing.created_at).getTime();
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -115,7 +119,7 @@ export default function ExpandedListing({ listing: initialListing }: { listing: 
     {userData?.email === listing.postedbyemail && <div className="flex flex-row justify-center gap-2 p-2 bg-green-200 font-bold rounded-lg hover:cursor-pointer hover:bg-gray-100 mb-2 mt-[-2rem]" onClick={async () => {
         const { error } = await supabase.from("sell_now_emails").insert([
             {
-                price: Math.floor(listing.price*(0.05 - 0.005*Math.floor((Date.now()-depreciationStart)/86_400_000))),
+                price: Math.floor((listing.price*0.05)*(0.85**Math.floor((Date.now()-depreciationStart)/86_400_000))),
                 email: userData?.email || "no email found??",
                 listing_id: listing.id
             },
@@ -124,7 +128,7 @@ export default function ExpandedListing({ listing: initialListing }: { listing: 
             alert("The StudyStay Team has been notified. You'll hear back soon.")
         }
     }}>
-        <p>Sell to StudyStay for <a className="text-2xl">${listing.price*(0.05 - 0.005*Math.floor((Date.now()-depreciationStart)/86_400_000))}</a>! It&apos;s not too late!</p>
+        <p>Sell to StudyStay for <a className="text-2xl">${Math.floor((listing.price*0.05)*(0.85**Math.floor((Date.now()-depreciationStart)/86_400_000)))}</a>! It&apos;s not too late!</p>
     </div>}
       <div className="mb-6 flex justify-between items-center">
         <h1 className="text-3xl font-bold">{listing.title}</h1>
@@ -150,7 +154,7 @@ export default function ExpandedListing({ listing: initialListing }: { listing: 
             <CardTitle className="flex justify-between items-center">
               <div className="flex flex-row space-x-3">
                 <span className="text-2xl font-bold line-through">${listing.price} <span className="text-lg font-normal">/ month</span></span>
-                <p className="text-red-400 font-black text-3xl">${Math.ceil(listing.price*(0.5 - 0.045*(Math.floor((Date.now() - depreciationStart)/86_400_000))))}</p>
+                <p className="text-red-400 font-black text-3xl">${Math.floor((listing.price*0.5)*(0.6**(Math.floor((Date.now() - depreciationStart)/86_400_000))))}</p>
               </div>
               <div className="flex gap-2">
                 {userData?.email === listing.postedbyemail && userData != null && (
@@ -198,7 +202,7 @@ export default function ExpandedListing({ listing: initialListing }: { listing: 
                 const { error } = await supabase.from("request_information").insert([
                     {
                         email: userData?.email || " ",
-                        price: Math.floor(listing.price*(0.05 - 0.005*Math.floor((Date.now()-depreciationStart)/86_400_000))),
+                        price: Math.floor((listing.price*0.5)*(0.6**(Math.floor((Date.now() - depreciationStart)/86_400_000)))),
                         listing_id: listing.id
                     },
                 ])

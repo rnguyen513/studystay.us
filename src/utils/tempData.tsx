@@ -1,5 +1,6 @@
 export type ListingData = {
     id: string,
+    created_at: string
     location: string,
     description?: string,
     title: string,
