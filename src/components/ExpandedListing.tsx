@@ -494,49 +494,80 @@ export default function ExpandedListing({ listing: initialListing }: { listing: 
       )}
 
       {isBookingOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <Card className="w-full max-w-md">
-            <CardHeader>
-              <CardTitle className={`${leagueSpartan.className}`}>StudyStay has been notified that you&apos;re interested. For an immediate response, contact:</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className={`flex flex-col items-center justify-center p-6 ${leagueSpartan.className}`}>
-                <div className="flex items-center justify-center p-6">
-                  <Mail className="w-6 h-6 mr-2" />
-                  <a href={`mailto:ryan@studystay.us`} className="text-lg font-medium hover:underline">
-                    ryan@studystay.us
-                  </a>
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 px-4">
+            <Card className="w-full max-w-md rounded-xl shadow-lg">
+                <CardHeader>
+                <CardTitle className={`text-xl font-semibold text-center ${leagueSpartan.className}`}>
+                    Thanks for your interest!
+                </CardTitle>
+                </CardHeader>
+                <CardContent className={`space-y-6 ${leagueSpartan.className}`}>
+                <div className="text-center">
+                    <p className="text-md mb-2">The StudyStay team has been notified.</p>
+                    <p className="text-sm text-muted-foreground">For an immediate response, reach out to:</p>
+                    <div className="flex items-center justify-center mt-2">
+                    <Mail className="w-5 h-5 mr-2" />
+                    <a
+                        href="mailto:ryan@studystay.us"
+                        className="text-base font-medium text-blue-600 hover:underline"
+                    >
+                        ryan@studystay.us
+                    </a>
+                    </div>
+                    {listing.additionalcontact && (
+                    <div className="mt-4 text-sm text-gray-700 bg-gray-100 rounded-md px-3 py-2 inline-block">
+                        or {listing.additionalcontact}
+                    </div>
+                    )}
                 </div>
-                {listing.additionalcontact && (
-                  <div className="bg-gray-100 rounded-lg px-4 py-2">
-                    or {listing.additionalcontact}
-                  </div>
-                )}
-              </div>
-              <div className="flex justify-end mt-4">
+
                 {!userData?.email && (
-                    <div className="">
-                        <p className="text-sm">Please enter your email so we know how to contact you</p>
-                        <input className="border rounded-lg" type="email" placeholder="john.doe@place.com" value={anonymous_user_email || ""} onChange={(v)=>setAnonymous_user_email(v.target.value)}/>
+                    <div className="space-y-2 text-sm text-gray-800">
+                    <Label htmlFor="anonEmail">Your email (so we can follow up):</Label>
+                    <Input
+                        id="anonEmail"
+                        type="email"
+                        required
+                        placeholder="john.doe@place.com"
+                        className={`w-full border ${
+                        anonymous_user_email === "" ? "border-red-500" : "border-gray-300"
+                        }`}
+                        value={anonymous_user_email || ""}
+                        onChange={(e) => setAnonymous_user_email(e.target.value)}
+                    />
+                    {anonymous_user_email === "" && (
+                        <p className="text-red-500 text-xs">Email is required.</p>
+                    )}
                     </div>
                 )}
-                <Button onClick={async () => {
-                    if (!userData?.email) {
+
+                <div className="flex justify-end">
+                    <Button
+                    disabled={!userData?.email && !anonymous_user_email?.trim()}
+                    onClick={async () => {
+                        if (!userData?.email && !anonymous_user_email?.trim()) {
+                            return; // prevent sending if empty
+                        }
+                        if (!userData?.email) {
                         const { error } = await supabase.from("request_information").insert([
                             {
-                                email: anonymous_user_email || "",
-                                price: market_price,
-                                listing_id: listing.id
+                            email: anonymous_user_email?.trim() || "no email provided...",
+                            price: market_price,
+                            listing_id: listing.id,
                             },
-                        ])
-                        if (!error) console.log("successfully submitted anonymous email")
-                    }
-                    setIsBookingOpen(false)}
-                }>{userData?.email ? "Close" : "Send"}</Button>
-              </div>
-            </CardContent>
-          </Card>
+                        ]);
+                        if (!error) console.log("Successfully submitted anonymous email");
+                        }
+                        setIsBookingOpen(false);
+                    }}
+                    >
+                    {userData?.email ? "Close" : "Send"}
+                    </Button>
+                </div>
+                </CardContent>
+            </Card>
         </div>
+
       )}
 
       {isDeleteOpen && (
