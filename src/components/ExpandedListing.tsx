@@ -41,7 +41,7 @@ export default function ExpandedListing({ listing: initialListing }: { listing: 
 
   const depreciationStart = new Date(listing.created_at).getTime();
   const studystay_price = Math.floor((listing.price*0.05)*(0.85**Math.floor((Date.now()-depreciationStart)/86_400_000)));
-  const market_price = Math.floor((listing.price*0.5)*(0.6**(Math.floor((Date.now() - depreciationStart)/86_400_000))));
+  const market_price = Math.floor((listing.price*0.5)*(0.9**(Math.floor((Date.now() - depreciationStart)/86_400_000))));
 
   useEffect(() => {
     const fetchUserData = async () => {
