@@ -3,7 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { leagueSpartan } from "@/utils/fonts"
 
 const TermsAndConditions = () => {
-    return (
+  return (
     <div className={`min-h-screen bg-white text-black ${leagueSpartan.className} text-xl overflow-hidden`}>
       <Header />
       <main className="container mx-auto px-4 py-8">
@@ -11,35 +11,54 @@ const TermsAndConditions = () => {
           <CardHeader>
             <CardTitle className="text-3xl font-bold text-center">Terms and Conditions</CardTitle>
             <CardDescription className="text-center">
-              Please read these terms carefully before using our service
+              By creating an account and posting on StudyStay, you agree to the following terms and conditions.
             </CardDescription>
           </CardHeader>
           <CardContent>
             <ol className="list-decimal space-y-6 pl-6">
               <li className="text-lg">
-                <h3 className="font-semibold mb-2">Be respectful</h3>
+                <h3 className="font-semibold mb-2">Use of the StudyStay Platform</h3>
+                <p className="text-muted-foreground mb-2">
+                  StudyStay provides a platform for users to list and sell subleases. When listing a property, users may choose:
+                </p>
+                <ul className="list-disc list-inside ml-4 text-muted-foreground">
+                  <li>Sell immediately to StudyStay at a displayed price.</li>
+                  <li>List on the open market, starting at 50% of the original rent. This market price decreases over time, according to a proprietary formula created by StudyStay that reflects rapid diminishing demand over time.</li>
+                </ul>
+              </li>
+
+              <li className="text-lg">
+                <h3 className="font-semibold mb-2">User Conduct</h3>
                 <p className="text-muted-foreground">
-                  Treat all users with courtesy and respect. Harassment, hate speech, or any form of discriminatory behavior will not be tolerated.
+                  Users are expected to treat others with courtesy and respect. Harassment, discrimination, or hate speech will result in removal from the platform.
                 </p>
               </li>
+
               <li className="text-lg">
-                <h3 className="font-semibold mb-2">Don&apos;t put sensitive information through channels</h3>
+                <h3 className="font-semibold mb-2">Information Safety</h3>
                 <p className="text-muted-foreground">
-                  Avoid sharing personal or sensitive information through public channels. This includes but is not limited to financial details, passwords, and private contact information.
+                  Do not share sensitive information (e.g. passwords, financial details, personal addresses) through public or unsecured channels.
                 </p>
               </li>
+
               <li className="text-lg">
-                <h3 className="font-semibold mb-2">Profile protection and liability</h3>
-                <p className="text-muted-foreground">
-                  Profiles are protected through student emails. However, we are not responsible for handling or administering the passing of leases or financial information through the channels. Users are advised to exercise caution and use secure methods for such transactions.
-                </p>
+                <h3 className="font-semibold mb-2">Terms of Service Summary</h3>
+                <ol className="list-decimal list-inside text-muted-foreground space-y-2 ml-4">
+                  <li><strong>Acceptance of Terms:</strong> Use of StudyStay constitutes agreement to these Terms and our Privacy Policy.</li>
+                  <li><strong>Service Description:</strong> StudyStay facilitates sublease listings but does not own or manage any properties listed.</li>
+                  <li><strong>Payment Processing:</strong> Rent payments are securely processed. Service Fees are non-refundable.</li>
+                  <li><strong>User Responsibilities:</strong> Users must provide accurate information and are responsible for safeguarding their accounts.</li>
+                  <li><strong>Limitation of Liability:</strong> StudyStay is not liable for property condition, user disputes, or tenant behavior.</li>
+                  <li><strong>Dispute Resolution:</strong> Disputes must be resolved between the buyer and seller. StudyStay may assist but is not obligated to mediate.</li>
+                  <li><strong>Governing Law:</strong> These Terms are governed by the laws of the Commonwealth of Virginia.</li>
+                </ol>
               </li>
             </ol>
           </CardContent>
         </Card>
-        </main>
+      </main>
     </div>
-    )
+  )
 }
 
 export default TermsAndConditions;

@@ -1,41 +1,9 @@
-"use client"
-
-import { useState } from "react"
 import { motion } from "framer-motion"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import { createClient } from "@/utils/supabase/component"
 import { leagueSpartan } from "@/utils/fonts"
 import Link from "next/link"
-
 import Header from "@/components/header"
 
-export default function Interested() {
-  const [email, setEmail] = useState("")
-  const [submitted, setSubmitted] = useState(false)
-  const [error, setError] = useState("")
-
-  const supabase = createClient()
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setError("")
-    if (!email || !email.includes("@")) {
-      setError("Please enter a valid email address.")
-      return
-    }
-
-    const { error } = await supabase.from("interested_emails").insert([{ email }])
-
-    if (error) {
-      setError("Something went wrong. Try again.")
-      return
-    }
-
-    setSubmitted(true)
-    setEmail("")
-  }
-
+export default function Flyer() {
   return (
     <div className={`min-h-screen w-full overflow-hidden bg-white ${leagueSpartan.className}`}>
       <Header />
@@ -44,43 +12,44 @@ export default function Interested() {
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
         viewport={{ once: true }}
-        className="mt-24 mb-28 px-4 w-full flex justify-center"
+        className="mt-14 mb-28 px-4 w-full flex justify-center"
       >
-        <div className="w-full max-w-xl text-center space-y-6">
-          <h2 className="text-5xl font-bold text-blue-800">get notified</h2>
-          <p className="text-lg text-gray-700">
-            once you&apos;re in our system, we&apos;ll reach out to start working together
+        <div className="w-full max-w-3xl text-center space-y-10">
+          <h1 className="text-5xl font-extrabold text-blue-800">Welcome to StudyStay</h1>
+          <p className="text-4xl text-[#F7CC85] font-bold">
+            We will buy your sublease!
           </p>
 
-          {submitted ? (
-            <div className="space-y-4">
-              <p className="text-green-600 font-medium text-lg">🎉 you&apos;re good to go!</p>
-              <Link
-                href="/in"
-                className="text-blue-800 hover:text-blue-900 underline font-medium transition-colors mt-10"
-              >
-                see listings available now →
-              </Link>
-            </div>
-          ) : (
-            <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3">
-              <Input
-                type="email"
-                placeholder="you@example.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="flex-1 text-base px-4 py-2"
-              />
-              <Button
-                type="submit"
-                className="bg-blue-800 hover:bg-blue-900 text-white font-semibold px-6 py-2 rounded-md transition-colors"
-              >
-                send
-              </Button>
-            </form>
-          )}
+          <div className="text-left bg-gray-100 rounded-xl p-6 space-y-6">
+            <h2 className="text-2xl font-bold text-blue-800 text-center">How It Works</h2>
+            <ul className="list-disc list-inside space-y-3 text-lg text-gray-800">
+              <li>
+                <strong>Sellers:</strong> List your sublease and:
+                <ul className="list-disc ml-6 mt-1">
+                  <li><strong>Sell Immediately</strong> to StudyStay for a guaranteed price.</li>
+                  <li><strong>Post to Market</strong> starting at 50% of your rent. Over time, the price drops according to a proprietary formula created by StudyStay.</li>
+                </ul>
+              </li>
+              <li>
+                <strong>Buyers:</strong> Browse listings to snatch up underpriced gems as they fall with time.
+              </li>
+            </ul>
+          </div>
 
-          {error && <p className="text-red-500 text-sm">{error}</p>}
+          <div className="flex flex-col sm:flex-row justify-center gap-4 mt-10">
+            <Link
+              href="/in"
+              className="bg-blue-800 hover:bg-blue-900 text-white font-semibold px-8 py-3 rounded-md text-lg transition"
+            >
+              Browse Listings →
+            </Link>
+            <Link
+              href="/onboarding"
+              className="border border-blue-800 text-blue-800 hover:bg-blue-800 hover:text-white font-semibold px-8 py-3 rounded-md text-lg transition"
+            >
+              List Your Place (requires an account) →
+            </Link>
+          </div>
         </div>
       </motion.section>
     </div>
