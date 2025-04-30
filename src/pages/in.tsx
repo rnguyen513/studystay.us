@@ -22,11 +22,12 @@ export default function LandingPage() {
                 <h1 className="font-bold text-3xl">StudyStay last minute sublets</h1>
                 <h3>Up to 30-40% off this summer!</h3>
             </div>
-            <ListingsArray listings={tempListings}/>
+            {/* <ListingsArray listings={tempListings}/> */}
+            <SearchResults searchQuery={""} date={""} home={true} setNumListings={setNumListings} randomized={true}/>
         </div>
-        <hr className="my-10"/>
-        <SearchBar numListings={numListings}/>
-        <SearchResults searchQuery={""} date={""} home={true} setNumListings={setNumListings} randomized={true}/>
+        {/* <hr className="my-10"/> */}
+        {/* <SearchBar numListings={numListings}/>
+        <SearchResults searchQuery={""} date={""} home={true} setNumListings={setNumListings} randomized={true}/> */}
       </main>
     </div>
     <StudyStayFooter/>

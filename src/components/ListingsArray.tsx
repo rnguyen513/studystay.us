@@ -12,6 +12,8 @@ type ListingsArrayProps = {
     user?: User
 };
 
+export const depreciationStart = new Date("Tue Apr 29 2025").getTime();
+
 const Listing = ({ listing, bookmarks, toggleBookmark }: { listing: ListingData, bookmarks: string[], toggleBookmark: (id: string) => void }) => {
     const router = useRouter();
 
@@ -49,11 +51,11 @@ const Listing = ({ listing, bookmarks, toggleBookmark }: { listing: ListingData,
                     {new Date(listing.dates.from).toDateString().substring(3)} - {new Date(listing.dates.to).toDateString().substring(3)}
                 </p>
                 <div className="flex flex-row space-x-2 items-center">
-                    <p className={`font-semibold ${listing.discount && "line-through"}`}>${listing.price} <span className="font-normal">month</span></p>
-                    {listing.discount && <p className="text-red-400 font-black">${listing.discount}</p>}
-                    {listing.extraCosts?.map((cost, index) => (
+                    <p className={`font-semibold line-through`}>${listing.price} <span className="font-normal">month</span></p>
+                    <p className="text-red-400 font-black">${Math.ceil(listing.price*(0.5 - 0.08*(Math.floor((Date.now() - depreciationStart)/86_400_000))))}</p>
+                    {/* {listing.extraCosts?.map((cost, index) => (
                         <p key={index} className="text-gray-500 text-xs mt-1">+ {cost}</p>
-                    ))}
+                    ))} */}
                 </div>
             </div>
         </div>

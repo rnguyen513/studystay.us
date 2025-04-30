@@ -19,6 +19,8 @@ import { leagueSpartan } from "@/utils/fonts"
 import { createClient } from "@/utils/supabase/component"
 import type { User } from "@supabase/supabase-js"
 
+import { depreciationStart } from "./ListingsArray"
+
 export default function ExpandedListing({ listing: initialListing }: { listing: ListingData }) {
   const [listing, setListing] = useState(initialListing)
   const [isBookingOpen, setIsBookingOpen] = useState(false)
@@ -132,7 +134,10 @@ export default function ExpandedListing({ listing: initialListing }: { listing: 
         <Card>
           <CardHeader>
             <CardTitle className="flex justify-between items-center">
-              <span className="text-2xl font-bold">${listing.price} <span className="text-lg font-normal">/ month</span></span>
+              <div className="flex flex-row space-x-3">
+                <span className="text-2xl font-bold line-through">${listing.price} <span className="text-lg font-normal">/ month</span></span>
+                <p className="text-red-400 font-black text-3xl">${Math.ceil(listing.price*(0.5 - 0.08*(Math.floor((Date.now() - depreciationStart)/86_400_000))))}</p>
+              </div>
               <div className="flex gap-2">
                 {userData?.email === listing.postedbyemail && userData != null && (
                   <div className="flex flex-row gap-2 text-red-500 px-2 py-1 rounded-lg hover:cursor-pointer hover:bg-gray-100" onClick={() => setIsDeleteOpen(true)}>
@@ -175,7 +180,7 @@ export default function ExpandedListing({ listing: initialListing }: { listing: 
             <div>
               <span className="font-semibold">Type:</span> {listing.typeOfProperty}
             </div>
-            <Button className="w-full" onClick={() => setIsBookingOpen(true)}>Contact</Button>
+            <Button className="w-full bg-red-400" onClick={() => setIsBookingOpen(true)}>Contact</Button>
           </CardContent>
         </Card>
       </div>
@@ -448,8 +453,11 @@ export default function ExpandedListing({ listing: initialListing }: { listing: 
               <div className={`flex flex-col items-center justify-center p-6 ${leagueSpartan.className}`}>
                 <div className="flex items-center justify-center p-6">
                   <Mail className="w-6 h-6 mr-2" />
-                  <a href={`mailto:${listing.postedbyemail}`} className="text-lg font-medium hover:underline">
+                  {/* <a href={`mailto:${listing.postedbyemail}`} className="text-lg font-medium hover:underline">
                     {listing.postedbyemail} 
+                  </a> */}
+                  <a href={`mailto:ryan@studystay.us`} className="text-lg font-medium hover:underline">
+                    ryan@studystay.us
                   </a>
                 </div>
                 {listing.additionalcontact && (
