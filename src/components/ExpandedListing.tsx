@@ -32,6 +32,8 @@ export default function ExpandedListing({ listing: initialListing }: { listing: 
   const [loading, setLoading] = useState(false)
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
+  const [anonymous_user_email, setAnonymous_user_email] = useState<string|null>(null);
+
   const supabase = createClient()
   const [userData, setUserData] = useState<User | null>(null)
 
@@ -216,14 +218,16 @@ export default function ExpandedListing({ listing: initialListing }: { listing: 
               <span className="font-semibold">Type:</span> {listing.typeOfProperty}
             </div>
             <Button className="w-full bg-red-400" onClick={async () => {
-                const { error } = await supabase.from("request_information").insert([
-                    {
-                        email: userData?.email || " ",
-                        price: market_price,
-                        listing_id: listing.id
-                    },
-                ])
-                if (error) alert("Something went wrong with the database...oops")
+                if (userData?.email) {
+                    const { error } = await supabase.from("request_information").insert([
+                        {
+                            email: userData?.email || " ",
+                            price: market_price,
+                            listing_id: listing.id
+                        },
+                    ])
+                    if (error) alert("Something went wrong with the database...oops")
+                }
                 setIsBookingOpen(true)
             }}>Contact to buy</Button>
           </CardContent>
@@ -499,9 +503,6 @@ export default function ExpandedListing({ listing: initialListing }: { listing: 
               <div className={`flex flex-col items-center justify-center p-6 ${leagueSpartan.className}`}>
                 <div className="flex items-center justify-center p-6">
                   <Mail className="w-6 h-6 mr-2" />
-                  {/* <a href={`mailto:${listing.postedbyemail}`} className="text-lg font-medium hover:underline">
-                    {listing.postedbyemail} 
-                  </a> */}
                   <a href={`mailto:ryan@studystay.us`} className="text-lg font-medium hover:underline">
                     ryan@studystay.us
                   </a>
@@ -513,7 +514,25 @@ export default function ExpandedListing({ listing: initialListing }: { listing: 
                 )}
               </div>
               <div className="flex justify-end mt-4">
-                <Button onClick={() => setIsBookingOpen(false)}>Close</Button>
+                {!userData?.email && (
+                    <div className="">
+                        <p className="text-sm">Please enter your email so we know how to contact you</p>
+                        <input className="border rounded-lg" type="email" placeholder="john.doe@place.com" value={anonymous_user_email || ""} onChange={(v)=>setAnonymous_user_email(v.target.value)}/>
+                    </div>
+                )}
+                <Button onClick={async () => {
+                    if (!userData?.email) {
+                        const { error } = await supabase.from("request_information").insert([
+                            {
+                                email: anonymous_user_email || "",
+                                price: market_price,
+                                listing_id: listing.id
+                            },
+                        ])
+                        if (!error) console.log("successfully submitted anonymous email")
+                    }
+                    setIsBookingOpen(false)}
+                }>{userData?.email ? "Close" : "Send"}</Button>
               </div>
             </CardContent>
           </Card>
