@@ -34,7 +34,8 @@ export type ListingData = {
     car_parking_space?: boolean,
     washer_and_dryer?: boolean,
     handicap_accessible?: boolean,
-    open_to_demographics?: string[]
+    open_to_demographics?: string[],
+    agreementUrl: string
 }
 
 export type SearchQuery = {
