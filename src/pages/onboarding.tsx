@@ -91,8 +91,8 @@ export default function OnboardingForm() {
     const [gender, setGender] = useState("")
     const [additionalContact, setAdditionalContact] = useState("")
     const [sharedBathroom, setSharedBathroom] = useState(false)
-    const [available_semester, setAvailable_semester] = useState("")
-    const [available_year, setAvailable_year] = useState(-1)
+    const [available_semester, setAvailable_semester] = useState("Summer")
+    const [available_year, setAvailable_year] = useState(2025)
     const [furnished, setFurnished] = useState(false)
     const [petsAllowed, setPetsAllowed] = useState(false)
     const [carParkingSpace, setCarParkingSpace] = useState(false)
@@ -699,7 +699,7 @@ export default function OnboardingForm() {
                     >
                         <h2 className="text-3xl font-semibold text-center">Set your price and availability</h2>
                         <div className="space-y-4">
-                            <div>
+                            {/* <div>
                                 <Label htmlFor="price" className="text-lg">
                                     Price per month
                                 </Label>
@@ -714,7 +714,7 @@ export default function OnboardingForm() {
                                         className="pl-10"
                                     />
                                 </div>
-                            </div>
+                            </div> */}
                             <div>
                                 <Label htmlFor="extraCosts" className="text-lg">
                                     Extra costs (optional)
@@ -736,7 +736,7 @@ export default function OnboardingForm() {
                                 <div className="space-y-4">
                                     <h3 className="text-lg font-medium">Semester and Year</h3>
                                     <div className="grid grid-cols-4 gap-2">
-                                        {["Fall", "Winter", "Spring", "Summer"].map((semester) => (
+                                        {["Summer"].map((semester) => (
                                             <Button
                                                 key={semester}
                                                 variant="outline"
@@ -748,7 +748,7 @@ export default function OnboardingForm() {
                                         ))}
                                     </div>
                                     <div className="grid grid-cols-4 gap-2">
-                                        {[2024, 2025, 2026, 2027].map((year) => (
+                                        {[2025].map((year) => (
                                             <Button
                                                 key={year}
                                                 variant="outline"
