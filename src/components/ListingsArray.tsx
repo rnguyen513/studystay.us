@@ -20,7 +20,7 @@ const Listing = ({ listing, bookmarks, toggleBookmark, user }: { listing: Listin
 
     const depreciationStart = new Date(listing.created_at).getTime();
     const studystay_price = Math.max(Math.floor((listing.price*0.05)*(0.85**Math.floor((Date.now()-depreciationStart)/86_400_000))), 50);
-    const market_price = Math.floor((listing.price*0.5)*(0.9**(Math.floor((Date.now() - depreciationStart)/86_400_000))));
+    const market_price = Math.max(Math.floor((listing.price*0.5)*(0.9**(Math.floor((Date.now() - depreciationStart)/86_400_000)))), 79);
 
     const goToExpandedPage = () => {
         router.push(`/listing/${listing.id}`);
@@ -71,7 +71,7 @@ const Listing = ({ listing, bookmarks, toggleBookmark, user }: { listing: Listin
                 </p>
                 <div className="flex flex-row space-x-2 items-center">
                     <p className={`font-semibold line-through`}>${listing.price} <span className="font-normal">month</span></p>
-                    <p className="text-red-400 font-black">${market_price} (+$50 fees)</p>
+                    <p className="text-red-400 font-black">${market_price}</p>
                     {/* {listing.extraCosts?.map((cost, index) => (
                         <p key={index} className="text-gray-500 text-xs mt-1">+ {cost}</p>
                     ))} */}

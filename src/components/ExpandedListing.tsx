@@ -41,7 +41,7 @@ export default function ExpandedListing({ listing: initialListing }: { listing: 
 
   const depreciationStart = new Date(listing.created_at).getTime();
   const studystay_price = Math.max(Math.floor((listing.price*0.05)*(0.85**Math.floor((Date.now()-depreciationStart)/86_400_000))),50);
-  const market_price = Math.floor((listing.price*0.5)*(0.9**(Math.floor((Date.now() - depreciationStart)/86_400_000))));
+  const market_price = Math.max(Math.floor((listing.price*0.5)*(0.9**(Math.floor((Date.now() - depreciationStart)/86_400_000)))),79);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -314,7 +314,7 @@ export default function ExpandedListing({ listing: initialListing }: { listing: 
                 <div>
                   <Label htmlFor="price">Price (per month)</Label>
                   <Input id="price" name="price" type="number" value={updatedListing.price} onChange={handleInputChange} />
-                  {updatedListing.price != listing.price && <p className="text-sm text-red-400">New market price: ${Math.floor((updatedListing.price*0.5)*(0.6**(Math.floor((Date.now() - depreciationStart)/86_400_000))))}</p>}
+                  {updatedListing.price != listing.price && <p className="text-sm text-red-400">New market price: ${Math.max(Math.floor((updatedListing.price*0.5)*(0.6**(Math.floor((Date.now() - depreciationStart)/86_400_000)))),79)}</p>}
                 </div>
                 <div>
                   <Label htmlFor="location">University</Label>
