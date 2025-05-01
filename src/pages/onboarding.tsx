@@ -306,23 +306,32 @@ export default function OnboardingForm() {
             const firstPage = pages[1]
             const { height, width } = firstPage.getSize()
 
-            const font = await pdfDoc.embedFont(StandardFonts.HelveticaBold)
-            const smallFont = await pdfDoc.embedFont(StandardFonts.Helvetica)
+            const font = await pdfDoc.embedFont(StandardFonts.TimesRomanBold)
+            const smallFont = await pdfDoc.embedFont(StandardFonts.TimesRoman)
 
-            const signatureY = height - 680
+            const signatureX = width * 0.5
+            const signatureY = height * 0.5
 
             // 🔏 Signature block
-            firstPage.drawText(`Signed by: ${fullName}`, {
-                x: 50,
-                y: signatureY,
+            firstPage.drawText(`${fullName}`, {
+                x: signatureX * 0.5 + 80,
+                y: signatureY + 20,
                 size: 12,
                 font,
                 color: rgb(0, 0, 0),
             })
 
-            firstPage.drawText(`Date: ${new Date().toLocaleDateString()}`, {
-                x: 50,
-                y: signatureY - 20,
+            firstPage.drawText(`${new Date().toLocaleDateString()}`, {
+                x: signatureX * 1.5 - 10,
+                y: signatureY + 20,
+                size: 12,
+                font,
+                color: rgb(0, 0, 0),
+            })
+
+            firstPage.drawText(`${new Date().toLocaleDateString()}`, {
+                x: signatureX * 1.5 - 5,
+                y: signatureY - 30,
                 size: 12,
                 font,
                 color: rgb(0, 0, 0),
@@ -331,7 +340,7 @@ export default function OnboardingForm() {
             // 💧 Watermark footer
             firstPage.drawText("Digitally signed via StudyStay", {
                 x: width / 2 - 100,
-                y: 20,
+                y: height / 2 - 50,
                 size: 10,
                 font: smallFont,
                 color: rgb(0.5, 0.5, 0.5),
@@ -387,8 +396,7 @@ export default function OnboardingForm() {
             case 4:
                 return guests > 0 && bedrooms > 0 && beds > 0 && baths > 0
             case 5:
-                // return title.trim() !== "" && description.trim() !== "" && images.length > 0 # TODO: CHANGE BACK ------------------------------
-                return true
+                return title.trim() !== "" && description.trim() !== "" && images.length > 0
             case 6:
                 return price > 0 && dates !== undefined
             case 7:
