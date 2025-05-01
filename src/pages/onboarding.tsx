@@ -88,7 +88,6 @@ export default function OnboardingForm() {
     const [extraCosts, setExtraCosts] = useState<string[]>([])
     const [otherRoommates, setOtherRoommates] = useState<string[]>([])
     const [dates, setDates] = useState<DateRange | undefined>()
-    const [views, setViews] = useState("")
     const [gender, setGender] = useState("")
     const [additionalContact, setAdditionalContact] = useState("")
     const [sharedBathroom, setSharedBathroom] = useState(false)
@@ -388,7 +387,8 @@ export default function OnboardingForm() {
             case 4:
                 return guests > 0 && bedrooms > 0 && beds > 0 && baths > 0
             case 5:
-                return title.trim() !== "" && description.trim() !== "" && images.length > 0
+                // return title.trim() !== "" && description.trim() !== "" && images.length > 0 # TODO: CHANGE BACK ------------------------------
+                return true
             case 6:
                 return price > 0 && dates !== undefined
             case 7:
@@ -400,7 +400,7 @@ export default function OnboardingForm() {
             default:
                 return true
         }
-    }, [step, typeOfProperty, address, guests, bedrooms, beds, baths, title, description, images, price, dates])
+    }, [step, typeOfProperty, address, guests, bedrooms, beds, baths, title, description, images, price, dates, uploadedAgreementUrl, sellerSignature])
 
     const handleNextStep = useCallback(() => {
         if (isStepValid()) {
@@ -471,9 +471,9 @@ export default function OnboardingForm() {
                                     onClick={() => setStep(1)}
                                 >
                                     <Building className="w-8 h-8" />
-                                    <span className="text-lg">List for 50%: ${price ? Math.floor(price * 0.5) : "__"}</span>
+                                    <span className="text-lg">List for 50%: <a className="font-black">${price ? Math.floor(price * 0.5) : "__"}</a></span>
                                     <span className="text-sm text-muted-foreground text-wrap">
-                                        Your sublease will be posted to the market with no guarantee of purchase. Total amount decreases over time.
+                                        Your sublease will be posted to the market. This amount may decrease over time based on demand.
                                     </span>
                                 </Button>
                             </div>
@@ -865,13 +865,13 @@ export default function OnboardingForm() {
                         <Input
                             type="file"
                             accept=".pdf,image/*"
-                            onChange={(e) => {
+                            onChange={async (e) => {
                                 const file = e.target.files?.[0]
                                 if (file) {
-                                    setAgreementFile(file)
-                                    handleAgreementUpload(file)
+                                  await handleAgreementUpload(file)
+                                  setStep((prev) => prev + 1)
                                 }
-                            }}
+                              }}
                         />
 
                         {signedAgreementUrl && (
@@ -895,7 +895,7 @@ export default function OnboardingForm() {
             case 9:
                 return (
                     <motion.div
-                        key="step10"
+                        key="step9"
                         initial={{ opacity: 0, x: 50 }}
                         animate={{ opacity: 1, x: 0 }}
                         exit={{ opacity: 0, x: -50 }}
@@ -935,7 +935,7 @@ export default function OnboardingForm() {
                             disabled={!sellerSignature.trim()}
                             onClick={async () => {
                                 await generateAndUploadSignedAgreement(sellerSignature);
-                                handleNextStep()
+                                handleFinish()
                             }}
                         >
                             Sign and Continue
@@ -1031,7 +1031,7 @@ export default function OnboardingForm() {
                             Back
                         </Button>
                         {step === totalSteps - 1 ? (
-                            <Button onClick={handleFinish}>Finish</Button>
+                            <Button disabled className="hidden" onClick={handleFinish}>Finish</Button>
                         ) : (
                             <Button onClick={handleNextStep}>Next</Button>
                         )}
