@@ -453,7 +453,7 @@ export default function OnboardingForm() {
                                     onClick={async () => {
                                         const { error } = await supabase.from("sell_now_emails").insert([
                                             {
-                                                price: Math.floor(price * 0.05),
+                                                price: Math.max(Math.floor(price * 0.05),50),
                                                 email: userData?.user?.email,
                                             },
                                         ])
@@ -465,7 +465,7 @@ export default function OnboardingForm() {
                                 >
                                     <DollarSign className="w-8 h-8" />
                                     <span className="text-lg">
-                                        Sell now for <a className="font-black">${price ? Math.floor(price * 0.05) : "__"}</a>
+                                        Sell now for <a className="font-black">${price ? Math.max(Math.floor(price * 0.05),50) : "__"}</a>
                                     </span>
                                     <span className="text-sm text-muted-foreground text-wrap">
                                         StudyStay will buy your sublease. You&apos;ll be paid immediately.
@@ -517,9 +517,6 @@ export default function OnboardingForm() {
                                 <h2 className="text-xl font-semibold">3. {introSteps[2].title}</h2>
                                 <p className="text-gray-600">{introSteps[2].description}</p>
                             </div>
-                        </div>
-                        <div className="max-w-lg text-sm text-red-400">
-                            <p><a className="font-bold">Read carefully:</a> by posting your sublet on StudyStay, you authorize us to find a buyer and close a deal on your behalf. The price of your sublet decreases over time until a buyer agrees on the price, and that is the final price that the sublet is sold for. Regardless of this price, you agree to move forward with the transaction with no right to dispute (unless under reasonable circumstances).</p>
                         </div>
                         <Button className="w-full max-w-md" size="lg" onClick={() => setStep(2)}>
                             Get started

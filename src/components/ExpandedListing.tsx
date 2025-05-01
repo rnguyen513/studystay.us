@@ -40,7 +40,7 @@ export default function ExpandedListing({ listing: initialListing }: { listing: 
   const router = useRouter()
 
   const depreciationStart = new Date(listing.created_at).getTime();
-  const studystay_price = Math.floor((listing.price*0.05)*(0.85**Math.floor((Date.now()-depreciationStart)/86_400_000)));
+  const studystay_price = Math.max(Math.floor((listing.price*0.05)*(0.85**Math.floor((Date.now()-depreciationStart)/86_400_000))),50);
   const market_price = Math.floor((listing.price*0.5)*(0.9**(Math.floor((Date.now() - depreciationStart)/86_400_000))));
 
   useEffect(() => {

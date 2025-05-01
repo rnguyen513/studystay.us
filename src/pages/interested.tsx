@@ -24,10 +24,10 @@ export default function Flyer() {
             <h2 className="text-2xl font-bold text-blue-800 text-center">How It Works</h2>
             <ul className="list-disc list-inside space-y-3 text-lg text-gray-800">
               <li>
-                <strong>Sellers:</strong> List your sublease and:
+                <strong>Sellers:</strong> List your sublease and,
                 <ul className="list-disc ml-6 mt-1">
-                  <li><strong>Sell Immediately</strong> to StudyStay for a guaranteed price.</li>
-                  <li><strong>Post to Market</strong> starting at 50% of your rent. Over time, the price drops according to a proprietary formula created by StudyStay.</li>
+                  <li><strong>Sell immediately</strong> to StudyStay for a guaranteed price.</li>
+                  <li><strong>Post to market</strong> starting at 50% of your rent, and will change based on market demand.</li>
                 </ul>
               </li>
               <li>
