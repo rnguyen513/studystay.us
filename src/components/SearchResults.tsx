@@ -76,7 +76,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({ searchQuery, date, home, 
                     <ListingsArray listings={listings} user={userData?.user ?? undefined}/>
                 </>
             ) : (
-                <div className="text-center text-muted-foreground italic">
+                <div className="text-center text-muted-foreground italic mt-20">
                     No listings just yet — but the best places go fast, so check back soon!
                 </div>
             )}
