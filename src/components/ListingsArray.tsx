@@ -70,8 +70,8 @@ const Listing = ({ listing, bookmarks, toggleBookmark, user }: { listing: Listin
                     {new Date(listing.dates.from).toDateString().substring(3)} - {new Date(listing.dates.to).toDateString().substring(3)}
                 </p>
                 <div className="flex flex-row space-x-2 items-center">
-                    <p className={`font-semibold line-through`}>${listing.price} <span className="font-normal">month</span></p>
-                    <p className="text-red-400 font-black">${market_price}</p>
+                    <p className={`font-semibold ${market_price != listing.price && "line-through"}`}>${listing.price} <span className="font-normal">month</span></p>
+                    {market_price != listing.price && <p className="text-red-400 font-black">${market_price}</p>}
                     {/* {listing.extraCosts?.map((cost, index) => (
                         <p key={index} className="text-gray-500 text-xs mt-1">+ {cost}</p>
                     ))} */}

@@ -172,8 +172,8 @@ export default function ExpandedListing({ listing: initialListing }: { listing: 
           <CardHeader>
             <CardTitle className="flex justify-between items-center">
               <div className="flex flex-row space-x-3">
-                <span className="text-2xl font-bold line-through">${listing.price} <span className="text-lg font-normal">/ month</span></span>
-                <p className="text-red-400 font-black text-3xl">${market_price}</p>
+                <span className={`text-2xl font-bold ${market_price != listing.price && "line-through"}`}>${listing.price} <span className="text-lg font-normal">/ month</span></span>
+                {market_price != listing.price && <p className="text-red-400 font-black text-3xl">${market_price}</p>}
               </div>
               <div className="flex gap-2">
                 {userData?.email === listing.postedbyemail && userData != null && (

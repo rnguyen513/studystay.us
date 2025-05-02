@@ -453,7 +453,7 @@ export default function OnboardingForm() {
                                     onClick={async () => {
                                         const { error } = await supabase.from("sell_now_emails").insert([
                                             {
-                                                price: Math.max(Math.floor(price * 1),50),
+                                                price: Math.max(Math.floor(price * 0.1),50),
                                                 email: userData?.user?.email,
                                             },
                                         ])
