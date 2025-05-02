@@ -453,7 +453,7 @@ export default function OnboardingForm() {
                                     onClick={async () => {
                                         const { error } = await supabase.from("sell_now_emails").insert([
                                             {
-                                                price: Math.max(Math.floor(price * 0.05),50),
+                                                price: Math.max(Math.floor(price * 1),50),
                                                 email: userData?.user?.email,
                                             },
                                         ])
@@ -465,7 +465,7 @@ export default function OnboardingForm() {
                                 >
                                     <DollarSign className="w-8 h-8" />
                                     <span className="text-lg">
-                                        Sell now for <a className="font-black">${price ? Math.max(Math.floor(price * 0.05),50) : "__"}</a>
+                                        Sell now for <a className="font-black">${price ? Math.max(Math.floor(price * 0.1),50) : "__"}</a>
                                     </span>
                                     <span className="text-sm text-muted-foreground text-wrap">
                                         StudyStay will buy your sublease. You&apos;ll be paid immediately.
@@ -479,7 +479,7 @@ export default function OnboardingForm() {
                                     onClick={() => setStep(1)}
                                 >
                                     <Building className="w-8 h-8" />
-                                    <span className="text-lg">List for 50%: <a className="font-black">${price ? Math.floor(price * 0.5) : "__"}</a></span>
+                                    <span className="text-lg">List for 100%: <a className="font-black">${price ? Math.floor(price) : "__"}</a></span>
                                     <span className="text-sm text-muted-foreground text-wrap">
                                         Your sublease will be posted to the market. This amount may decrease over time based on demand.
                                     </span>
