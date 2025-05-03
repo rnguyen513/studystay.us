@@ -23,8 +23,8 @@ const TermsAndConditions = () => {
                 </p>
                 <ul className="list-disc list-inside ml-4 text-muted-foreground">
                   <li>Sell immediately to StudyStay at a displayed price.</li>
-                  <li>List on the open market, starting at 50% of the original rent. This market price decreases over time, according to a proprietary formula created by StudyStay that reflects rapid diminishing demand over time.</li>
-                  <li className="text-red-400"><a className="font-bold">Read carefully:</a> by posting your sublet on StudyStay, you authorize us to find a buyer and close a deal on your behalf. The price of your sublet decreases over time until a buyer agrees on the price, and that is the final price that the sublet is sold for. Regardless of this price, you agree to move forward with the transaction with no right to dispute (unless under reasonable circumstances).</li>
+                  <li>List on the open market, starting at 100% of the original rent. This amount may decrease over time, according to interpreted market demand by StudyStay.</li>
+                  {/* <li className="text-red-400"><a className="font-bold">Read carefully:</a> by posting your sublet on StudyStay, you authorize us to find a buyer and close a deal on your behalf. The price of your sublet decreases over time until a buyer agrees on the price, and that is the final price that the sublet is sold for. Regardless of this price, you agree to move forward with the transaction with no right to dispute (unless under reasonable circumstances).</li> */}
                 </ul>
               </li>
 
