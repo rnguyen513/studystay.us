@@ -13,32 +13,28 @@ export default function LandingPage() {
 
   return (
     <div className={`min-h-screen bg-gradient-to-b from-blue-50 to-white ${leagueSpartan.className} overflow-x-hidden`}>
-        <header className="container mx-auto px-4 py-6 flex justify-between items-center">
-        <div className="flex items-center space-x-2">
-            <Link href="/in">
-            <div className="relative w-20 h-20"> {/* Change size as needed */}
+        <header className="w-full">
+        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+            {/* Logo */}
+            <Link href="/" className="flex items-center space-x-2">
+            <div className="relative w-20 h-20">
                 <Image
-                    src="/favicon.png"
-                    alt="favicon"
-                    fill
-                    className="object-contain"
+                src="/favicon.png"
+                alt="favicon"
+                fill
+                className="object-contain"
                 />
             </div>
             </Link>
+
+            {/* Desktop Navigation */}
+            <nav className="hidden md:flex space-x-6 text-blue-800 font-medium text-lg">
+                <Link href="/">Home</Link>
+                <Link href="/subletting">Subletting</Link>
+                <Link href="/about">About Us</Link>
+                <Link href="/resources">Resources</Link>
+            </nav>
         </div>
-        <nav className="hidden md:block">
-            <ul className="flex space-x-6">
-            <li>
-                <Link
-                href="https://www.instagram.com/studystay.us"
-                target="_blank"
-                className="text-blue-800 hover:text-orange-500 transition-colors"
-                >
-                Follow us on Instagram!
-                </Link>
-            </li>
-            </ul>
-        </nav>
         </header>
 
       <main className="container mx-auto px-4 py-16 md:py-16">
