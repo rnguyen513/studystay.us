@@ -20,15 +20,15 @@ const nextConfig = {
       }
     ]
   },
-  async redirects() {
-    return [
-        {
-            source:"/",
-            destination:"/in",
-            permanent:false
-        }
-    ]
-  },
+//   async redirects() {
+//     return [
+//         {
+//             source:"/",
+//             destination:"/in",
+//             permanent:false
+//         }
+//     ]
+//   },
 };
 
 export default nextConfig;

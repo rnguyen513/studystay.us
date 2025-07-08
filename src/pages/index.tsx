@@ -6,24 +6,40 @@ import StudyStayFooter from '@/components/StudyStayFooter'
 
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-
-import { Button } from '@/components/ui/button'
+import Image from 'next/image'
 
 export default function LandingPage() {
   const router = useRouter();
 
   return (
     <div className={`min-h-screen bg-gradient-to-b from-blue-50 to-white ${leagueSpartan.className} overflow-x-hidden`}>
-      <header className="container mx-auto px-4 py-6 flex justify-between items-center">
-        <div className="flex items-center">
-          <div className="text-2xl font-bold text-blue-800">StudyStay</div>
+        <header className="container mx-auto px-4 py-6 flex justify-between items-center">
+        <div className="flex items-center space-x-2">
+            <Link href="/in">
+            <div className="relative w-20 h-20"> {/* Change size as needed */}
+                <Image
+                    src="/favicon.png"
+                    alt="favicon"
+                    fill
+                    className="object-contain"
+                />
+            </div>
+            </Link>
         </div>
         <nav className="hidden md:block">
-          <ul className="flex space-x-6">
-            <li><Link href="https://www.instagram.com/studystay.us" target="_blank" className="text-blue-800 hover:text-orange-500 transition-colors">Follow us on Instagram!</Link></li>
-          </ul>
+            <ul className="flex space-x-6">
+            <li>
+                <Link
+                href="https://www.instagram.com/studystay.us"
+                target="_blank"
+                className="text-blue-800 hover:text-orange-500 transition-colors"
+                >
+                Follow us on Instagram!
+                </Link>
+            </li>
+            </ul>
         </nav>
-      </header>
+        </header>
 
       <main className="container mx-auto px-4 py-16 md:py-16">
         <section className="text-center">
@@ -71,33 +87,7 @@ export default function LandingPage() {
               <span className="flex flex-row">Post a sublet <ArrowRight className="ml-2"/></span>
             </button>
           </motion.form>
-          {/* <motion.div
-            initial={{opacity: 0, y: 20}}
-            animate={{opacity: 1, y: 0}}
-            transition={{duration: 0.8, delay: 0.6}}
-            >
-              <hr/>
-          </motion.div> */}
-          {/* <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-            className="flex flex-col items-center space-y-4 my-8 px-4 w-full max-w-7xl mx-auto"
-          >
-            <b className="text-gray-500 text-center">Or find housing for:</b>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 w-full">
-              {["International Students", "Transfer Students", "Traevling Nurses", "Summer Stays", "Monthly Stays", "Winter Break", "Internships/Co-ops"].map((demographic) => (
-                <Button
-                  key={demographic}
-                  onClick={() => router.push(`/s/UVA?open_to_demographics=${demographic}`)}
-                  className="w-full bg-gray-500 hover:bg-gray-600 text-white"
-                  variant="secondary"
-                >
-                  {demographic}
-                </Button>
-              ))}
-            </div>
-          </motion.div> */}
+
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
