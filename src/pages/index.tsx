@@ -202,7 +202,7 @@ export default function LandingPage() {
                         </div>
                         <div className="text-lg space-y-6">
                             <p>
-                                Subletting your space or finding a sublet to take over is a <b>notoriously difficult process</b>. Here's
+                                Subletting your space or finding a sublet to take over is a <b>notoriously difficult process</b>. Here&apos;s
                                 what studystay does to make it easy:
                             </p>
 
@@ -228,9 +228,9 @@ export default function LandingPage() {
                                 </div>
 
                                 <div>
-                                    <h3 className="font-bold text-blue-800 mb-2">4) We're made for students, by students</h3>
+                                    <h3 className="font-bold text-blue-800 mb-2">4) We&apos;re made for students, by students</h3>
                                     <p>
-                                        At studystay, we've experienced the current subletting system firsthand and we are dedicated to
+                                        At studystay, we&apos;ve experienced the current subletting system firsthand and we are dedicated to
                                         making it a better experience for everyone.
                                     </p>
                                 </div>
