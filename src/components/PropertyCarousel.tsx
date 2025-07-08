@@ -1,5 +1,3 @@
-"use client"
-
 import React, { useState, useEffect } from "react"
 import Image from "next/image"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
@@ -37,7 +35,7 @@ export default function Component() {
             style={{ transform: `translateX(${offset}%)` }}
           >
             {[...tempListings, ...tempListings, ...tempListings].map((property, index) => (
-              <div key={`${property.id}-${index}`} className="w-full md:w-1/2 lg:w-1/3 flex-shrink-0 px-2 hover:cursor-pointer" onClick={()=>router.push(`/listing/${property.id}`)}>
+              <div key={`${property.id}-${index}`} className="w-full md:w-1/2 lg:w-1/3 flex-shrink-0 px-2 hover:cursor-pointer" onClick={()=>router.push("/in")}>
                 <Card className="overflow-hidden">
                   <div className="relative">
                     <Image
@@ -58,12 +56,10 @@ export default function Component() {
                     <div className="flex justify-between items-start mb-2">
                       <h3 className="text-lg font-semibold">{property.location}</h3>
                       <div className="flex items-center">
-                        <ThumbsUp className="h-4 w-4 mr-1" />
-                        <span className="text-sm">{property.rating}</span>
                       </div>
                     </div>
                     <p className="text-sm text-muted-foreground mb-1">{property.views}</p>
-                    <p className="text-sm text-muted-foreground">{property.dates.to} - {property.dates.from}</p>
+                    <p className="text-sm text-muted-foreground">{(new Date(property.dates.to)).toDateString()} - {(new Date(property.dates.from)).toDateString()}</p>
                   </CardContent>
                   <CardFooter className="p-4 pt-0 flex justify-between items-end">
                     <div>
