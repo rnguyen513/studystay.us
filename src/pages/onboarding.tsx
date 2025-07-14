@@ -429,11 +429,11 @@ export default function OnboardingForm() {
                         animate={{ opacity: 1, x: 0 }}
                         exit={{ opacity: 0, x: -50 }}
                         transition={{ duration: 0.3 }}
-                        className="max-w-2xl mx-auto space-y-8"
+                        className="max-w-2xl mx-auto space-y-8 mt-[-10rem]"
                     >
                         <h2 className="text-4xl font-semibold text-center">How much is your rent?</h2>
-                        <div className="space-y-6">
-                            <div className="relative mt-1">
+                        <div className="flex flex-col items-center w-full space-y-6">
+                            <div className="relative mt-1 w-full">
                                 <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
                                 <Input
                                     id="price"
@@ -441,11 +441,24 @@ export default function OnboardingForm() {
                                     placeholder="Enter your monthly rent"
                                     value={price || ""}
                                     onChange={(e) => setPrice(Number.parseInt(e.target.value) || 0)}
-                                    className="pl-10"
+                                    className="pl-10 w-full"
                                 />
                             </div>
 
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
+                            <p className="text-gray-500">Pro tip: most sublettors price the rent at 50-75% of their actual rent to attract buyers.</p>
+
+                            <div>
+                                <Button
+                                    className="h-auto flex flex-col items-center gap-4 hover:bg-green-200"
+                                    variant="outline"
+                                    disabled={price ? false : true}
+                                    onClick={() => setStep(1)}
+                                >
+                                    Confirm
+                                </Button>
+                            </div>
+
+                            {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
                                 <Button
                                     className="h-auto py-6 flex flex-col items-center gap-4 hover:bg-green-200"
                                     variant="outline"
@@ -484,7 +497,7 @@ export default function OnboardingForm() {
                                         Your sublease will be posted to the market. This amount may decrease over time based on demand.
                                     </span>
                                 </Button>
-                            </div>
+                            </div> */}
                         </div>
                     </motion.div>
                 )
@@ -873,10 +886,10 @@ export default function OnboardingForm() {
                             onChange={async (e) => {
                                 const file = e.target.files?.[0]
                                 if (file) {
-                                  await handleAgreementUpload(file)
-                                  setStep((prev) => prev + 1)
+                                    await handleAgreementUpload(file)
+                                    setStep((prev) => prev + 1)
                                 }
-                              }}
+                            }}
                         />
 
                         {signedAgreementUrl && (
