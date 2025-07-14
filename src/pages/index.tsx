@@ -12,19 +12,16 @@ export default function LandingPage() {
     const router = useRouter()
 
     return (
-        <div className={`min-h-screen ${leagueSpartan.className} overflow-hidden`}>
+        <div className={`min-h-screen ${leagueSpartan.className} overflow-x-hidden`}>
             {/* Header */}
-            <header className="fixed w-full z-10 bg-white shadow-sm border-1">
-                <div className="container mx-auto px-4 flex items-center justify-between">
-                    {/* Logo */}
+            <header className="fixed w-full z-10 bg-white shadow-sm border-b">
+                <div className="container mx-auto px-4 flex items-center justify-between h-20">
                     <Link href="/in" className="flex items-center space-x-2">
-                        <div className="relative w-20 h-20">
+                        <div className="relative w-12 h-12 sm:w-16 sm:h-16">
                             <Image src="/favicon.png" alt="favicon" fill className="object-contain" />
                         </div>
                     </Link>
-
-                    {/* Desktop Navigation */}
-                    <nav className="hidden md:flex space-x-6 text-blue-800 font-medium text-lg">
+                    <nav className="hidden md:flex space-x-6 text-blue-800 font-medium text-sm sm:text-base">
                         <Link href="/in">Home</Link>
                         <Link href="/in">Subletting</Link>
                         <Link href="/in">About Us</Link>
@@ -34,17 +31,17 @@ export default function LandingPage() {
             </header>
 
             {/* Split Screen Content */}
-            <div className="flex min-h-screen mb-8">
-                {/* Left Section - Blue Background */}
+            <div className="flex flex-col lg:flex-row min-h-screen pt-20 mb-8">
+                {/* Left Section */}
                 <motion.div
-                    className="flex-1 bg-blue-700 flex flex-col justify-center items-start px-12 lg:px-20"
+                    className="w-full lg:w-1/2 bg-blue-700 flex flex-col justify-center items-start px-6 sm:px-12 py-16"
                     initial={{ opacity: 0, x: -50 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.8 }}
                 >
                     <div className="max-w-lg">
                         <motion.h1
-                            className="text-white text-5xl lg:text-6xl font-bold mb-6 leading-tight"
+                            className="text-white text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 leading-tight"
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.8, delay: 0.2 }}
@@ -53,7 +50,7 @@ export default function LandingPage() {
                         </motion.h1>
 
                         <motion.p
-                            className="text-white text-2xl lg:text-3xl font-light mb-12 leading-relaxed"
+                            className="text-white text-xl sm:text-2xl lg:text-3xl font-light mb-12 leading-relaxed"
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.8, delay: 0.4 }}
@@ -62,7 +59,7 @@ export default function LandingPage() {
                         </motion.p>
 
                         <motion.button
-                            className="bg-white text-blue-700 px-10 py-4 rounded-lg font-semibold text-xl hover:bg-gray-50 transition-colors shadow-lg"
+                            className="bg-white text-blue-700 px-6 sm:px-10 py-3 sm:py-4 rounded-lg font-semibold text-lg sm:text-xl hover:bg-gray-50 transition-colors shadow-lg"
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.8, delay: 0.6 }}
@@ -73,16 +70,16 @@ export default function LandingPage() {
                     </div>
                 </motion.div>
 
-                {/* Right Section - Light Background */}
+                {/* Right Section */}
                 <motion.div
-                    className="flex-1 bg-gray-50 flex flex-col justify-center items-center px-12 lg:px-20"
+                    className="w-full lg:w-1/2 bg-gray-50 flex flex-col justify-center items-center px-6 sm:px-12 py-16"
                     initial={{ opacity: 0, x: 50 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.8 }}
                 >
                     <div className="max-w-lg w-full">
                         <motion.h2
-                            className="text-blue-700 text-5xl lg:text-6xl font-bold mb-6 text-center"
+                            className="text-blue-700 text-4xl sm:text-5xl lg:text-6xl font-bold text-center mb-6"
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.8, delay: 0.2 }}
@@ -91,7 +88,7 @@ export default function LandingPage() {
                         </motion.h2>
 
                         <motion.p
-                            className="text-gray-700 text-2xl mb-12 text-center font-medium"
+                            className="text-gray-700 text-lg sm:text-xl mb-12 text-center font-medium"
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.8, delay: 0.4 }}
@@ -102,7 +99,7 @@ export default function LandingPage() {
                         <div className="space-y-6">
                             <motion.button
                                 onClick={() => router.push("/in")}
-                                className="w-full bg-blue-400 hover:bg-blue-500 text-white px-10 py-5 rounded-lg font-semibold text-xl transition-colors flex items-center justify-center group shadow-lg"
+                                className="w-full bg-blue-400 hover:bg-blue-500 text-white px-6 py-4 sm:px-10 sm:py-5 rounded-lg font-semibold text-lg sm:text-xl transition-colors flex items-center justify-center group shadow-lg"
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.8, delay: 0.6 }}
@@ -113,7 +110,7 @@ export default function LandingPage() {
 
                             <motion.button
                                 onClick={() => router.push("/onboarding")}
-                                className="w-full bg-blue-600 hover:bg-blue-700 text-white px-10 py-5 rounded-lg font-semibold text-xl transition-colors flex items-center justify-center group shadow-lg"
+                                className="w-full bg-blue-600 hover:bg-blue-700 text-white px-6 py-4 sm:px-10 sm:py-5 rounded-lg font-semibold text-lg sm:text-xl transition-colors flex items-center justify-center group shadow-lg"
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.8, delay: 0.8 }}
@@ -126,81 +123,79 @@ export default function LandingPage() {
                 </motion.div>
             </div>
 
-            <PropertyCarousel/>
+            <PropertyCarousel />
 
-            {/* Additional Content Sections */}
+            {/* How It Works Section */}
             <main className="container mx-auto px-4">
-
                 <section className="text-center mt-10 mb-20 bg-white py-16 rounded-xl">
-                    <div className="container mx-auto px-4">
-                        <h2 className="text-4xl font-bold mb-4 text-black">How It Works</h2>
-                        <p className="text-gray-600 text-lg mb-12 max-w-2xl mx-auto">
-                            Our simple process helps connect student hosts with reliable renters
-                        </p>
+                    <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-black">How It Works</h2>
+                    <p className="text-gray-600 text-base sm:text-lg mb-12 max-w-2xl mx-auto">
+                        Our simple process helps connect student hosts with reliable renters
+                    </p>
 
-                        <div className="grid md:grid-cols-4 gap-8 max-w-6xl mx-auto">
-                            {[
-                                {
-                                    step: 1,
-                                    icon: "🏠",
-                                    title: "List Your Space",
-                                    description: "Create a detailed listing with photos, amenities, and preferences",
-                                    userType: "Host",
-                                },
-                                {
-                                    step: 2,
-                                    icon: "🔍",
-                                    title: "Find Your Sublet",
-                                    description: "Browse verified listings and express interest in your favorites",
-                                    userType: "Renter",
-                                },
-                                {
-                                    step: 3,
-                                    icon: "📋",
-                                    title: "Connect & Sign",
-                                    description: "Our team helps finalize the match and handles document signing",
-                                    userType: "Both",
-                                },
-                                {
-                                    step: 4,
-                                    icon: "💳",
-                                    title: "Secure Payment",
-                                    description: "Pay and receive rent through our secure payment system",
-                                    userType: "Both",
-                                },
-                            ].map((step, index) => (
-                                <div key={index} className="flex flex-col items-center">
-                                    <div className="relative mb-6">
-                                        <div className="w-16 h-16 rounded-full bg-blue-100 flex items-center justify-center text-2xl mb-2">
-                                            {step.icon}
-                                        </div>
-                                        <div className="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center text-sm font-bold">
-                                            {step.step}
-                                        </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 max-w-6xl mx-auto">
+                        {[
+                            {
+                                step: 1,
+                                icon: "🏠",
+                                title: "List Your Space",
+                                description: "Create a detailed listing with photos, amenities, and preferences",
+                                userType: "Host",
+                            },
+                            {
+                                step: 2,
+                                icon: "🔍",
+                                title: "Find Your Sublet",
+                                description: "Browse verified listings and express interest in your favorites",
+                                userType: "Renter",
+                            },
+                            {
+                                step: 3,
+                                icon: "📋",
+                                title: "Connect & Sign",
+                                description: "Our team helps finalize the match and handles document signing",
+                                userType: "Both",
+                            },
+                            {
+                                step: 4,
+                                icon: "💳",
+                                title: "Secure Payment",
+                                description: "Pay and receive rent through our secure payment system",
+                                userType: "Both",
+                            },
+                        ].map((step, index) => (
+                            <div key={index} className="flex flex-col items-center text-center">
+                                <div className="relative mb-6">
+                                    <div className="w-16 h-16 rounded-full bg-blue-100 flex items-center justify-center text-2xl mb-2">
+                                        {step.icon}
                                     </div>
-                                    <h3 className="text-xl font-bold mb-3 text-black">{step.title}</h3>
-                                    <p className="text-gray-600 mb-3 text-center leading-relaxed">{step.description}</p>
-                                    <span className="text-sm font-medium text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
-                                        {step.userType}
-                                    </span>
+                                    <div className="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center text-sm font-bold">
+                                        {step.step}
+                                    </div>
                                 </div>
-                            ))}
-                        </div>
+                                <h3 className="text-lg font-bold mb-2 text-black">{step.title}</h3>
+                                <p className="text-gray-600 text-sm mb-2">{step.description}</p>
+                                <span className="text-sm font-medium text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
+                                    {step.userType}
+                                </span>
+                            </div>
+                        ))}
                     </div>
                 </section>
 
-                <section className="flex flex-col items-center md:w-3/4 w-full mx-auto mb-16 mt-10">
+                {/* Why Section */}
+                <section className="flex flex-col items-center w-full md:w-3/4 mx-auto mb-16 mt-10 px-4">
                     <motion.div
-                        className="bg-white p-16 rounded-xl"
+                        className="bg-white p-6 sm:p-10 rounded-xl w-full"
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, delay: 0.2 }}
                     >
                         <div className="flex flex-col items-center justify-center mb-6">
-                            <CircleHelp className="mr-2 h-12 w-12 text-blue-800 mb-4" />
-                            <h2 className="text-4xl font-semibold text-blue-800">Why use studystay?</h2>
+                            <CircleHelp className="h-10 w-10 sm:h-12 sm:w-12 text-blue-800 mb-4" />
+                            <h2 className="text-2xl sm:text-4xl font-semibold text-blue-800 text-center">Why use studystay?</h2>
                         </div>
-                        <div className="text-lg space-y-6">
+                        <div className="text-base sm:text-lg space-y-6 text-gray-700">
                             <p>
                                 Subletting your space or finding a sublet to take over is a <b>notoriously difficult process</b>. Here&apos;s
                                 what studystay does to make it easy:
