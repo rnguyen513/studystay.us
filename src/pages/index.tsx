@@ -14,7 +14,7 @@ export default function LandingPage() {
     return (
         <div className={`min-h-screen ${leagueSpartan.className} overflow-hidden`}>
             {/* Header */}
-            <header className="w-full absolute top-0 z-10">
+            <header className="fixed w-full z-10 bg-white shadow-sm border-1">
                 <div className="container mx-auto px-4 flex items-center justify-between">
                     {/* Logo */}
                     <Link href="/in" className="flex items-center space-x-2">
@@ -25,10 +25,10 @@ export default function LandingPage() {
 
                     {/* Desktop Navigation */}
                     <nav className="hidden md:flex space-x-6 text-blue-800 font-medium text-lg">
-                        <Link href="/">Home</Link>
-                        <Link href="/subletting">Subletting</Link>
-                        <Link href="/about">About Us</Link>
-                        <Link href="/resources">Resources</Link>
+                        <Link href="/in">Home</Link>
+                        <Link href="/in">Subletting</Link>
+                        <Link href="/in">About Us</Link>
+                        <Link href="/in">Resources</Link>
                     </nav>
                 </div>
             </header>

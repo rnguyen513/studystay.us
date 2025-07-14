@@ -9,8 +9,8 @@ const StudyStayFooter = () => {
                     <p>&copy; {new Date().getFullYear()} StudyStay. All rights reserved.</p>
                     <div className="flex gap-5">
                         <Link href="/terms-and-conditions">Terms</Link>
-                        <Link href="">Privacy</Link>
-                        <Link href="">Contact</Link>
+                        <Link href="/terms-and-conditions">Privacy</Link>
+                        <Link href="mailto:ryan@studystay.us">Contact</Link>
                     </div>
                 </div>
             </div>
