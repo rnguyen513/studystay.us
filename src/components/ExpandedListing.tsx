@@ -135,7 +135,7 @@ export default function ExpandedListing({ listing: initialListing }: { listing: 
 
   return (
     <div className="container mx-auto px-4 py-8">
-    {userData?.email === listing.postedbyemail && <div className="flex flex-row justify-center gap-2 p-2 bg-green-200 font-bold rounded-lg hover:cursor-pointer hover:bg-gray-100 mb-2 mt-[-2rem]" onClick={async () => {
+    {/* {userData?.email === listing.postedbyemail && <div className="flex flex-row justify-center gap-2 p-2 bg-green-200 font-bold rounded-lg hover:cursor-pointer hover:bg-gray-100 mb-2 mt-[-2rem]" onClick={async () => {
         const { error } = await supabase.from("sell_now_emails").insert([
             {
                 price: studystay_price,
@@ -148,7 +148,7 @@ export default function ExpandedListing({ listing: initialListing }: { listing: 
         }
     }}>
         <p>Sell to StudyStay for <a className="text-2xl">${studystay_price}</a>! It&apos;s not too late!</p>
-    </div>}
+    </div>} */}
       <div className="mb-6 flex justify-between items-center">
         <h1 className="text-3xl font-bold">{listing.title}</h1>
         {(userData?.email === listing.postedbyemail || ["amk3ef@virginia.edu", "uww9ws@virginia.edu"].includes(userData?.email ?? "")) && (
@@ -172,8 +172,9 @@ export default function ExpandedListing({ listing: initialListing }: { listing: 
           <CardHeader>
             <CardTitle className="flex justify-between items-center">
               <div className="flex flex-row space-x-3">
-                <span className={`text-2xl font-bold ${market_price != listing.price && "line-through"}`}>${listing.price} <span className="text-lg font-normal">/ month</span></span>
-                {market_price != listing.price && <p className="text-red-400 font-black text-3xl">${market_price}</p>}
+                {/* <span className={`text-2xl font-bold ${market_price != listing.price && "line-through"}`}>${listing.price} <span className="text-lg font-normal">/ month</span></span>
+                {market_price != listing.price && <p className="text-red-400 font-black text-3xl">${market_price}</p>} */}
+                <span className="text-2xl font-bold text-[#004aad]">${listing.price} <span className="text-lg font-normal">/ month</span></span>
               </div>
               <div className="flex gap-2">
                 {userData?.email === listing.postedbyemail && userData != null && (
@@ -217,12 +218,12 @@ export default function ExpandedListing({ listing: initialListing }: { listing: 
             <div>
               <span className="font-semibold">Type:</span> {listing.typeOfProperty}
             </div>
-            <Button className="w-full bg-red-400" onClick={async () => {
+            <Button className="w-full bg-[#004aad]" onClick={async () => {
                 if (userData?.email) {
                     const { error } = await supabase.from("request_information").insert([
                         {
                             email: userData?.email || " ",
-                            price: market_price,
+                            price: listing.price,
                             listing_id: listing.id
                         },
                     ])

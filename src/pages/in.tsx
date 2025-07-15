@@ -20,9 +20,9 @@ export default function LandingPage() {
                 <Header />
                 <main className="container mx-auto px-4 py-8">
                     <div>
-                        <div className="mb-5 text-red-400">
-                            <h1 className="font-bold text-3xl">StudyStay last minute sublets</h1>
-                            <h3>Up to 60-70% off this summer!</h3>
+                        <div className="mb-5">
+                            <h1 className="font-bold text-3xl">Current <a className="text-[#004aad]">studystay</a> sublets</h1>
+                            <h3>Price negotiable!</h3>
                         </div>
                         {/* <ListingsArray listings={tempListings}/> */}
                         <SearchResults searchQuery={""} date={""} home={true} setNumListings={setNumListings} randomized={true} />
