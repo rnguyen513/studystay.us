@@ -3,23 +3,27 @@ import { leagueSpartan } from "@/utils/fonts"
 import Header from "@/components/header"
 import ExpandedListing from "@/components/ExpandedListing"
 import type { ListingData } from "@/utils/tempData"
+import SeoHead from "@/components/SeoHead"
 
-import Head from "next/head"
+export default function ListingPage({ listing }: { listing: ListingData | null }) {
+  const imageUrl = listing?.images?.[0]
+    ? `https://zinuafgdmiwpkvlixboz.supabase.co/storage/v1/render/image/public/uploadedimages/${listing.images[0].split("/").at(-1)}?width=1200&height=630&resize=cover`
+    : "https://www.studystay.us/og-image.png";
 
-export default function ListingPage({ listing }: { listing: ListingData | null}) {
+  const pageUrl = listing?.id
+    ? `https://www.studystay.us/listing/${listing.id}`
+    : "https://www.studystay.us";
+
   return (
     <>
-      <Head>
-        <title>{listing?.title}</title>
-        <meta name="description" content={listing?.description ?? "The better way to sublet"}/>
-        <meta property="og:title" content={listing?.title ?? "Listing unavailable"}/>
-        <meta property="og:description" content={listing?.description ?? "Listing unavailable"}/>
-        <meta property="og:image" content={`https://zinuafgdmiwpkvlixboz.supabase.co/storage/v1/render/image/public/uploadedimages/${listing?.images[0].split("/").at(-1)}?width=1200&height=630&resize=cover`}/>
-        <meta property="og:url" content={`https://studystay.us/listing/${listing?.id}}`}/>
-        <meta property="og:type" content="website"/>
-      </Head>
+      <SeoHead
+        title={listing?.title ?? "Listing not found | StudyStay"}
+        description={listing?.description ?? "This listing may have been removed or is unavailable."}
+        url={pageUrl}
+        image={imageUrl}
+      />
       <div className={`min-h-screen bg-white text-black ${leagueSpartan.className} text-xl overflow-hidden`}>
-        <Header/>
+        <Header />
         <main className="container mx-auto px-4 py-8">
           {false ? (
             <p className="text-center text-xl">Loading...</p>
@@ -31,7 +35,7 @@ export default function ListingPage({ listing }: { listing: ListingData | null})
         </main>
       </div>
     </>
-  )
+  );
 }
 
 export async function getServerSideProps(context: any) {

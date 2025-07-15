@@ -8,11 +8,16 @@ import Image from "next/image"
 import PropertyCarousel from "@/components/PropertyCarousel"
 import StudyStayFooter from "@/components/StudyStayFooter"
 
+import SeoHead from "@/components/SeoHead"
+
 export default function LandingPage() {
     const router = useRouter()
 
     return (
         <div className={`min-h-screen ${leagueSpartan.className} overflow-x-hidden`}>
+
+            <SeoHead/>
+
             {/* Header */}
             <header className="fixed w-full z-10 bg-white shadow-sm border-b">
                 <div className="container mx-auto px-4 flex items-center justify-between h-20">
@@ -130,7 +135,7 @@ export default function LandingPage() {
                 <section className="text-center mt-10 mb-20 bg-white py-16 rounded-xl">
                     <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-black">How It Works</h2>
                     <p className="text-gray-600 text-base sm:text-lg mb-12 max-w-2xl mx-auto">
-                        Our simple process helps connect student hosts with reliable renters
+                        StudyStay helps UVA students find verified, secure, off-campus sublets in Charlottesville. Whether you&apos;re going abroad or need temporary housing near the University of Virginia, StudyStay makes student housing easier.
                     </p>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 max-w-6xl mx-auto">

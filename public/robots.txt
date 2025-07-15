@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://www.studystay.us
+
+# Sitemaps
+Sitemap: https://www.studystay.us/sitemap.xml

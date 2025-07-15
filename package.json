@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "postbuild": "next-sitemap"
   },
   "dependencies": {
     "@firebase/firestore": "^4.7.3",
@@ -34,6 +35,7 @@
     "framer-motion": "^11.11.8",
     "lucide-react": "^0.452.0",
     "next": "^15.2.4",
+    "next-sitemap": "^4.2.3",
     "pdf-lib": "^1.17.1",
     "react": "^18",
     "react-day-picker": "^8.10.1",
