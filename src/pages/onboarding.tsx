@@ -748,8 +748,8 @@ export default function OnboardingForm() {
                                 </div>
                                 <div className="space-y-4">
                                     <h3 className="text-lg font-medium">Semester and Year</h3>
-                                    <div className="grid gap-2">
-                                        {["Summer"].map((semester) => (
+                                    <div className="grid grid-rows-2 grid-cols-2 gap-2">
+                                        {["Fall","Spring","Summer","Winter"].map((semester) => (
                                             <Button
                                                 key={semester}
                                                 variant="outline"
@@ -760,8 +760,8 @@ export default function OnboardingForm() {
                                             </Button>
                                         ))}
                                     </div>
-                                    <div className="grid gap-2">
-                                        {[2025].map((year) => (
+                                    <div className="grid grid-rows-2 grid-cols-2 gap-2">
+                                        {[2025, 2026, 2027].map((year) => (
                                             <Button
                                                 key={year}
                                                 variant="outline"

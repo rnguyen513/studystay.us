@@ -39,10 +39,10 @@ const Listing = ({ listing, bookmarks, toggleBookmark, user }: { listing: Listin
                 >
                     <Bookmark className={`w-6 h-6 fill-${bookmarks.includes(listing.id) ? "current" : "none"}`} />
                 </button>
-                <div className="absolute top-2 left-2 bg-white rounded-full px-2 py-1 text-xs font-semibold z-10">
+                {/* <div className="absolute top-2 left-2 bg-white rounded-full px-2 py-1 text-xs font-semibold z-10">
                     Favorite
-                </div>
-                {user?.email == listing.postedbyemail && <div onClick={async ()=> {
+                </div> */}
+                {/* {user?.email == listing.postedbyemail && <div onClick={async ()=> {
                     const { error } = await supabase.from("sell_now_emails").insert([
                         {
                             price: studystay_price,
@@ -55,7 +55,7 @@ const Listing = ({ listing, bookmarks, toggleBookmark, user }: { listing: Listin
                     }
                 }} className="absolute top-2 left-20 bg-green-200 rounded-full px-2 py-1 text-xs font-semibold z-10">
                     Sell to StudyStay (<a className="text-sm">${studystay_price}</a>)
-                </div>}
+                </div>} */}
             </div>
             <div className="space-y-1">
                 <div className="flex justify-between items-center">
@@ -69,9 +69,10 @@ const Listing = ({ listing, bookmarks, toggleBookmark, user }: { listing: Listin
                 <p className="text-gray-500 text-sm">
                     {new Date(listing.dates.from).toDateString().substring(3)} - {new Date(listing.dates.to).toDateString().substring(3)}
                 </p>
-                <div className="flex flex-row space-x-2 items-center">
-                    <p className={`font-semibold ${market_price != listing.price && "line-through"}`}>${listing.price} <span className="font-normal">month</span></p>
-                    {market_price != listing.price && <p className="text-red-400 font-black">${market_price}</p>}
+                <div className="flex flex-row space-x-2 items-center text-[#004aad]">
+                    {/* <p className={`font-semibold ${market_price != listing.price && "line-through"}`}>${listing.price} <span className="font-normal">month</span></p>
+                    {market_price != listing.price && <p className="text-red-400 font-black">${market_price}</p>} */}
+                    <p className={`font-semibold`}>${listing.price} <span className="font-normal">month</span></p>
                     {/* {listing.extraCosts?.map((cost, index) => (
                         <p key={index} className="text-gray-500 text-xs mt-1">+ {cost}</p>
                     ))} */}

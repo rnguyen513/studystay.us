@@ -24,7 +24,7 @@ export default function ListingPage({ listing }: { listing: ListingData | null }
       />
       <div className={`min-h-screen bg-white text-black ${leagueSpartan.className} text-xl overflow-hidden`}>
         <Header />
-        <main className="container mx-auto px-4 py-8">
+        <main className="container">
           {false ? (
             <p className="text-center text-xl">Loading...</p>
           ) : listing ? (
