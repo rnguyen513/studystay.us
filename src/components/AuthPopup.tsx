@@ -358,7 +358,7 @@ export default function AuthPopup({ onClose }: { onClose: () => void }) {
             {step === 1 && (
               <div className="relative mt-2">
                 <Button
-                  className="w-full"
+                  className="w-full font-bold text-[#004aad]"
                   variant="outline"
                   onClick={() => setStep(3)}
                 >

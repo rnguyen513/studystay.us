@@ -45,27 +45,11 @@ const Header = () => {
         <>
             <header className={`border-b z-100 ${leagueSpartan.className}`}>
                 <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-                    <Link href="/in" className="flex items-center space-x-2">
+                    <Link href="/" className="flex items-center space-x-2">
                         <div className="relative w-12 h-12 sm:w-16 sm:h-16">
                             <Image src="/favicon.png" alt="favicon" fill className="object-contain" />
                         </div>
                     </Link>
-
-                    {/* Desktop nav */}
-                    {/* <div className="hidden md:flex space-x-4 absolute left-1/2 transform -translate-x-1/2 text-[#004aad]">
-            <Link href="/in" className="font-bold">Find a sublet</Link>
-            <span>|</span>
-            <a
-              onClick={() =>
-                userData?.user?.confirmed_at
-                  ? router.push("/onboarding")
-                  : setShowAuth(true)
-              }
-              className="hover:cursor-pointer"
-            >
-              List a sublet
-            </a>
-          </div> */}
 
                     {/* Right controls */}
                     <div className="flex items-center space-x-4">

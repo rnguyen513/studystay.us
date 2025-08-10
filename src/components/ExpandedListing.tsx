@@ -499,10 +499,11 @@ export default function ExpandedListing({ listing: initialListing }: { listing: 
                 {isBookingOpen && (
                     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 px-4">
                         <Card className="w-full max-w-md rounded-xl shadow-lg">
-                            <CardHeader>
+                            <CardHeader className="relative">
                                 <CardTitle className={`text-xl font-semibold text-center ${leagueSpartan.className}`}>
                                     Thanks for your interest!
                                 </CardTitle>
+                                <button onClick={() => setIsBookingOpen(false)} className="absolute left-5 top-5 text-red-400 font-bold">X</button>
                             </CardHeader>
                             <CardContent className={`space-y-6 ${leagueSpartan.className}`}>
                                 <div className="text-center">
