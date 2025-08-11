@@ -623,7 +623,7 @@ export default function ProfileCompletion() {
                           <Camera className="w-8 h-8 text-gray-400" />
                         </div>
                       )}
-                      <div>
+        <div>
                         <input
                           type="file"
                           accept="image/*"
@@ -803,6 +803,6 @@ export default function ProfileCompletion() {
           </motion.div>
         </main>
         <StudyStayFooter />
-      </div>
+        </div>
     )
-  }
+}
