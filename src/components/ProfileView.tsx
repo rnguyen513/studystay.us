@@ -7,6 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge"
 import { User, GraduationCap, Linkedin, FileText, MapPin } from 'lucide-react'
 import { leagueSpartan } from '@/utils/fonts'
+import Image from 'next/image'
 
 interface ProfileViewProps {
   userId: string
@@ -66,9 +67,11 @@ export default function ProfileView({ userId, showFullProfile = false }: Profile
       <CardHeader className="text-center">
         <div className="flex justify-center mb-4">
           {profileData.profile_picture_url ? (
-            <img
+            <Image
               src={profileData.profile_picture_url}
               alt={`${profileData.first_name} ${profileData.last_name}`}
+              width={96}
+              height={96}
               className="w-24 h-24 rounded-full object-cover border-4 border-[#004aad]"
             />
           ) : (

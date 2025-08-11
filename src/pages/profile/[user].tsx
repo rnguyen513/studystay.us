@@ -9,6 +9,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Upload, User, GraduationCap, Linkedin, FileText, Camera, Edit, ArrowLeft } from 'lucide-react'
+import Image from 'next/image'
 import { motion } from "framer-motion"
 import { leagueSpartan } from '@/utils/fonts'
 import { createClient } from '@/utils/supabase/component'
@@ -334,9 +335,11 @@ export default function ProfileCompletion() {
               <div className="relative bg-gradient-to-r from-[#004aad] to-[#0056cc] p-8 text-white">
                 <div className="flex items-center space-x-6">
                   {profileData.profile_picture_url ? (
-                    <img
+                    <Image
                       src={profileData.profile_picture_url}
                       alt="Profile"
+                      width={96}
+                      height={96}
                       className="w-24 h-24 rounded-full object-cover border-4 border-white shadow-lg"
                     />
                   ) : (
@@ -463,7 +466,7 @@ export default function ProfileCompletion() {
             {userListings.length > 0 && (
               <div className="mt-8">
                 <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">
-                  {profileData.first_name}'s Available Stays
+                  {profileData.first_name}&apos;s Available Stays
                 </h3>
                 <ListingsArray listings={userListings} user={currentUser ?? undefined} />
               </div>
@@ -477,7 +480,7 @@ export default function ProfileCompletion() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                   </svg>
                   <h3 className="text-lg font-medium text-gray-900 mb-2">No Available Stays</h3>
-                  <p className="text-gray-500">This user doesn't have any available stays at the moment.</p>
+                  <p className="text-gray-500">This user doesn&apos;t have any available stays at the moment.</p>
                 </div>
               </div>
             )}
@@ -602,7 +605,7 @@ export default function ProfileCompletion() {
                     <div className="flex items-center space-x-4">
                       {profileData.profile_picture_url ? (
                         <div className="relative">
-                          <img 
+                          <Image
                             src={profileData.profile_picture_url} 
                             alt="Profile" 
                             className="w-20 h-20 rounded-full object-cover border-2 border-gray-200"
@@ -758,7 +761,7 @@ export default function ProfileCompletion() {
                       rows={3}
                     />
                     <p className="text-sm text-gray-500">
-                      This information helps us verify your identity and won't be publicly visible.
+                      This information helps us verify your identity and won&apos;t be publicly visible.
                     </p>
                   </div>
 
