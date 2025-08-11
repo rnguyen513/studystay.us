@@ -21,7 +21,7 @@ export default function LandingPage() {
             {/* Header */}
             <header className="fixed w-full z-10 bg-white shadow-sm border-b">
                 <div className="container mx-auto px-4 flex items-center justify-between h-20">
-                    <Link href="/in" className="flex items-center space-x-2">
+                    <Link href="/" className="flex items-center space-x-2">
                         <div className="relative w-12 h-12 sm:w-16 sm:h-16">
                             <Image src="/favicon.png" alt="favicon" fill className="object-contain" />
                         </div>
@@ -70,7 +70,7 @@ export default function LandingPage() {
                             transition={{ duration: 0.8, delay: 0.6 }}
                             onClick={() => router.push("/in")}
                         >
-                            Learn More
+                            Continue
                         </motion.button>
                     </div>
                 </motion.div>

@@ -44,12 +44,15 @@ export default function AuthPopup({ onClose }: { onClose: () => void }) {
   const handleSignUp = async () => {
     try {
       // if (!email.includes("@virginia.edu")) throw new Error("Please use your @virginia.edu email address")
-      const { error } = await supabase.auth.signUp({ email, password })
+      const { data, error } = await supabase.auth.signUp({ email, password })
 
       if (error) {
         setErrorMessage(error.message)
         throw new Error(error.message)
       }
+
+      // Note: User record is automatically created in auth.users by Supabase
+      // No need to manually insert into public.users table
 
       router.push(`/checkemail?email=${encodeURIComponent(email)}`)
     } catch (error) {
@@ -358,7 +361,7 @@ export default function AuthPopup({ onClose }: { onClose: () => void }) {
             {step === 1 && (
               <div className="relative mt-2">
                 <Button
-                  className="w-full"
+                  className="w-full font-bold text-[#004aad]"
                   variant="outline"
                   onClick={() => setStep(3)}
                 >

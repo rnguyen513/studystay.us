@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation"
 import { useState, useEffect } from "react"
-import { MapPin, Users, Bed, Bath, Mail, Pen, X, Car, Dog, Accessibility, WashingMachine, Armchair } from "lucide-react"
+import { MapPin, Users, Bed, Bath, Mail, Pen, X, Car, Dog, Accessibility, WashingMachine, Armchair, Linkedin, User as UserIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -19,6 +19,8 @@ import { leagueSpartan } from "@/utils/fonts"
 import { createClient } from "@/utils/supabase/component"
 import type { User } from "@supabase/supabase-js"
 import StudyStayFooter from "@/components/StudyStayFooter"
+import Image from "next/image"
+import Link from "next/link"
 
 // import { depreciationStart } from "./ListingsArray"
 // studystay depreciation: 0.85, starting from 0.05
@@ -32,6 +34,18 @@ export default function ExpandedListing({ listing: initialListing }: { listing: 
     const [updatedListing, setUpdatedListing] = useState<ListingData>(listing)
     const [loading, setLoading] = useState(false)
     const [errorMessage, setErrorMessage] = useState<string | null>(null)
+    const [posterProfile, setPosterProfile] = useState<null | {
+        user_id: string
+        first_name: string | null
+        last_name: string | null
+        profile_picture_url: string | null
+        school: string | null
+        major: string | null
+        gender: string | null
+        introduction: string | null
+        linkedin_url?: string | null
+    }>(null)
+    const [loadingPoster, setLoadingPoster] = useState(false)
 
     const [anonymous_user_email, setAnonymous_user_email] = useState<string | null>(null);
 
@@ -51,6 +65,28 @@ export default function ExpandedListing({ listing: initialListing }: { listing: 
         }
         fetchUserData()
     }, [supabase])
+
+    // Fetch poster's public profile
+    useEffect(() => {
+        const fetchPoster = async () => {
+            const posterUserId = (listing as any)?.postedby as string | undefined
+            if (!posterUserId) return
+            try {
+                setLoadingPoster(true)
+                const { data, error } = await supabase
+                    .from('public_user_data')
+                    .select('*')
+                    .eq('user_id', posterUserId)
+                    .single()
+                if (!error && data) {
+                    setPosterProfile(data as any)
+                }
+            } finally {
+                setLoadingPoster(false)
+            }
+        }
+        fetchPoster()
+    }, [listing, supabase])
 
     const handleDelete = async () => {
         if (userData == null || listing.postedbyemail != userData.email) return
@@ -278,6 +314,76 @@ export default function ExpandedListing({ listing: initialListing }: { listing: 
                             </Card>
                         )}
                     </div>
+                    {/* Host Overview */}
+                    <Card>
+                        <CardHeader>
+                            <CardTitle>About the host</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                            {loadingPoster ? (
+                                <div className="flex items-center space-x-3">
+                                    <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-[#004aad]"></div>
+                                    <span className="text-sm text-gray-600">Loading host...</span>
+                                </div>
+                            ) : posterProfile ? (
+                                <div className="space-y-4">
+                                    <div className="flex items-center space-x-4">
+                                        {posterProfile.profile_picture_url ? (
+                                            <Image
+                                                src={posterProfile.profile_picture_url}
+                                                alt="Host avatar"
+                                                width={56}
+                                                height={56}
+                                                className="w-14 h-14 rounded-full object-cover border"
+                                            />
+                                        ) : (
+                                            <div className="w-14 h-14 rounded-full bg-gray-200 flex items-center justify-center">
+                                                <UserIcon className="w-7 h-7 text-gray-500" />
+                                            </div>
+                                        )}
+                                        <div>
+                                            <div className="text-lg font-semibold">
+                                                {(posterProfile.first_name || '') + ' ' + (posterProfile.last_name || '')}
+                                            </div>
+                                            <div className="text-sm text-gray-600">
+                                                {posterProfile.school}
+                                                {posterProfile.major ? ` • ${posterProfile.major}` : ''}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {posterProfile.introduction && (
+                                        <p className="text-sm text-gray-700 leading-relaxed">
+                                            {posterProfile.introduction.length > 180
+                                                ? posterProfile.introduction.slice(0, 177) + '...'
+                                                : posterProfile.introduction}
+                                        </p>
+                                    )}
+
+                                    <div className="flex items-center justify-between">
+                                        <Link
+                                            href={`/profile/${posterProfile.user_id}`}
+                                            className="text-[#004aad] hover:underline text-sm font-medium"
+                                        >
+                                            View full profile
+                                        </Link>
+                                        {posterProfile.linkedin_url && (
+                                            <a
+                                                href={posterProfile.linkedin_url}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="inline-flex items-center text-sm text-[#004aad] hover:underline"
+                                            >
+                                                <Linkedin className="w-4 h-4 mr-1" /> LinkedIn
+                                            </a>
+                                        )}
+                                    </div>
+                                </div>
+                            ) : (
+                                <p className="text-sm text-gray-600">Host profile is not available.</p>
+                            )}
+                        </CardContent>
+                    </Card>
 
                     <Card>
                         <CardHeader>
@@ -499,10 +605,11 @@ export default function ExpandedListing({ listing: initialListing }: { listing: 
                 {isBookingOpen && (
                     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 px-4">
                         <Card className="w-full max-w-md rounded-xl shadow-lg">
-                            <CardHeader>
+                            <CardHeader className="relative">
                                 <CardTitle className={`text-xl font-semibold text-center ${leagueSpartan.className}`}>
                                     Thanks for your interest!
                                 </CardTitle>
+                                <button onClick={() => setIsBookingOpen(false)} className="absolute left-5 top-5 text-red-400 font-bold">X</button>
                             </CardHeader>
                             <CardContent className={`space-y-6 ${leagueSpartan.className}`}>
                                 <div className="text-center">
