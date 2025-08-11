@@ -237,6 +237,62 @@ export type Database = {
         }
         Relationships: []
       }
+      public_user_data: {
+        Row: {
+          user_id: string
+          first_name: string
+          last_name: string
+          profile_picture_url: string | null
+          gender: 'M' | 'F' | 'Other'
+          gender_other_specify: string | null
+          description: string | null
+          school: string
+          major: string
+          linkedin_url: string | null
+          introduction: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          user_id: string
+          first_name: string
+          last_name: string
+          profile_picture_url?: string | null
+          gender: 'M' | 'F' | 'Other'
+          gender_other_specify?: string | null
+          description?: string | null
+          school: string
+          major: string
+          linkedin_url?: string | null
+          introduction?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          user_id?: string
+          first_name?: string
+          last_name?: string
+          profile_picture_url?: string | null
+          gender?: 'M' | 'F' | 'Other'
+          gender_other_specify?: string | null
+          description?: string | null
+          school?: string
+          major?: string
+          linkedin_url?: string | null
+          introduction?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "public_user_data_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
     }
     Views: {
       [_ in never]: never

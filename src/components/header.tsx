@@ -100,6 +100,12 @@ const Header = () => {
                                     >
                                         My listings
                                     </DropdownMenuItem>
+                                    <DropdownMenuItem
+                                        onClick={() => router.push(`/profile/${userData?.user?.id}`)}
+                                        className={`${leagueSpartan.className} text-xl py-2 hover:cursor-pointer`}
+                                    >
+                                        My profile
+                                    </DropdownMenuItem>
                                     <DropdownMenuSeparator />
                                     <DropdownMenuItem
                                         onClick={() => router.push("/savedlistings")}

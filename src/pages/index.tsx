@@ -70,7 +70,7 @@ export default function LandingPage() {
                             transition={{ duration: 0.8, delay: 0.6 }}
                             onClick={() => router.push("/in")}
                         >
-                            Learn More
+                            Continue
                         </motion.button>
                     </div>
                 </motion.div>
