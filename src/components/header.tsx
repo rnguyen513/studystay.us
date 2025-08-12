@@ -51,21 +51,162 @@ const Header = () => {
                         </div>
                     </Link>
 
+                    {/* Main Navigation */}
+                    <nav className="hidden lg:flex items-center space-x-8">
+                        {/* Home */}
+                        <Link 
+                            href="/" 
+                            className="text-gray-700 hover:text-[#004aad] font-medium transition-colors"
+                        >
+                            Home
+                        </Link>
+
+                        {/* Subletting Dropdown */}
+                        <DropdownMenu>
+                            <DropdownMenuTrigger className="text-gray-700 hover:text-[#004aad] font-medium transition-colors flex items-center space-x-1">
+                                <span>Subletting</span>
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent className="font-medium w-48 p-2">
+                                <DropdownMenuItem
+                                    onClick={() => router.push("/onboarding")}
+                                    className="py-2 hover:cursor-pointer"
+                                >
+                                    Post a Sublet
+                                </DropdownMenuItem>
+                                <DropdownMenuItem
+                                    onClick={() => router.push("/")}
+                                    className="py-2 hover:cursor-pointer"
+                                >
+                                    Find a Sublet
+                                </DropdownMenuItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+
+                        {/* List a Sublet Button */}
+                        <button
+                            onClick={() =>
+                                userData?.user?.confirmed_at
+                                    ? router.push("/onboarding")
+                                    : setShowAuth(true)
+                            }
+                            className="bg-[#004aad] hover:bg-[#003d8f] text-white px-4 py-2 rounded-lg font-medium transition-colors"
+                        >
+                            List a Sublet
+                        </button>
+
+                        {/* About Us */}
+                        <Link 
+                            href="/about" 
+                            className="text-gray-700 hover:text-[#004aad] font-medium transition-colors"
+                        >
+                            About Us
+                        </Link>
+
+                        {/* Resources Dropdown */}
+                        <DropdownMenu>
+                            <DropdownMenuTrigger className="text-gray-700 hover:text-[#004aad] font-medium transition-colors flex items-center space-x-1">
+                                <span>Resources</span>
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent className="font-medium w-56 p-2">
+                                <DropdownMenuItem
+                                    onClick={() => window.open('/studystay-seller-agreement.pdf', '_blank')}
+                                    className="py-2 hover:cursor-pointer"
+                                >
+                                    Buyer + Seller Agreement
+                                </DropdownMenuItem>
+                                <DropdownMenuItem
+                                    onClick={() => router.push("/terms-and-conditions")}
+                                    className="py-2 hover:cursor-pointer"
+                                >
+                                    Terms and Conditions
+                                </DropdownMenuItem>
+                                <DropdownMenuItem
+                                    onClick={() => router.push("/privacy-policy")}
+                                    className="py-2 hover:cursor-pointer"
+                                >
+                                    Privacy Policy
+                                </DropdownMenuItem>
+                                <DropdownMenuItem
+                                    onClick={() => router.push("/contact")}
+                                    className="py-2 hover:cursor-pointer"
+                                >
+                                    Contact Us
+                                </DropdownMenuItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+                    </nav>
+
                     {/* Right controls */}
                     <div className="flex items-center space-x-4">
-                        {/* Mobile: show 'List a lease' */}
-                        <div className="md:hidden mt-1">
-                            <a
-                                onClick={() =>
-                                    userData?.user?.confirmed_at
-                                        ? router.push("/onboarding")
-                                        : setShowAuth(true)
-                                }
-                                className="text-[#004aad] font-semibold hover:cursor-pointer"
-                            >
-                                List a sublet
-                            </a>
-                        </div>
+                                            {/* Mobile Navigation */}
+                    <div className="lg:hidden">
+                        <DropdownMenu>
+                            <DropdownMenuTrigger className="text-gray-700 hover:text-[#004aad] font-medium transition-colors p-2">
+                                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                                </svg>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent className="font-medium w-64 p-2">
+                                <DropdownMenuItem
+                                    onClick={() => router.push("/")}
+                                    className="py-3 text-lg hover:cursor-pointer"
+                                >
+                                    Home
+                                </DropdownMenuItem>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuItem
+                                    onClick={() => router.push("/onboarding")}
+                                    className="py-3 text-lg hover:cursor-pointer"
+                                >
+                                    Post a Sublet
+                                </DropdownMenuItem>
+                                <DropdownMenuItem
+                                    onClick={() => router.push("/")}
+                                    className="py-3 text-lg hover:cursor-pointer"
+                                >
+                                    Find a Sublet
+                                </DropdownMenuItem>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuItem
+                                    onClick={() => router.push("/about")}
+                                    className="py-3 text-lg hover:cursor-pointer"
+                                >
+                                    About Us
+                                </DropdownMenuItem>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuItem
+                                    onClick={() => window.open('/studystay-seller-agreement.pdf', '_blank')}
+                                    className="py-3 text-lg hover:cursor-pointer"
+                                >
+                                    Buyer + Seller Agreement
+                                </DropdownMenuItem>
+                                <DropdownMenuItem
+                                    onClick={() => router.push("/terms-and-conditions")}
+                                    className="py-3 text-lg hover:cursor-pointer"
+                                >
+                                    Terms and Conditions
+                                </DropdownMenuItem>
+                                <DropdownMenuItem
+                                    onClick={() => router.push("/privacy-policy")}
+                                    className="py-3 text-lg hover:cursor-pointer"
+                                >
+                                    Privacy Policy
+                                </DropdownMenuItem>
+                                <DropdownMenuItem
+                                    onClick={() => router.push("/contact")}
+                                    className="py-3 text-lg hover:cursor-pointer"
+                                >
+                                    Contact Us
+                                </DropdownMenuItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+                    </div>
 
                         {/* Auth / profile */}
                         {!userData?.user ? (

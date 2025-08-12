@@ -106,11 +106,10 @@ export default function ProfileCompletion() {
           })
           setHasExistingProfile(isComplete)
           setProfileOwner(profileData)
-          
-          // If profile is incomplete, automatically show edit mode
-          if (!isComplete) {
-            setIsEditing(true)
-          }
+        } else {
+          // No profile found, this is a new user
+          setHasExistingProfile(false)
+          setProfileOwner(null)
         }
       } catch (error) {
         console.error('Error fetching data:', error)
@@ -122,6 +121,13 @@ export default function ProfileCompletion() {
     
     fetchData()
   }, [supabase, profileUserId, router.isReady])
+
+  // Set edit mode when profile is loaded (only once)
+  useEffect(() => {
+    if (!isLoading && !hasExistingProfile && !isEditing) {
+      setIsEditing(true)
+    }
+  }, [isLoading, hasExistingProfile, isEditing])
 
   // Fetch user listings when profile is loaded
   useEffect(() => {
