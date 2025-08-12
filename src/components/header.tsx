@@ -45,7 +45,7 @@ const Header = () => {
         <>
             <header className={`border-b z-100 ${leagueSpartan.className}`}>
                 <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-                    <Link href="/" className="flex items-center space-x-2">
+                    <Link href="/in" className="flex items-center space-x-2">
                         <div className="relative w-12 h-12 sm:w-16 sm:h-16">
                             <Image src="/favicon.png" alt="favicon" fill className="object-contain" />
                         </div>
@@ -55,7 +55,7 @@ const Header = () => {
                     <nav className="hidden lg:flex items-center space-x-8">
                         {/* Home */}
                         <Link 
-                            href="/" 
+                            href="/in" 
                             className="text-gray-700 hover:text-[#004aad] font-medium transition-colors"
                         >
                             Home
@@ -69,7 +69,7 @@ const Header = () => {
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                                 </svg>
                             </DropdownMenuTrigger>
-                            <DropdownMenuContent className="font-medium w-48 p-2">
+                            <DropdownMenuContent className={`font-medium w-48 p-2 ${leagueSpartan.className}`}>
                                 <DropdownMenuItem
                                     onClick={() => router.push("/onboarding")}
                                     className="py-2 hover:cursor-pointer"
@@ -77,7 +77,7 @@ const Header = () => {
                                     Post a Sublet
                                 </DropdownMenuItem>
                                 <DropdownMenuItem
-                                    onClick={() => router.push("/")}
+                                    onClick={() => router.push("/in")}
                                     className="py-2 hover:cursor-pointer"
                                 >
                                     Find a Sublet
@@ -99,7 +99,7 @@ const Header = () => {
 
                         {/* About Us */}
                         <Link 
-                            href="/about" 
+                            href="/sublet-resources" 
                             className="text-gray-700 hover:text-[#004aad] font-medium transition-colors"
                         >
                             About Us
@@ -113,7 +113,7 @@ const Header = () => {
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                                 </svg>
                             </DropdownMenuTrigger>
-                            <DropdownMenuContent className="font-medium w-56 p-2">
+                            <DropdownMenuContent className={`font-medium w-56 p-2 ${leagueSpartan.className}`}>
                                 <DropdownMenuItem
                                     onClick={() => window.open('/studystay-seller-agreement.pdf', '_blank')}
                                     className="py-2 hover:cursor-pointer"
@@ -126,18 +126,7 @@ const Header = () => {
                                 >
                                     Terms and Conditions
                                 </DropdownMenuItem>
-                                <DropdownMenuItem
-                                    onClick={() => router.push("/privacy-policy")}
-                                    className="py-2 hover:cursor-pointer"
-                                >
-                                    Privacy Policy
-                                </DropdownMenuItem>
-                                <DropdownMenuItem
-                                    onClick={() => router.push("/contact")}
-                                    className="py-2 hover:cursor-pointer"
-                                >
-                                    Contact Us
-                                </DropdownMenuItem>
+                                
                             </DropdownMenuContent>
                         </DropdownMenu>
                     </nav>
@@ -152,9 +141,9 @@ const Header = () => {
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
                                 </svg>
                             </DropdownMenuTrigger>
-                            <DropdownMenuContent className="font-medium w-64 p-2">
+                            <DropdownMenuContent className={`font-medium w-64 p-2 ${leagueSpartan.className}`}>
                                 <DropdownMenuItem
-                                    onClick={() => router.push("/")}
+                                    onClick={() => router.push("/in")}
                                     className="py-3 text-lg hover:cursor-pointer"
                                 >
                                     Home
@@ -167,14 +156,14 @@ const Header = () => {
                                     Post a Sublet
                                 </DropdownMenuItem>
                                 <DropdownMenuItem
-                                    onClick={() => router.push("/")}
+                                    onClick={() => router.push("/in")}
                                     className="py-3 text-lg hover:cursor-pointer"
                                 >
                                     Find a Sublet
                                 </DropdownMenuItem>
                                 <DropdownMenuSeparator />
                                 <DropdownMenuItem
-                                    onClick={() => router.push("/about")}
+                                    onClick={() => router.push("/sublet-resources")}
                                     className="py-3 text-lg hover:cursor-pointer"
                                 >
                                     About Us
@@ -192,18 +181,13 @@ const Header = () => {
                                 >
                                     Terms and Conditions
                                 </DropdownMenuItem>
-                                <DropdownMenuItem
-                                    onClick={() => router.push("/privacy-policy")}
-                                    className="py-3 text-lg hover:cursor-pointer"
-                                >
-                                    Privacy Policy
-                                </DropdownMenuItem>
-                                <DropdownMenuItem
+                                
+                                {/* <DropdownMenuItem
                                     onClick={() => router.push("/contact")}
                                     className="py-3 text-lg hover:cursor-pointer"
                                 >
                                     Contact Us
-                                </DropdownMenuItem>
+                                </DropdownMenuItem> */}
                             </DropdownMenuContent>
                         </DropdownMenu>
                     </div>
@@ -228,7 +212,7 @@ const Header = () => {
                                         </span>
                                     </div>
                                 </DropdownMenuTrigger>
-                                <DropdownMenuContent className="font-semibold w-56 p-2">
+                                <DropdownMenuContent className={`font-semibold w-56 p-2 ${leagueSpartan.className}`}>
                                     <DropdownMenuItem
                                         onClick={() => router.push("/onboarding")}
                                         className={`${leagueSpartan.className} text-xl py-2 hover:cursor-pointer`}
