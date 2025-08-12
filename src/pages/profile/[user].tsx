@@ -84,11 +84,14 @@ export default function ProfileCompletion() {
         
         if (profileError) {
           console.error('Error fetching profile:', profileError)
-          setError('Profile not found')
+          setError('Failed to load profile')
           return
         }
         
         if (profileData) {
+          // Check if profile is complete (has required fields filled)
+          const isComplete = profileData.first_name && profileData.last_name && profileData.school && profileData.major
+          
           setProfileData({
             first_name: profileData.first_name || '',
             last_name: profileData.last_name || '',
@@ -101,8 +104,13 @@ export default function ProfileCompletion() {
             linkedin_url: profileData.linkedin_url || '',
             introduction: profileData.introduction || ''
           })
-          setHasExistingProfile(true)
+          setHasExistingProfile(isComplete)
           setProfileOwner(profileData)
+          
+          // If profile is incomplete, automatically show edit mode
+          if (!isComplete) {
+            setIsEditing(true)
+          }
         }
       } catch (error) {
         console.error('Error fetching data:', error)
@@ -547,6 +555,12 @@ export default function ProfileCompletion() {
             <StudyStayFooter />
           </div>
         )
+      }
+
+      // Show profile completion form for new users (incomplete profiles)
+      if (!hasExistingProfile) {
+        // Set editing mode to true so they can fill out their profile
+        setIsEditing(true)
       }
 
       return (
