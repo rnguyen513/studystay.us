@@ -1,12 +1,13 @@
 import Header from "@/components/header";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { leagueSpartan } from "@/utils/fonts"
+import StudyStayFooter from "@/components/StudyStayFooter"
 
 const TermsAndConditions = () => {
   return (
-    <div className={`min-h-screen bg-white text-black ${leagueSpartan.className} text-xl overflow-hidden`}>
+    <div className={`min-h-screen bg-white text-black ${leagueSpartan.className} text-xl overflow-hidden flex flex-col`}>
       <Header />
-      <main className="container mx-auto px-4 py-8">
+      <main className="container mx-auto px-4 py-8 flex-1">
         <Card className="w-full max-w-3xl mx-auto">
           <CardHeader>
             <CardTitle className="text-3xl font-bold text-center">Terms and Conditions</CardTitle>
@@ -58,6 +59,7 @@ const TermsAndConditions = () => {
           </CardContent>
         </Card>
       </main>
+      <StudyStayFooter />
     </div>
   )
 }

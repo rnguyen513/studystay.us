@@ -21,10 +21,10 @@ export default function LandingPage() {
     // If profile is complete, show the normal page content
     return (
         <>
-            <div className={`min-h-screen bg-white text-black ${leagueSpartan.className} text-xl overflow-hidden`}>
+            <div className={`min-h-screen bg-white text-black ${leagueSpartan.className} text-xl overflow-hidden flex flex-col`}>
                 <SeoHead/>
                 <Header />
-                <main className="container mx-auto px-4 py-8">
+                <main className="container mx-auto px-4 py-8 flex-1">
                     {/* Profile completion reminder banner - only show once per session */}
                     {user && showBanner() && (
                         <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
@@ -62,8 +62,8 @@ export default function LandingPage() {
                     {/* <SearchBar numListings={numListings}/>
         <SearchResults searchQuery={""} date={""} home={true} setNumListings={setNumListings} randomized={true}/> */}
                 </main>
+                <StudyStayFooter />
             </div>
-            <StudyStayFooter />
         </>
     )
 }

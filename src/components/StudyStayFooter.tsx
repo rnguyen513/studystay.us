@@ -3,7 +3,7 @@ import Link from "next/link"
 
 const StudyStayFooter = () => {
     return (
-        <footer className={`bg-blue-800 py-8 mt-16 text-white ${leagueSpartan.className}`}>
+        <footer className={`bg-blue-800 py-8 text-white ${leagueSpartan.className} mt-auto`}>
             <div className="container mx-auto px-4">
                 <div className="flex flex-row justify-between mt-8 text-center text-sm">
                     <p>&copy; {new Date().getFullYear()} StudyStay. All rights reserved.</p>

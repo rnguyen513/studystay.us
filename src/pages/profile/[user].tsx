@@ -62,6 +62,8 @@ export default function ProfileCompletion() {
   const supabase = createClient()
   const router = useRouter()
   const profileUserId = typeof router.query.user === 'string' ? router.query.user : undefined
+  
+
 
   useEffect(() => {
     // Wait for router to be ready and we have a user id from the URL
@@ -122,12 +124,12 @@ export default function ProfileCompletion() {
     fetchData()
   }, [supabase, profileUserId, router.isReady])
 
-  // Set edit mode when profile is loaded (only once)
-  useEffect(() => {
-    if (!isLoading && !hasExistingProfile && !isEditing) {
-      setIsEditing(true)
-    }
-  }, [isLoading, hasExistingProfile, isEditing])
+  // Simplified approach: don't automatically set edit mode
+  // Let the user choose when to edit
+
+
+
+
 
   // Fetch user listings when profile is loaded
   useEffect(() => {
@@ -251,7 +253,7 @@ export default function ProfileCompletion() {
       <div className={`min-h-screen bg-white text-black ${leagueSpartan.className} text-xl overflow-hidden flex flex-col`}>
         <SeoHead/>
         <Header />
-        <main className="flex-1 container mx-auto px-4 py-8">
+        <main className="container mx-auto px-4 py-8 flex-1">
           <div className="flex items-center justify-center h-full">
             <div className="text-center">
               <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-[#004aad] mx-auto mb-4"></div>
@@ -269,10 +271,10 @@ export default function ProfileCompletion() {
   // Show error state if there was an error loading the profile
   if (error) {
     return (
-      <div className={`min-h-screen bg-white text-black ${leagueSpartan.className} text-xl overflow-hidden`}>
+      <div className={`min-h-screen bg-white text-black ${leagueSpartan.className} text-xl overflow-hidden flex flex-col`}>
         <SeoHead/>
         <Header />
-        <main className="container mx-auto px-4 py-8">
+        <main className="container mx-auto px-4 py-8 flex-1">
           <div className="max-w-2xl mx-auto text-center">
             <div className="bg-red-50 border border-red-200 rounded-lg p-8">
               <svg className="w-16 h-16 text-red-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -293,10 +295,10 @@ export default function ProfileCompletion() {
 
   if (success) {
     return (
-      <div className={`min-h-screen bg-white text-black ${leagueSpartan.className} text-xl overflow-hidden`}>
+      <div className={`min-h-screen bg-white text-black ${leagueSpartan.className} text-xl overflow-hidden flex flex-col`}>
         <SeoHead/>
         <Header />
-        <main className="container mx-auto px-4 py-8">
+        <main className="container mx-auto px-4 py-8 flex-1">
           <div className="flex items-center justify-center py-20">
             <Card className="w-full max-w-md">
               <CardContent className="pt-6 text-center">
@@ -326,17 +328,60 @@ export default function ProfileCompletion() {
 
   // Only allow editing if current user is the profile owner
   if (isEditing && (!currentUser || currentUser.id !== profileUserId)) {
-    router.push(`/profile/${profileUserId}`)
-    return null
+    return (
+      <div className={`min-h-screen bg-white text-black ${leagueSpartan.className} text-xl overflow-hidden flex flex-col`}>
+        <SeoHead/>
+        <Header />
+        <main className="container mx-auto px-4 py-8 flex-1">
+          <div className="flex items-center justify-center py-20">
+            <div className="text-center">
+              <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-[#004aad] mx-auto mb-4"></div>
+              <p className="text-gray-600">Redirecting...</p>
+            </div>
+          </div>
+        </main>
+        <StudyStayFooter />
+      </div>
+    )
+  }
+
+  // Show incomplete profile message if profile exists but is incomplete
+  if (!hasExistingProfile && profileOwner && !isEditing) {
+    return (
+      <div className={`min-h-screen bg-white text-black ${leagueSpartan.className} text-xl overflow-hidden flex flex-col`}>
+        <SeoHead/>
+        <Header />
+        <main className="container mx-auto px-4 py-8 flex-1">
+          <div className="max-w-2xl mx-auto text-center">
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-8">
+              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <User className="w-8 h-8 text-blue-600" />
+              </div>
+              <h2 className="text-2xl font-bold text-blue-800 mb-2">Complete Your Profile</h2>
+              <p className="text-blue-600 mb-4">Your profile is incomplete. Please add the required information.</p>
+              {currentUser && currentUser.id === profileUserId && (
+                <Button
+                  onClick={() => setIsEditing(true)}
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 text-lg font-semibold"
+                >
+                  Complete Profile
+                </Button>
+              )}
+            </div>
+          </div>
+        </main>
+        <StudyStayFooter />
+      </div>
+    )
   }
 
   // Show view mode if profile exists and user is not editing
   if (hasExistingProfile && !isEditing && profileOwner) {
     return (
-      <div className={`min-h-screen bg-white text-black ${leagueSpartan.className} text-xl overflow-hidden`}>
+      <div className={`min-h-screen bg-white text-black ${leagueSpartan.className} text-xl overflow-hidden flex flex-col`}>
         <SeoHead/>
         <Header />
-        <main className="container mx-auto px-4 py-8">
+        <main className="container mx-auto px-4 py-8 flex-1">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -516,10 +561,10 @@ export default function ProfileCompletion() {
       // Only allow editing if current user is the profile owner and we have profile data
       if (!currentUser || currentUser.id !== profileUserId || !profileOwner) {
         return (
-          <div className={`min-h-screen bg-white text-black ${leagueSpartan.className} text-xl overflow-hidden`}>
+          <div className={`min-h-screen bg-white text-black ${leagueSpartan.className} text-xl overflow-hidden flex flex-col`}>
             <SeoHead/>
             <Header />
-            <main className="container mx-auto px-4 py-8">
+            <main className="container mx-auto px-4 py-8 flex-1">
               <div className="max-w-2xl mx-auto text-center">
                 <div className="bg-red-50 border border-red-200 rounded-lg p-8">
                   <svg className="w-16 h-16 text-red-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -541,10 +586,10 @@ export default function ProfileCompletion() {
       // Only allow profile completion if current user is the profile owner and we have a valid profileUserId
       if (!hasExistingProfile && (!currentUser || currentUser.id !== profileUserId || !profileUserId)) {
         return (
-          <div className={`min-h-screen bg-white text-black ${leagueSpartan.className} text-xl overflow-hidden`}>
+          <div className={`min-h-screen bg-white text-black ${leagueSpartan.className} text-xl overflow-hidden flex flex-col`}>
             <SeoHead/>
             <Header />
-            <main className="container mx-auto px-4 py-8">
+            <main className="container mx-auto px-8 flex-1">
               <div className="max-w-2xl mx-auto text-center">
                 <div className="bg-red-50 border border-red-200 rounded-lg p-8">
                   <svg className="w-16 h-16 text-red-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -564,16 +609,13 @@ export default function ProfileCompletion() {
       }
 
       // Show profile completion form for new users (incomplete profiles)
-      if (!hasExistingProfile) {
-        // Set editing mode to true so they can fill out their profile
-        setIsEditing(true)
-      }
+      // Note: isEditing should be set by user interaction, not automatically
 
       return (
-      <div className={`min-h-screen bg-white text-black ${leagueSpartan.className} text-xl overflow-hidden`}>
+      <div className={`min-h-screen bg-white text-black ${leagueSpartan.className} text-xl overflow-hidden flex flex-col`}>
         <SeoHead/>
         <Header />
-        <main className="container mx-auto px-4 py-8">
+        <main className="container mx-auto px-4 py-8 flex-1">
           <div className="mb-5">
             {hasExistingProfile && (
               <Button
@@ -628,6 +670,8 @@ export default function ProfileCompletion() {
                           <Image
                             src={profileData.profile_picture_url} 
                             alt="Profile" 
+                            width={80}
+                            height={80}
                             className="w-20 h-20 rounded-full object-cover border-2 border-gray-200"
                           />
                           <button
