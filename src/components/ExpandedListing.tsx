@@ -273,8 +273,9 @@ export default function ExpandedListing({ listing: initialListing }: { listing: 
                     </Card>
                 </div>
 
-                <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div className="md:col-span-2 space-y-6">
+                <div className="mt-8 grid grid-cols-1 lg:grid-cols-4 gap-8">
+                    {/* Main content area - spans 3 columns on large screens */}
+                    <div className="lg:col-span-3 space-y-6">
                         <Card>
                             <CardHeader>
                                 <CardTitle>Description</CardTitle>
@@ -313,95 +314,100 @@ export default function ExpandedListing({ listing: initialListing }: { listing: 
                                 </CardContent>
                             </Card>
                         )}
-                    </div>
-                    {/* Host Overview */}
-                    <Card>
-                        <CardHeader>
-                            <CardTitle>About the host</CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                            {loadingPoster ? (
-                                <div className="flex items-center space-x-3">
-                                    <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-[#004aad]"></div>
-                                    <span className="text-sm text-gray-600">Loading host...</span>
+
+                        {/* Location Card - Now in main content area with more space */}
+                        <Card>
+                            <CardHeader>
+                                <CardTitle>Location</CardTitle>
+                            </CardHeader>
+                            <CardContent>
+                                <div className="aspect-video rounded-md overflow-hidden">
+                                    <GoogleMapsEmbed
+                                        apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ?? ""}
+                                        height={400}
+                                        width="100%"
+                                        mode="place"
+                                        loading="eager"
+                                        q={listing.address + ", Charlottesville, VA, USA"}
+                                    />
                                 </div>
-                            ) : posterProfile ? (
-                                <div className="space-y-4">
-                                    <div className="flex items-center space-x-4">
-                                        {posterProfile.profile_picture_url ? (
-                                            <Image
-                                                src={posterProfile.profile_picture_url}
-                                                alt="Host avatar"
-                                                width={56}
-                                                height={56}
-                                                className="w-14 h-14 rounded-full object-cover border"
-                                            />
-                                        ) : (
-                                            <div className="w-14 h-14 rounded-full bg-gray-200 flex items-center justify-center">
-                                                <UserIcon className="w-7 h-7 text-gray-500" />
-                                            </div>
-                                        )}
-                                        <div>
-                                            <div className="text-lg font-semibold">
-                                                {(posterProfile.first_name || '') + ' ' + (posterProfile.last_name || '')}
-                                            </div>
-                                            <div className="text-sm text-gray-600">
-                                                {posterProfile.school}
-                                                {posterProfile.major ? ` • ${posterProfile.major}` : ''}
+                            </CardContent>
+                        </Card>
+                    </div>
+
+                    {/* Right sidebar - spans 1 column, contains host info */}
+                    <div className="space-y-6">
+                        {/* Host Overview */}
+                        <Card>
+                            <CardHeader>
+                                <CardTitle>About the host</CardTitle>
+                            </CardHeader>
+                            <CardContent>
+                                {loadingPoster ? (
+                                    <div className="flex items-center space-x-3">
+                                        <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-[#004aad]"></div>
+                                        <span className="text-sm text-gray-600">Loading host...</span>
+                                    </div>
+                                ) : posterProfile ? (
+                                    <div className="space-y-4">
+                                        <div className="flex items-center space-x-4">
+                                            {posterProfile.profile_picture_url ? (
+                                                <Image
+                                                    src={posterProfile.profile_picture_url}
+                                                    alt="Host avatar"
+                                                    width={56}
+                                                    height={56}
+                                                    className="w-14 h-14 rounded-full object-cover border"
+                                                />
+                                            ) : (
+                                                <div className="w-14 h-14 rounded-full bg-gray-200 flex items-center justify-center">
+                                                    <UserIcon className="w-7 h-7 text-gray-500" />
+                                                </div>
+                                            )}
+                                            <div>
+                                                <div className="text-lg font-semibold">
+                                                    {(posterProfile.first_name || '') + ' ' + (posterProfile.last_name || '')}
+                                                </div>
+                                                <div className="text-sm text-gray-600">
+                                                    {posterProfile.school}
+                                                    {posterProfile.major ? ` • ${posterProfile.major}` : ''}
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
 
-                                    {posterProfile.introduction && (
-                                        <p className="text-sm text-gray-700 leading-relaxed">
-                                            {posterProfile.introduction.length > 180
-                                                ? posterProfile.introduction.slice(0, 177) + '...'
-                                                : posterProfile.introduction}
-                                        </p>
-                                    )}
-
-                                    <div className="flex items-center justify-between">
-                                        <Link
-                                            href={`/profile/${posterProfile.user_id}`}
-                                            className="text-[#004aad] hover:underline text-sm font-medium"
-                                        >
-                                            View full profile
-                                        </Link>
-                                        {posterProfile.linkedin_url && (
-                                            <a
-                                                href={posterProfile.linkedin_url}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="inline-flex items-center text-sm text-[#004aad] hover:underline"
-                                            >
-                                                <Linkedin className="w-4 h-4 mr-1" /> LinkedIn
-                                            </a>
+                                        {posterProfile.introduction && (
+                                            <p className="text-sm text-gray-700 leading-relaxed">
+                                                {posterProfile.introduction.length > 180
+                                                    ? posterProfile.introduction.slice(0, 177) + '...'
+                                                    : posterProfile.introduction}
+                                            </p>
                                         )}
-                                    </div>
-                                </div>
-                            ) : (
-                                <p className="text-sm text-gray-600">Host profile is not available.</p>
-                            )}
-                        </CardContent>
-                    </Card>
 
-                    <Card>
-                        <CardHeader>
-                            <CardTitle>Location</CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                            <div className="aspect-video rounded-md overflow-hidden">
-                                <GoogleMapsEmbed
-                                    apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ?? ""}
-                                    height={200}
-                                    width="100%"
-                                    mode="place"
-                                    loading="eager"
-                                    q={listing.address + ", Charlottesville, VA, USA"}
-                                />
-                            </div>
-                        </CardContent>
-                    </Card>
+                                        <div className="flex items-center justify-between">
+                                            <Link
+                                                href={`/profile/${posterProfile.user_id}`}
+                                                className="text-[#004aad] hover:underline text-sm font-medium"
+                                            >
+                                                View full profile
+                                            </Link>
+                                            {posterProfile.linkedin_url && (
+                                                <a
+                                                    href={posterProfile.linkedin_url}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="inline-flex items-center text-sm text-[#004aad] hover:underline"
+                                                >
+                                                    <Linkedin className="w-4 h-4 mr-1" /> LinkedIn
+                                                </a>
+                                            )}
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <p className="text-sm text-gray-600">Host profile is not available.</p>
+                                )}
+                            </CardContent>
+                        </Card>
+                    </div>
                 </div>
 
                 {isEditOpen && (
