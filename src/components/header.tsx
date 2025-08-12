@@ -99,7 +99,7 @@ const Header = () => {
 
                         {/* About Us */}
                         <Link 
-                            href="/sublet-resources" 
+                            href="/about" 
                             className="text-gray-700 hover:text-[#004aad] font-medium transition-colors"
                         >
                             About Us
@@ -163,7 +163,7 @@ const Header = () => {
                                 </DropdownMenuItem>
                                 <DropdownMenuSeparator />
                                 <DropdownMenuItem
-                                    onClick={() => router.push("/sublet-resources")}
+                                    onClick={() => router.push("/about")}
                                     className="py-3 text-lg hover:cursor-pointer"
                                 >
                                     About Us

@@ -7,6 +7,7 @@ import Image from "next/image"
 
 import PropertyCarousel from "@/components/PropertyCarousel"
 import StudyStayFooter from "@/components/StudyStayFooter"
+import Header from "@/components/header"
 
 import SeoHead from "@/components/SeoHead"
 
@@ -29,8 +30,8 @@ export default function LandingPage() {
                     <nav className="hidden md:flex space-x-6 text-blue-800 font-medium text-sm sm:text-base">
                         <Link href="/in">Home</Link>
                         <Link href="/in">Subletting</Link>
-                        <Link href="/in">About Us</Link>
-                        <Link href="/in">Resources</Link>
+                        <Link href="/about">About Us</Link>
+                        <Link href="/about">Resources</Link>
                     </nav>
                 </div>
             </header>
